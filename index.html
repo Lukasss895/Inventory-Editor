@@ -144,6 +144,19 @@
           </div>
 
           <!-- FORM FIELDS -->
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-400 mb-1">Item Name Display</label>
+            <input type="text" id="input-item-name" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-amber-500" value="★ Butterfly Knife | Fade">
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-semibold text-amber-400 mb-1 flex items-center justify-between">
+              <span><i class="fa-solid fa-tag mr-1"></i> Name Tag (Custom In-Game Name)</span>
+              <span class="text-[9px] text-slate-500">Optional</span>
+            </label>
+            <input type="text" id="input-nametag" placeholder="e.g. My Magic Knife" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 font-mono text-xs text-amber-300 focus:outline-none focus:border-amber-500">
+          </div>
+
           <div class="grid grid-cols-2 gap-3">
             <div>
               <label class="block text-[11px] font-semibold text-slate-400 mb-1">Def Index</label>
@@ -234,19 +247,19 @@
   <script>
     // CATALOG & DEF MAPPING
     const PRESETS = {
-      "515_38": { name: "Butterfly Knife | Fade", def_index: 515, paint_kit: 38, wear: 0.01, seed: 41, rarity: 6 },
-      "515_418": { name: "Butterfly Knife | Doppler P1", def_index: 515, paint_kit: 418, wear: 0.02, seed: 120, rarity: 6 },
-      "507_38": { name: "Karambit | Fade", def_index: 507, paint_kit: 38, wear: 0.01, seed: 80, rarity: 6 },
-      "507_44": { name: "Karambit | Case Hardened", def_index: 507, paint_kit: 44, wear: 0.15, seed: 661, rarity: 6 },
-      "508_419": { name: "M9 Bayonet | Doppler P2", def_index: 508, paint_kit: 419, wear: 0.03, seed: 21, rarity: 6 },
-      "508_12": { name: "M9 Bayonet | Crimson Web", def_index: 508, paint_kit: 12, wear: 0.07, seed: 33, rarity: 6 },
-      "500_415": { name: "Bayonet | Ruby", def_index: 500, paint_kit: 415, wear: 0.01, seed: 1, rarity: 6 },
-      "506_38": { name: "Flip Knife | Fade", def_index: 506, paint_kit: 38, wear: 0.02, seed: 99, rarity: 6 },
-      "505_418": { name: "Gut Knife | Doppler", def_index: 505, paint_kit: 418, wear: 0.03, seed: 15, rarity: 6 },
-      "512_38": { name: "Huntsman Knife | Fade", def_index: 512, paint_kit: 38, wear: 0.01, seed: 50, rarity: 6 },
-      "509_38": { name: "Falchion Knife | Fade", def_index: 509, paint_kit: 38, wear: 0.02, seed: 12, rarity: 6 },
-      "516_12": { name: "Shadow Daggers | Crimson Web", def_index: 516, paint_kit: 12, wear: 0.08, seed: 4, rarity: 6 },
-      "514_38": { name: "Bowie Knife | Fade", def_index: 514, paint_kit: 38, wear: 0.01, seed: 30, rarity: 6 },
+      "515_38": { name: "★ Butterfly Knife | Fade", def_index: 515, paint_kit: 38, wear: 0.01, seed: 41, rarity: 6 },
+      "515_418": { name: "★ Butterfly Knife | Doppler P1", def_index: 515, paint_kit: 418, wear: 0.02, seed: 120, rarity: 6 },
+      "507_38": { name: "★ Karambit | Fade", def_index: 507, paint_kit: 38, wear: 0.01, seed: 80, rarity: 6 },
+      "507_44": { name: "★ Karambit | Case Hardened", def_index: 507, paint_kit: 44, wear: 0.15, seed: 661, rarity: 6 },
+      "508_419": { name: "★ M9 Bayonet | Doppler P2", def_index: 508, paint_kit: 419, wear: 0.03, seed: 21, rarity: 6 },
+      "508_12": { name: "★ M9 Bayonet | Crimson Web", def_index: 508, paint_kit: 12, wear: 0.07, seed: 33, rarity: 6 },
+      "500_415": { name: "★ Bayonet | Ruby", def_index: 500, paint_kit: 415, wear: 0.01, seed: 1, rarity: 6 },
+      "506_38": { name: "★ Flip Knife | Fade", def_index: 506, paint_kit: 38, wear: 0.02, seed: 99, rarity: 6 },
+      "505_418": { name: "★ Gut Knife | Doppler", def_index: 505, paint_kit: 418, wear: 0.03, seed: 15, rarity: 6 },
+      "512_38": { name: "★ Huntsman Knife | Fade", def_index: 512, paint_kit: 38, wear: 0.01, seed: 50, rarity: 6 },
+      "509_38": { name: "★ Falchion Knife | Fade", def_index: 509, paint_kit: 38, wear: 0.02, seed: 12, rarity: 6 },
+      "516_12": { name: "★ Shadow Daggers | Crimson Web", def_index: 516, paint_kit: 12, wear: 0.08, seed: 4, rarity: 6 },
+      "514_38": { name: "★ Bowie Knife | Fade", def_index: 514, paint_kit: 38, wear: 0.01, seed: 30, rarity: 6 },
 
       "7_38": { name: "AK-47 | Redline", def_index: 7, paint_kit: 38, wear: 0.15, seed: 10, rarity: 4 },
       "7_180": { name: "AK-47 | Fire Serpent", def_index: 7, paint_kit: 180, wear: 0.08, seed: 111, rarity: 5 },
@@ -276,20 +289,13 @@
       "1201_0": { name: "CS:GO Case Key", def_index: 1201, paint_kit: 0, wear: 0, seed: 0, rarity: 0 }
     };
 
-    const WEAPON_NAMES = {
-      515: "Butterfly Knife", 507: "Karambit", 508: "M9 Bayonet", 500: "Bayonet",
-      506: "Flip Knife", 505: "Gut Knife", 512: "Huntsman Knife", 509: "Falchion Knife",
-      516: "Shadow Daggers", 514: "Bowie Knife", 7: "AK-47", 16: "M4A4", 60: "M4A1-S",
-      9: "AWP", 1: "Desert Eagle", 4: "Glock-18", 61: "USP-S", 19: "P90", 4001: "Container Case", 1201: "Key"
-    };
-
     // INVENTORY ARRAY STATE
     let inventory = [
-      { id: 2, inventory_id: 1, def_index: 515, paint_kit: 38, wear: 0.01, seed: 41, rarity: 6, equipped: "3", name: "Butterfly Knife | Fade" },
-      { id: 3, inventory_id: 2, def_index: 4001, paint_kit: 0, wear: 0, seed: 0, rarity: 0, equipped: "0", name: "CS:GO Weapon Case" },
-      { id: 4, inventory_id: 3, def_index: 1201, paint_kit: 0, wear: 0, seed: 0, rarity: 0, equipped: "0", name: "CS:GO Case Key" },
-      { id: 24, inventory_id: 16, def_index: 7, paint_kit: 38, wear: 0.15, seed: 10, rarity: 4, equipped: "2", name: "AK-47 | Redline" },
-      { id: 25, inventory_id: 4, def_index: 16, paint_kit: 255, wear: 0.22, seed: 32, rarity: 4, equipped: "0", name: "M4A4 | Asiimov" }
+      { id: 2, inventory_id: 1, def_index: 515, paint_kit: 38, wear: 0.01, seed: 41, rarity: 6, equipped: "3", name: "★ Butterfly Knife | Fade", nametag: "Sharp Beauty" },
+      { id: 3, inventory_id: 2, def_index: 4001, paint_kit: 0, wear: 0, seed: 0, rarity: 0, equipped: "0", name: "CS:GO Weapon Case", nametag: "" },
+      { id: 4, inventory_id: 3, def_index: 1201, paint_kit: 0, wear: 0, seed: 0, rarity: 0, equipped: "0", name: "CS:GO Case Key", nametag: "" },
+      { id: 24, inventory_id: 16, def_index: 7, paint_kit: 38, wear: 0.15, seed: 10, rarity: 4, equipped: "2", name: "AK-47 | Redline", nametag: "" },
+      { id: 25, inventory_id: 4, def_index: 16, paint_kit: 255, wear: 0.22, seed: 32, rarity: 4, equipped: "0", name: "M4A4 | Asiimov", nametag: "" }
     ];
 
     window.onload = function() {
@@ -300,6 +306,7 @@
       const selectedVal = document.getElementById('preset-select').value;
       const preset = PRESETS[selectedVal];
       if (preset) {
+        document.getElementById('input-item-name').value = preset.name;
         document.getElementById('input-def-index').value = preset.def_index;
         document.getElementById('input-paint-kit').value = preset.paint_kit;
         document.getElementById('input-wear').value = preset.wear;
@@ -309,14 +316,13 @@
     }
 
     function addItemFromForm() {
+      const name = document.getElementById('input-item-name').value.trim() || "Custom Item";
+      const nametag = document.getElementById('input-nametag').value.trim();
       const def_index = parseInt(document.getElementById('input-def-index').value) || 7;
       const paint_kit = parseInt(document.getElementById('input-paint-kit').value) || 0;
       const wear = parseFloat(document.getElementById('input-wear').value) || 0.01;
       const seed = parseInt(document.getElementById('input-seed').value) || 1;
       const rarity = parseInt(document.getElementById('input-rarity').value) || 2;
-
-      const weaponName = WEAPON_NAMES[def_index] || `Item #${def_index}`;
-      const name = paint_kit > 0 ? `${weaponName} | Custom` : weaponName;
 
       const maxId = inventory.reduce((max, item) => Math.max(max, item.id), 1);
       const maxInvId = inventory.reduce((max, item) => Math.max(max, item.inventory_id), 0);
@@ -330,7 +336,8 @@
         seed: seed,
         rarity: rarity,
         equipped: "0",
-        name: name
+        name: name,
+        nametag: nametag
       });
 
       renderInventory();
@@ -390,6 +397,7 @@
             <div>
               <span class="text-[10px] text-slate-400 font-mono">ID: #${item.id} (Def ${item.def_index})</span>
               <h3 class="text-xs font-bold text-white tracking-wide mt-0.5">${item.name}</h3>
+              ${item.nametag ? `<div class="text-[10px] text-amber-300 font-mono mt-1"><i class="fa-solid fa-tag text-[9px] mr-1"></i>"${item.nametag}"</div>` : ''}
             </div>
             ${badge}
           </div>
@@ -437,6 +445,10 @@
         kv += `\t\t"origin"\t\t"24"\n`;
         kv += `\t\t"in_use"\t\t"0"\n`;
         kv += `\t\t"rarity"\t\t"${item.rarity}"\n`;
+
+        if (item.nametag) {
+          kv += `\t\t"custom_name"\t\t"${item.nametag}"\n`;
+        }
 
         if (item.paint_kit > 0) {
           kv += `\t\t"attributes"\n`;
