@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS:GO Offline Inventory Editor & Case Simulator</title>
+    <title>CS:GO Offline Inventár Editor & Simulátor Otvárania Bední</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -41,7 +41,6 @@
         }
     </script>
     <style>
-        /* Custom scrollbar for Steam feel */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: #0e1217; }
         ::-webkit-scrollbar-thumb { background: #2a3f5a; border-radius: 4px; }
@@ -64,7 +63,6 @@
         .rarity-covert { border-bottom: 4px solid #eb4b4b; }
         .rarity-special { border-bottom: 4px solid #ffd700; box-shadow: inset 0 0 15px rgba(255, 215, 0, 0.2); }
 
-        /* Spinner animation container */
         .spinner-viewport {
             overflow: hidden;
             position: relative;
@@ -90,10 +88,6 @@
             will-change: transform;
             transition: transform 5s cubic-bezier(0.08, 0.82, 0.17, 1);
         }
-
-        /* Ambient glows */
-        .glow-gold { box-shadow: 0 0 25px rgba(228, 174, 57, 0.3); }
-        .glow-covert { box-shadow: 0 0 25px rgba(235, 75, 75, 0.3); }
     </style>
 </head>
 <body class="bg-csbg text-gray-200 min-h-screen flex flex-col font-sans antialiased">
@@ -102,23 +96,23 @@
     <header class="bg-csheader border-b border-csborder shadow-md sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
             <div class="flex items-center space-x-3">
-                <i class="fa-solid fa-[#000] fa-crosshairs text-csgold text-2xl"></i>
+                <i class="fa-solid fa-crosshairs text-csgold text-2xl"></i>
                 <div>
                     <h1 class="font-cs text-2xl tracking-wider text-white leading-none">CS:GO <span class="text-csgold">INVENTORY LAB</span></h1>
-                    <p class="text-xs text-gray-400 font-mono">Offline KeyValues Editor & Case Unboxer</p>
+                    <p class="text-xs text-gray-400 font-mono">Offline KeyValues Editor & Bedňový Simulátor</p>
                 </div>
             </div>
 
             <!-- TABS -->
             <nav class="flex space-x-2">
                 <button id="tab-inv-btn" onclick="switchTab('inventory')" class="px-4 py-2 text-sm font-semibold rounded-t-md transition flex items-center space-x-2 bg-cspanel text-csgold border-t-2 border-csgold">
-                    <i class="fa-solid fa-boxes-stacked"></i> <span>Inventory (<span id="inv-count">0</span>)</span>
+                    <i class="fa-solid fa-boxes-stacked"></i> <span>Inventár (<span id="inv-count">0</span>)</span>
                 </button>
                 <button id="tab-unbox-btn" onclick="switchTab('unboxing')" class="px-4 py-2 text-sm font-semibold rounded-t-md text-gray-400 hover:text-white transition flex items-center space-x-2">
-                    <i class="fa-solid fa-box-open"></i> <span>Case Unboxing</span>
+                    <i class="fa-solid fa-box-open"></i> <span>Otváranie Bední</span>
                 </button>
                 <button id="tab-kv-btn" onclick="switchTab('keyvalues')" class="px-4 py-2 text-sm font-semibold rounded-t-md text-gray-400 hover:text-white transition flex items-center space-x-2">
-                    <i class="fa-solid fa-code"></i> <span>KeyValues (txt)</span>
+                    <i class="fa-solid fa-code"></i> <span>KeyValues (inventory.txt)</span>
                 </button>
             </nav>
         </div>
@@ -134,40 +128,38 @@
                 <div class="flex items-center space-x-3 flex-1 min-w-[240px]">
                     <div class="relative w-full">
                         <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
-                        <input type="text" id="inv-search" oninput="renderInventory()" placeholder="Search items by name, weapon, wear..." 
+                        <input type="text" id="inv-search" oninput="renderInventory()" placeholder="Hľadať podľa názvu, zbrane, opotrebovania..." 
                                class="w-full bg-csbg border border-csborder rounded pl-9 pr-4 py-2 text-sm text-gray-200 focus:outline-none focus:border-csaccent">
                     </div>
                     <select id="rarity-filter" onchange="renderInventory()" class="bg-csbg border border-csborder rounded px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-csaccent">
-                        <option value="ALL">All Rarities</option>
-                        <option value="Special Extraordinary">★ Special / Knives</option>
-                        <option value="Covert">Covert (Red)</option>
-                        <option value="Classified">Classified (Pink)</option>
-                        <option value="Restricted">Restricted (Purple)</option>
-                        <option value="Mil-Spec">Mil-Spec (Blue)</option>
-                        <option value="Industrial">Industrial (Light Blue)</option>
-                        <option value="Consumer">Consumer Grade (Gray)</option>
+                        <option value="ALL">Všetky Vzácnosti</option>
+                        <option value="Special Extraordinary">★ Špeciálne / Nože</option>
+                        <option value="Covert">Covert (Červené)</option>
+                        <option value="Classified">Classified (Ružové)</option>
+                        <option value="Restricted">Restricted (Fialové)</option>
+                        <option value="Mil-Spec">Mil-Spec (Modré)</option>
+                        <option value="Industrial">Industrial (Svetlomodré)</option>
+                        <option value="Consumer">Consumer Grade (Sivé)</option>
                     </select>
                 </div>
 
                 <div class="flex items-center space-x-3">
                     <button onclick="openAddItemModal()" class="bg-csgold hover:bg-yellow-500 text-black font-semibold text-sm px-4 py-2 rounded shadow flex items-center space-x-2 transition">
-                        <i class="fa-solid fa-plus"></i> <span>Add Custom Item</span>
+                        <i class="fa-solid fa-plus"></i> <span>Pridať Predmet</span>
                     </button>
                     <button onclick="clearInventory()" class="bg-red-900/60 hover:bg-red-800 text-red-200 border border-red-700 text-sm px-3 py-2 rounded transition flex items-center space-x-1">
-                        <i class="fa-solid fa-trash"></i> <span>Clear</span>
+                        <i class="fa-solid fa-trash"></i> <span>Vymazať Všetko</span>
                     </button>
                 </div>
             </div>
 
             <!-- Item Grid -->
-            <div id="inventory-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                <!-- Rendered dynamically -->
-            </div>
+            <div id="inventory-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
             
             <div id="empty-inv-msg" class="hidden text-center py-16 bg-cspanel/40 rounded-lg border border-dashed border-csborder">
                 <i class="fa-solid fa-box-open text-5xl text-gray-600 mb-3"></i>
-                <p class="text-gray-400 font-semibold text-lg">Your Inventory is Empty</p>
-                <p class="text-sm text-gray-500 max-w-md mx-auto mt-1">Unbox cases in the <span class="text-csgold font-semibold cursor-pointer" onclick="switchTab('unboxing')">Case Unboxing</span> tab or import an existing <span class="text-csaccent font-mono">inventory.txt</span> file!</p>
+                <p class="text-gray-400 font-semibold text-lg">Tvoj inventár je prázdny</p>
+                <p class="text-sm text-gray-500 max-w-md mx-auto mt-1">Otváraj bedne v záložke <span class="text-csgold font-semibold cursor-pointer" onclick="switchTab('unboxing')">Otváranie Bední</span> alebo pridaj vlastný predmet!</p>
             </div>
         </section>
 
@@ -178,11 +170,9 @@
                 <div class="flex items-center space-x-4">
                     <label class="text-sm font-semibold text-gray-300 flex items-center space-x-2">
                         <i class="fa-solid fa-box text-csgold"></i>
-                        <span>Select Case:</span>
+                        <span>Vyber Bedňu:</span>
                     </label>
-                    <select id="case-select" onchange="loadSelectedCase()" class="bg-csbg border border-csborder text-csgold font-semibold rounded px-4 py-2 text-sm focus:outline-none focus:border-csaccent">
-                        <!-- Populated dynamically -->
-                    </select>
+                    <select id="case-select" onchange="loadSelectedCase()" class="bg-csbg border border-csborder text-csgold font-semibold rounded px-4 py-2 text-sm focus:outline-none focus:border-csaccent"></select>
                 </div>
                 
                 <div class="flex items-center space-x-6 text-xs text-gray-400 font-mono">
@@ -190,7 +180,7 @@
                     <div class="flex items-center space-x-1.5"><span class="w-3 h-3 rounded-full bg-rarityRestricted inline-block"></span><span>Restricted (15.98%)</span></div>
                     <div class="flex items-center space-x-1.5"><span class="w-3 h-3 rounded-full bg-rarityClassified inline-block"></span><span>Classified (3.20%)</span></div>
                     <div class="flex items-center space-x-1.5"><span class="w-3 h-3 rounded-full bg-rarityCovert inline-block"></span><span>Covert (0.64%)</span></div>
-                    <div class="flex items-center space-x-1.5"><span class="w-3 h-3 rounded-full bg-raritySpecial inline-block"></span><span>★ Special (0.26%)</span></div>
+                    <div class="flex items-center space-x-1.5"><span class="w-3 h-3 rounded-full bg-raritySpecial inline-block"></span><span>★ Špeciálne (0.26%)</span></div>
                 </div>
             </div>
 
@@ -198,32 +188,30 @@
             <div class="bg-cspanel border border-csborder rounded-xl p-6 text-center space-y-6 relative overflow-hidden">
                 <div id="case-display-info" class="space-y-1">
                     <h2 id="case-title" class="font-cs text-3xl tracking-wide text-white uppercase">CS:GO Weapon Case</h2>
-                    <p class="text-xs text-gray-400">Key required: <span id="key-title" class="text-csgold font-semibold">CS:GO Weapon Case Key</span></p>
+                    <p class="text-xs text-gray-400">Vyžaduje kľúč: <span id="key-title" class="text-csgold font-semibold">CS:GO Weapon Case Key</span></p>
                 </div>
 
                 <!-- Spinner Component -->
                 <div class="spinner-viewport h-40 rounded-lg relative my-4">
                     <div class="spinner-line"></div>
-                    <div id="spinner-track" class="spinner-track h-full">
-                        <!-- Spinner cards inserted dynamically -->
-                    </div>
+                    <div id="spinner-track" class="spinner-track h-full"></div>
                 </div>
 
                 <!-- Controls -->
                 <div class="flex items-center justify-center space-x-4">
                     <button id="open-case-btn" onclick="startUnboxing()" class="bg-gradient-to-r from-yellow-600 to-csgold hover:from-yellow-500 hover:to-yellow-400 text-black font-cs text-2xl tracking-wider px-10 py-3 rounded shadow-lg transition transform hover:scale-105 active:scale-95 flex items-center space-x-2">
                         <i class="fa-solid fa-key"></i>
-                        <span>UNLOCK CASE</span>
+                        <span>OTVORIŤ BEDŇU</span>
                     </button>
                     <button id="fast-unbox-btn" onclick="quickUnbox(5)" class="bg-csbg border border-csborder hover:border-csaccent text-csaccent text-sm font-semibold px-4 py-3 rounded transition flex items-center space-x-2">
                         <i class="fa-solid fa-forward-fast"></i>
-                        <span>Quick Unbox (x5)</span>
+                        <span>Rýchle otvorenie (5x)</span>
                     </button>
                 </div>
 
-                <!-- Dropped Item Modal/Card reveal result -->
+                <!-- Dropped Item Reveal Result -->
                 <div id="unbox-result" class="hidden bg-csbg/95 border-2 border-csgold rounded-lg p-6 max-w-md mx-auto space-y-4 animate-fade-in shadow-2xl">
-                    <div class="text-xs font-mono uppercase tracking-widest text-csgold">You Unboxed</div>
+                    <div class="text-xs font-mono uppercase tracking-widest text-csgold">Získal si z bedne</div>
                     <div id="result-icon" class="text-6xl my-2"></div>
                     <div>
                         <h3 id="result-name" class="font-cs text-3xl text-white">AK-47 | Case Hardened</h3>
@@ -232,7 +220,7 @@
                     <div id="result-rarity" class="inline-block px-3 py-1 text-xs font-bold rounded uppercase tracking-wider">Classified</div>
                     <div class="pt-2 flex justify-center space-x-3">
                         <button onclick="dismissResult()" class="bg-csgold text-black font-semibold text-sm px-6 py-2 rounded hover:bg-yellow-400 transition">
-                            Add to Inventory & Continue
+                            Pridať do inventára a pokračovať
                         </button>
                     </div>
                 </div>
@@ -241,11 +229,9 @@
             <!-- Case Contents Preview -->
             <div class="bg-cspanel border border-csborder rounded-lg p-4">
                 <h3 class="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-4 border-b border-csborder pb-2">
-                    Case Contents
+                    Obsah Bedne
                 </h3>
-                <div id="case-contents-grid" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3">
-                    <!-- Populated dynamically -->
-                </div>
+                <div id="case-contents-grid" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3"></div>
             </div>
         </section>
 
@@ -254,14 +240,14 @@
             <div class="bg-cspanel border border-csborder p-4 rounded-lg flex items-center justify-between">
                 <div>
                     <h2 class="text-lg font-semibold text-white">Valve KeyValues (inventory.txt) Editor</h2>
-                    <p class="text-xs text-gray-400">Directly syncs with your visual inventory above.</p>
+                    <p class="text-xs text-gray-400">Generuje plne kompatibilnú Valve štruktúru vrátane def_index, paint_kit, seed, float a equipped state.</p>
                 </div>
                 <div class="flex items-center space-x-3">
                     <button onclick="exportToClipboard()" class="bg-csaccent hover:bg-blue-400 text-black font-semibold text-sm px-4 py-2 rounded shadow flex items-center space-x-1.5 transition">
-                        <i class="fa-regular fa-copy"></i> <span>Copy to Clipboard</span>
+                        <i class="fa-regular fa-copy"></i> <span>Kopírovať</span>
                     </button>
                     <button onclick="downloadKVFile()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm px-4 py-2 rounded shadow flex items-center space-x-1.5 transition">
-                        <i class="fa-solid fa-download"></i> <span>Download inventory.txt</span>
+                        <i class="fa-solid fa-download"></i> <span>Stiahnuť inventory.txt</span>
                     </button>
                 </div>
             </div>
@@ -270,48 +256,44 @@
                 <!-- Text Editor -->
                 <div class="space-y-2">
                     <div class="flex justify-between items-center text-xs text-gray-400 font-mono">
-                        <span>KEYVALUES INPUT / OUTPUT</span>
-                        <button onclick="parseRawKeyValues()" class="text-csgold hover:underline"><i class="fa-solid fa-rotate"></i> Parse Text -> Sync Visual Inv</button>
+                        <span>KEYVALUES VÝSTUP / VSTUP</span>
+                        <button onclick="parseRawKeyValues()" class="text-csgold hover:underline"><i class="fa-solid fa-rotate"></i> Synchronizovať Text -> Inventár</button>
                     </div>
-                    <textarea id="kv-textarea" class="w-full h-[500px] bg-csbg border border-csborder rounded p-4 font-mono text-xs text-green-400 focus:outline-none focus:border-csaccent leading-relaxed resize-none shadow-inner" spellcheck="false"></textarea>
+                    <textarea id="kv-textarea" class="w-full h-[520px] bg-csbg border border-csborder rounded p-4 font-mono text-xs text-green-400 focus:outline-none focus:border-csaccent leading-relaxed resize-none shadow-inner" spellcheck="false"></textarea>
                 </div>
 
-                <!-- Info and Quick Actions -->
+                <!-- Info Block -->
                 <div class="space-y-4 text-sm text-gray-300">
                     <div class="bg-cspanel border border-csborder rounded p-5 space-y-3">
                         <h3 class="font-bold text-white flex items-center space-x-2">
                             <i class="fa-solid fa-circle-info text-csaccent"></i>
-                            <span>Valve inventory.txt Format Specs</span>
+                            <span>Špecifikácia Formátu CS:GO KeyValues</span>
                         </h3>
                         <p class="text-xs leading-relaxed text-gray-400">
-                            CS:GO & CS2 inventory state files use Valve's standard KeyValues text format. The structure utilizes hierarchical block syntax:
+                            Pre korektné fungovanie v CS:GO serverových zostavách sa atribúty ukladajú pomocou očíslovaných kľúčov:
                         </p>
+                        <ul class="text-xs font-mono text-gray-300 space-y-1 list-disc list-inside">
+                            <li><span class="text-csgold font-bold">6</span>: paint_kit (ID vzoru skinu)</li>
+                            <li><span class="text-csgold font-bold">7</span>: seed (Seed vzoru)</li>
+                            <li><span class="text-csgold font-bold">8</span>: wear (Float hodnota opotrebovania)</li>
+                        </ul>
                         <pre class="bg-csbg p-3 rounded text-xs font-mono text-csgold overflow-x-auto border border-csborder">
-"items"
+"inventory"
 {
   "1"
   {
-    "def_index" "7"
-    "paint_index" "180"
-    "rarity" "4"
-    "wear" "0.0521"
-    "stattrak" "1"
-    "custom_name" "My AK"
+    "id" "1"
+    "def_index" "515"
+    "rarity" "6"
+    "equipped_state" "2,3"
+    "attributes"
+    {
+      "6" "38"
+      "7" "412"
+      "8" "0.0150"
+    }
   }
 }</pre>
-                    </div>
-
-                    <div class="bg-cspanel border border-csborder rounded p-5 space-y-3">
-                        <h4 class="font-semibold text-white">Def Index Quick Reference</h4>
-                        <ul class="text-xs font-mono space-y-1 text-gray-400">
-                            <li><span class="text-csgold">7</span> - AK-47</li>
-                            <li><span class="text-csgold">16</span> - M4A4</li>
-                            <li><span class="text-csgold">60</span> - M4A1-S</li>
-                            <li><span class="text-csgold">9</span> - AWP</li>
-                            <li><span class="text-csgold">1</span> - Desert Eagle</li>
-                            <li><span class="text-csgold">507</span> - Karambit Knife</li>
-                            <li><span class="text-csgold">508</span> - M9 Bayonet</li>
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -323,7 +305,7 @@
     <div id="item-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-cspanel border border-csborder rounded-lg max-w-md w-full p-6 space-y-4 shadow-2xl animate-fade-in">
             <div class="flex justify-between items-center border-b border-csborder pb-3">
-                <h3 id="modal-title" class="font-cs text-2xl text-white">ADD ITEM TO INVENTORY</h3>
+                <h3 id="modal-title" class="font-cs text-2xl text-white">PRIDAŤ PREDMET DO INVENTÁRA</h3>
                 <button onclick="closeModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
 
@@ -331,41 +313,70 @@
                 <input type="hidden" id="edit-item-id" value="">
 
                 <div>
-                    <label class="block text-gray-400 mb-1">Weapon / Item Name</label>
-                    <input type="text" id="form-weapon" required placeholder="e.g. AK-47 or Karambit" class="w-full bg-csbg border border-csborder rounded p-2 text-white focus:outline-none focus:border-csaccent">
-                </div>
-
-                <div>
-                    <label class="block text-gray-400 mb-1">Skin Name</label>
-                    <input type="text" id="form-skin" required placeholder="e.g. Redline or Fade" class="w-full bg-csbg border border-csborder rounded p-2 text-white focus:outline-none focus:border-csaccent">
+                    <label class="block text-gray-400 mb-1">Vyber Preddefinovaný Skin / Zbraň</label>
+                    <select id="preset-select" onchange="applyPresetSelection()" class="w-full bg-csbg border border-csborder rounded p-2 text-csgold font-semibold focus:outline-none focus:border-csaccent">
+                        <option value="">-- Vlastný predmet / Ručné zadanie --</option>
+                    </select>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-gray-400 mb-1">Def Index</label>
-                        <input type="number" id="form-defindex" required placeholder="7" class="w-full bg-csbg border border-csborder rounded p-2 text-white focus:outline-none focus:border-csaccent">
+                        <label class="block text-gray-400 mb-1">Názov Zbrane</label>
+                        <input type="text" id="form-weapon" required placeholder="napr. Butterfly Knife" class="w-full bg-csbg border border-csborder rounded p-2 text-white focus:outline-none focus:border-csaccent">
                     </div>
                     <div>
-                        <label class="block text-gray-400 mb-1">Paint Index</label>
-                        <input type="number" id="form-paintindex" required placeholder="282" class="w-full bg-csbg border border-csborder rounded p-2 text-white focus:outline-none focus:border-csaccent">
+                        <label class="block text-gray-400 mb-1">Názov Skinu</label>
+                        <input type="text" id="form-skin" required placeholder="napr. Fade" class="w-full bg-csbg border border-csborder rounded p-2 text-white focus:outline-none focus:border-csaccent">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-gray-400 mb-1">Rarity</label>
+                        <label class="block text-gray-400 mb-1">Def Index (def_index)</label>
+                        <input type="number" id="form-defindex" required placeholder="515" class="w-full bg-csbg border border-csborder rounded p-2 text-white focus:outline-none focus:border-csaccent">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 mb-1">Paint Kit ID (6)</label>
+                        <input type="number" id="form-paintindex" required placeholder="38" class="w-full bg-csbg border border-csborder rounded p-2 text-white focus:outline-none focus:border-csaccent">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-gray-400 mb-1">Vzácnosť</label>
                         <select id="form-rarity" class="w-full bg-csbg border border-csborder rounded p-2 text-white focus:outline-none focus:border-csaccent">
-                            <option value="Mil-Spec">Mil-Spec (Blue)</option>
-                            <option value="Restricted">Restricted (Purple)</option>
-                            <option value="Classified">Classified (Pink)</option>
-                            <option value="Covert">Covert (Red)</option>
                             <option value="Special Extraordinary">★ Special (Gold)</option>
-                            <option value="Consumer">Consumer Grade</option>
+                            <option value="Covert">Covert (Red)</option>
+                            <option value="Classified">Classified (Pink)</option>
+                            <option value="Restricted">Restricted (Purple)</option>
+                            <option value="Mil-Spec">Mil-Spec (Blue)</option>
+                            <option value="Industrial">Industrial</option>
+                            <option value="Consumer">Consumer</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-gray-400 mb-1">Wear / Float Value (0.0 - 1.0)</label>
-                        <input type="number" step="0.001" min="0" max="1" id="form-wear" value="0.15" class="w-full bg-csbg border border-csborder rounded p-2 text-white focus:outline-none focus:border-csaccent">
+                        <label class="block text-gray-400 mb-1">Float (8)</label>
+                        <input type="number" step="0.0001" min="0" max="1" id="form-wear" value="0.0150" class="w-full bg-csbg border border-csborder rounded p-2 text-white focus:outline-none focus:border-csaccent">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 mb-1">Pattern Seed (7)</label>
+                        <input type="number" min="0" max="1000" id="form-seed" value="412" class="w-full bg-csbg border border-csborder rounded p-2 text-white focus:outline-none focus:border-csaccent">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 pt-1">
+                    <div>
+                        <label class="block text-gray-400 mb-1">Vybavenie (Equipped)</label>
+                        <select id="form-equipped" class="w-full bg-csbg border border-csborder rounded p-2 text-white focus:outline-none focus:border-csaccent">
+                            <option value="none">Nevybavené</option>
+                            <option value="2,3">T aj CT strana (2,3)</option>
+                            <option value="2">Iba T strana (2)</option>
+                            <option value="3">Iba CT strana (3)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 mb-1">Menná ceduľka (Nametag)</label>
+                        <input type="text" id="form-nametag" placeholder="napr. Magic Stick" class="w-full bg-csbg border border-csborder rounded p-2 text-white focus:outline-none focus:border-csaccent">
                     </div>
                 </div>
 
@@ -376,73 +387,57 @@
                     </label>
                 </div>
 
-                <div>
-                    <label class="block text-gray-400 mb-1">Nametag (Optional)</label>
-                    <input type="text" id="form-nametag" placeholder="e.g. Magic Stick" class="w-full bg-csbg border border-csborder rounded p-2 text-white focus:outline-none focus:border-csaccent">
-                </div>
-
                 <div class="pt-4 flex justify-end space-x-3">
-                    <button type="button" onclick="closeModal()" class="px-4 py-2 rounded bg-csbg text-gray-300 hover:bg-gray-800">Cancel</button>
-                    <button type="submit" class="px-5 py-2 rounded bg-csgold text-black font-semibold hover:bg-yellow-400">Save Item</button>
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 rounded bg-csbg text-gray-300 hover:bg-gray-800">Zrušiť</button>
+                    <button type="submit" class="px-5 py-2 rounded bg-csgold text-black font-semibold hover:bg-yellow-400">Uložiť Predmet</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- AUDIO SYNTHESIZER FOR CS:GO SOUND EFFECTS -->
+    <!-- AUDIO SYNTHESIZER -->
     <script>
-        // Web Audio API Synthesizer for CS:GO Unboxing Sounds
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
         function playTickSound() {
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
-            
             osc.type = 'sine';
             osc.frequency.setValueAtTime(440, audioCtx.currentTime);
             osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.03);
-
             gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
-
             osc.connect(gain);
             gain.connect(audioCtx.destination);
-
             osc.start();
             osc.stop(audioCtx.currentTime + 0.03);
         }
 
         function playUnboxSound(rarity) {
             if (audioCtx.state === 'suspended') audioCtx.resume();
-            
             const now = audioCtx.currentTime;
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
 
             if (rarity === 'Special Extraordinary' || rarity === 'Covert') {
-                // Gold / High Tier Fanfare sound
                 osc.type = 'triangle';
-                osc.frequency.setValueAtTime(523.25, now); // C5
-                osc.frequency.setValueAtTime(659.25, now + 0.1); // E5
-                osc.frequency.setValueAtTime(783.99, now + 0.2); // G5
-                osc.frequency.setValueAtTime(1046.50, now + 0.3); // C6
-
+                osc.frequency.setValueAtTime(523.25, now);
+                osc.frequency.setValueAtTime(659.25, now + 0.1);
+                osc.frequency.setValueAtTime(783.99, now + 0.2);
+                osc.frequency.setValueAtTime(1046.50, now + 0.3);
                 gain.gain.setValueAtTime(0.3, now);
                 gain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
             } else {
-                // Regular Drop Sound
                 osc.type = 'sine';
                 osc.frequency.setValueAtTime(300, now);
                 osc.frequency.exponentialRampToValueAtTime(600, now + 0.2);
-
                 gain.gain.setValueAtTime(0.2, now);
                 gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
             }
 
             osc.connect(gain);
             gain.connect(audioCtx.destination);
-
             osc.start();
             osc.stop(now + 1.2);
         }
@@ -450,51 +445,67 @@
 
     <!-- CORE DATA & APP LOGIC -->
     <script>
-        // --- DATA PRESETS FOR CS:GO CASES ---
+        // --- WEAPON & KNIFE DEFINITION PRESETS WITH EXACT VALVE DEF_INDEX & PAINT_KIT IDS ---
+        const WEAPON_PRESETS = [
+            // Knives
+            { weapon: 'Butterfly Knife', skin: 'Fade', defIndex: 515, paintIndex: 38, rarity: 'Special Extraordinary', seed: 412 },
+            { weapon: 'Butterfly Knife', skin: 'Doppler Phase 2', defIndex: 515, paintIndex: 419, rarity: 'Special Extraordinary', seed: 122 },
+            { weapon: 'Butterfly Knife', skin: 'Crimson Web', defIndex: 515, paintIndex: 12, rarity: 'Special Extraordinary', seed: 88 },
+            { weapon: 'Karambit', skin: 'Fade', defIndex: 507, paintIndex: 38, rarity: 'Special Extraordinary', seed: 90 },
+            { weapon: 'Karambit', skin: 'Case Hardened', defIndex: 507, paintIndex: 44, rarity: 'Special Extraordinary', seed: 387 },
+            { weapon: 'M9 Bayonet', skin: 'Doppler', defIndex: 508, paintIndex: 418, rarity: 'Special Extraordinary', seed: 21 },
+            { weapon: 'M9 Bayonet', skin: 'Autotronic', defIndex: 508, paintIndex: 577, rarity: 'Special Extraordinary', seed: 10 },
+            
+            // AK-47
+            { weapon: 'AK-47', skin: 'Case Hardened', defIndex: 7, paintIndex: 44, rarity: 'Classified', seed: 661 },
+            { weapon: 'AK-47', skin: 'Fire Serpent', defIndex: 7, paintIndex: 180, rarity: 'Covert', seed: 15 },
+            { weapon: 'AK-47', skin: 'Redline', defIndex: 7, paintIndex: 282, rarity: 'Classified', seed: 44 },
+            { weapon: 'AK-47', skin: 'Vulcan', defIndex: 7, paintIndex: 302, rarity: 'Covert', seed: 101 },
+
+            // AWP
+            { weapon: 'AWP', skin: 'Dragon Lore', defIndex: 9, paintIndex: 344, rarity: 'Covert', seed: 1 },
+            { weapon: 'AWP', skin: 'Asiimov', defIndex: 9, paintIndex: 279, rarity: 'Covert', seed: 99 },
+            { weapon: 'AWP', skin: 'Lightning Strike', defIndex: 9, paintIndex: 51, rarity: 'Covert', seed: 4 },
+
+            // M4A4 & M4A1-S
+            { weapon: 'M4A4', skin: 'Howl', defIndex: 16, paintIndex: 309, rarity: 'Covert', seed: 77 },
+            { weapon: 'M4A1-S', skin: 'Printstream', defIndex: 60, paintIndex: 984, rarity: 'Covert', seed: 55 },
+
+            // Desert Eagle
+            { weapon: 'Desert Eagle', skin: 'Printstream', defIndex: 1, paintIndex: 983, rarity: 'Classified', seed: 200 },
+            { weapon: 'Desert Eagle', skin: 'Blaze', defIndex: 1, paintIndex: 37, rarity: 'Restricted', seed: 420 }
+        ];
+
+        // --- CS:GO CASES ---
         const CSGO_CASES = [
             {
+                id: 'breakout_case',
+                name: 'Operation Breakout Weapon Case',
+                key: 'Operation Breakout Key',
+                items: [
+                    { weapon: 'MP7', skin: 'Urban Hazard', defIndex: 33, paintIndex: 351, rarity: 'Mil-Spec' },
+                    { weapon: 'CZ75-Auto', skin: 'Tigris', defIndex: 63, paintIndex: 350, rarity: 'Mil-Spec' },
+                    { weapon: 'P250', skin: 'Supernova', defIndex: 36, paintIndex: 358, rarity: 'Restricted' },
+                    { weapon: 'Glock-18', skin: 'Water Elemental', defIndex: 4, paintIndex: 353, rarity: 'Restricted' },
+                    { weapon: 'Desert Eagle', skin: 'Conspiracy', defIndex: 1, paintIndex: 351, rarity: 'Classified' },
+                    { weapon: 'M4A1-S', skin: 'Cyrex', defIndex: 60, paintIndex: 360, rarity: 'Covert' },
+                    // Knives
+                    { weapon: 'Butterfly Knife', skin: 'Fade', defIndex: 515, paintIndex: 38, rarity: 'Special Extraordinary' },
+                    { weapon: 'Butterfly Knife', skin: 'Crimson Web', defIndex: 515, paintIndex: 12, rarity: 'Special Extraordinary' },
+                    { weapon: 'Butterfly Knife', skin: 'Slaughter', defIndex: 515, paintIndex: 59, rarity: 'Special Extraordinary' }
+                ]
+            },
+            {
                 id: 'csgo_case_1',
-                name: 'CS:GO Weapon Case',
+                name: 'CS:GO Weapon Case 1',
                 key: 'CS:GO Weapon Case Key',
                 items: [
                     { weapon: 'MP7', skin: 'Skulls', defIndex: 33, paintIndex: 11, rarity: 'Mil-Spec' },
-                    { weapon: 'AUG', skin: 'Wings', defIndex: 8, paintIndex: 73, rarity: 'Mil-Spec' },
                     { weapon: 'SG 553', skin: 'Ultraviolet', defIndex: 39, paintIndex: 98, rarity: 'Mil-Spec' },
-                    { weapon: 'Glock-18', skin: 'Dragon Tattoo', defIndex: 4, paintIndex: 48, rarity: 'Restricted' },
                     { weapon: 'USP-S', skin: 'Dark Water', defIndex: 61, paintIndex: 60, rarity: 'Restricted' },
-                    { weapon: 'M4A1-S', skin: 'Dark Water', defIndex: 60, paintIndex: 60, rarity: 'Restricted' },
                     { weapon: 'AK-47', skin: 'Case Hardened', defIndex: 7, paintIndex: 44, rarity: 'Classified' },
-                    { weapon: 'Desert Eagle', skin: 'Hypnotic', defIndex: 1, paintIndex: 61, rarity: 'Classified' },
                     { weapon: 'AWP', skin: 'Lightning Strike', defIndex: 9, paintIndex: 51, rarity: 'Covert' },
-                    // Knives
-                    { weapon: 'Karambit', skin: 'Fade', defIndex: 507, paintIndex: 38, rarity: 'Special Extraordinary' },
-                    { weapon: 'M9 Bayonet', skin: 'Crimson Web', defIndex: 508, paintIndex: 12, rarity: 'Special Extraordinary' }
-                ]
-            },
-            {
-                id: 'bravo_case',
-                name: 'Operation Bravo Case',
-                key: 'Operation Bravo Key',
-                items: [
-                    { weapon: 'SG 553', skin: 'Wave Spray', defIndex: 39, paintIndex: 186, rarity: 'Mil-Spec' },
-                    { weapon: 'Dual Berettas', skin: 'Black Limba', defIndex: 14, paintIndex: 190, rarity: 'Mil-Spec' },
-                    { weapon: 'P90', skin: 'Cold Blooded', defIndex: 19, paintIndex: 67, rarity: 'Restricted' },
-                    { weapon: 'USP-S', skin: 'Overgrowth', defIndex: 61, paintIndex: 183, rarity: 'Restricted' },
-                    { weapon: 'AWP', skin: 'Graphite', defIndex: 9, paintIndex: 212, rarity: 'Classified' },
-                    { weapon: 'AK-47', skin: 'Fire Serpent', defIndex: 7, paintIndex: 180, rarity: 'Covert' },
-                    { weapon: 'Butterfly Knife', skin: 'Case Hardened', defIndex: 515, paintIndex: 44, rarity: 'Special Extraordinary' }
-                ]
-            },
-            {
-                id: 'chroma_case',
-                name: 'Chroma Case',
-                key: 'Chroma Key',
-                items: [
-                    { weapon: 'Glock-18', skin: 'Catacombs', defIndex: 4, paintIndex: 399, rarity: 'Mil-Spec' },
-                    { weapon: 'M4A1-S', skin: 'Basilisk', defIndex: 60, paintIndex: 383, rarity: 'Restricted' },
-                    { weapon: 'AK-47', skin: 'Cartel', defIndex: 7, paintIndex: 394, rarity: 'Classified' },
-                    { weapon: 'AWP', skin: 'Man-o\'-war', defIndex: 9, paintIndex: 395, rarity: 'Covert' },
-                    { weapon: 'Karambit', skin: 'Doppler', defIndex: 507, paintIndex: 418, rarity: 'Special Extraordinary' }
+                    { weapon: 'Karambit', skin: 'Fade', defIndex: 507, paintIndex: 38, rarity: 'Special Extraordinary' }
                 ]
             }
         ];
@@ -503,25 +514,29 @@
         let inventory = [
             {
                 id: 'init_1',
+                weapon: 'Butterfly Knife',
+                skin: 'Fade',
+                defIndex: 515,
+                paintIndex: 38,
+                rarity: 'Special Extraordinary',
+                wear: 0.0150,
+                seed: 412,
+                stattrak: false,
+                equipped: '2,3',
+                nametag: 'ButterFade'
+            },
+            {
+                id: 'init_2',
                 weapon: 'AK-47',
                 skin: 'Case Hardened',
                 defIndex: 7,
                 paintIndex: 44,
                 rarity: 'Classified',
-                wear: 0.1245,
+                wear: 0.0820,
+                seed: 661,
                 stattrak: true,
-                nametag: 'Blue Gem'
-            },
-            {
-                id: 'init_2',
-                weapon: 'Karambit',
-                skin: 'Fade',
-                defIndex: 507,
-                paintIndex: 38,
-                rarity: 'Special Extraordinary',
-                wear: 0.0112,
-                stattrak: false,
-                nametag: ''
+                equipped: '2',
+                nametag: 'Scar Pattern'
             }
         ];
 
@@ -530,6 +545,7 @@
 
         // --- INITIALIZATION ---
         window.onload = function() {
+            populatePresetDropdown();
             populateCaseDropdown();
             renderInventory();
             renderCaseContents();
@@ -594,9 +610,34 @@
 
         function getItemIcon(weapon) {
             if (weapon.includes('Knife') || weapon.includes('Karambit') || weapon.includes('Bayonet')) {
-                return '<i class="fa-solid fa-knife-kitchen text-csgold"></i>';
+                return '<i class="fa-solid fa-cut text-csgold"></i>';
             }
             return '<i class="fa-solid fa-gun text-gray-300"></i>';
+        }
+
+        function populatePresetDropdown() {
+            const select = document.getElementById('preset-select');
+            select.innerHTML = '<option value="">-- Vlastný predmet / Ručné zadanie --</option>';
+            WEAPON_PRESETS.forEach((p, idx) => {
+                const opt = document.createElement('option');
+                opt.value = idx;
+                opt.innerText = `${p.weapon} | ${p.skin} (def: ${p.defIndex}, paint: ${p.paintIndex})`;
+                select.appendChild(opt);
+            });
+        }
+
+        function applyPresetSelection() {
+            const val = document.getElementById('preset-select').value;
+            if (val === '') return;
+            const p = WEAPON_PRESETS[parseInt(val)];
+            if (!p) return;
+
+            document.getElementById('form-weapon').value = p.weapon;
+            document.getElementById('form-skin').value = p.skin;
+            document.getElementById('form-defindex').value = p.defIndex;
+            document.getElementById('form-paintindex').value = p.paintIndex;
+            document.getElementById('form-rarity').value = p.rarity;
+            if (p.seed) document.getElementById('form-seed').value = p.seed;
         }
 
         // --- INVENTORY MANAGER LOGIC ---
@@ -630,7 +671,7 @@
                 card.innerHTML = `
                     <div>
                         <div class="flex items-center justify-between text-xs text-gray-400 font-mono mb-2">
-                            <span>Def: ${item.defIndex}</span>
+                            <span>Def: ${item.defIndex} | Paint: ${item.paintIndex}</span>
                             ${item.stattrak ? '<span class="text-xs font-bold text-csgold bg-yellow-950/60 px-1.5 py-0.5 border border-csgold/40 rounded">ST™</span>' : ''}
                         </div>
                         <div class="text-center my-3 text-4xl">
@@ -646,9 +687,9 @@
                     </div>
                     <div class="mt-3 pt-2 border-t border-csborder/50 flex items-center justify-between text-[11px] text-gray-400 font-mono">
                         <span>${getWearName(item.wear)}</span>
-                        <div class="space-x-1">
-                            <button onclick="editItem('${item.id}')" class="hover:text-csaccent"><i class="fa-solid fa-pen"></i></button>
-                            <button onclick="deleteItem('${item.id}')" class="hover:text-red-400"><i class="fa-solid fa-trash"></i></button>
+                        <div class="space-x-2">
+                            <button onclick="editItem('${item.id}')" class="hover:text-csaccent" title="Upraviť"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="deleteItem('${item.id}')" class="hover:text-red-400" title="Vymazať"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </div>
                 `;
@@ -663,18 +704,18 @@
         }
 
         function clearInventory() {
-            if (confirm("Are you sure you want to clear your entire inventory?")) {
+            if (confirm("Naozaj chceš vymazať celý inventár?")) {
                 inventory = [];
                 renderInventory();
                 updateKeyValuesText();
             }
         }
 
-        // Modal Logic
         function openAddItemModal() {
-            document.getElementById('modal-title').innerText = "ADD ITEM TO INVENTORY";
+            document.getElementById('modal-title').innerText = "PRIDAŤ PREDMET DO INVENTÁRA";
             document.getElementById('edit-item-id').value = "";
             document.getElementById('item-form').reset();
+            document.getElementById('preset-select').value = "";
             document.getElementById('item-modal').classList.remove('hidden');
         }
 
@@ -682,14 +723,17 @@
             const item = inventory.find(i => i.id === id);
             if (!item) return;
 
-            document.getElementById('modal-title').innerText = "EDIT ITEM";
+            document.getElementById('modal-title').innerText = "UPRAVIŤ PREDMET";
             document.getElementById('edit-item-id').value = item.id;
+            document.getElementById('preset-select').value = "";
             document.getElementById('form-weapon').value = item.weapon;
             document.getElementById('form-skin').value = item.skin;
             document.getElementById('form-defindex').value = item.defIndex;
             document.getElementById('form-paintindex').value = item.paintIndex;
             document.getElementById('form-rarity').value = item.rarity;
             document.getElementById('form-wear').value = item.wear;
+            document.getElementById('form-seed').value = item.seed || 1;
+            document.getElementById('form-equipped').value = item.equipped || 'none';
             document.getElementById('form-stattrak').checked = item.stattrak;
             document.getElementById('form-nametag').value = item.nametag || '';
 
@@ -708,10 +752,12 @@
                 id: id || 'item_' + Date.now(),
                 weapon: document.getElementById('form-weapon').value,
                 skin: document.getElementById('form-skin').value,
-                defIndex: parseInt(document.getElementById('form-defindex').value) || 0,
+                defIndex: parseInt(document.getElementById('form-defindex').value) || 7,
                 paintIndex: parseInt(document.getElementById('form-paintindex').value) || 0,
                 rarity: document.getElementById('form-rarity').value,
-                wear: parseFloat(document.getElementById('form-wear').value) || 0.15,
+                wear: parseFloat(document.getElementById('form-wear').value) || 0.0150,
+                seed: parseInt(document.getElementById('form-seed').value) || 100,
+                equipped: document.getElementById('form-equipped').value,
                 stattrak: document.getElementById('form-stattrak').checked,
                 nametag: document.getElementById('form-nametag').value
             };
@@ -720,7 +766,7 @@
                 const index = inventory.findIndex(i => i.id === id);
                 if (index !== -1) inventory[index] = itemData;
             } else {
-                inventory.push(itemData);
+                inventory.unshift(itemData);
             }
 
             closeModal();
@@ -728,7 +774,7 @@
             updateKeyValuesText();
         }
 
-        // --- CASE UNBOXING SIMULATOR LOGIC ---
+        // --- CASE UNBOXING LOGIC ---
         function populateCaseDropdown() {
             const select = document.getElementById('case-select');
             select.innerHTML = '';
@@ -766,7 +812,6 @@
         }
 
         function getRandomItemFromCase() {
-            // Authentic CS:GO Odds
             const rand = Math.random() * 100;
             let targetRarity = 'Mil-Spec';
 
@@ -777,19 +822,20 @@
             else targetRarity = 'Mil-Spec';
 
             let pool = selectedCase.items.filter(i => i.rarity === targetRarity);
-            if (pool.length === 0) pool = selectedCase.items; // Fallback
+            if (pool.length === 0) pool = selectedCase.items;
 
             const selected = pool[Math.floor(Math.random() * pool.length)];
-            
-            // Random wear & StatTrak
             const wear = parseFloat((Math.random() * 0.99).toFixed(4));
-            const stattrak = Math.random() < 0.10; // 10% StatTrak chance
+            const seed = Math.floor(Math.random() * 1000) + 1;
+            const stattrak = Math.random() < 0.10;
 
             return {
                 ...selected,
                 id: 'unboxed_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
                 wear: wear,
+                seed: seed,
                 stattrak: stattrak,
+                equipped: 'none',
                 nametag: ''
             };
         }
@@ -803,7 +849,6 @@
             track.innerHTML = '';
 
             spinnerItems = [];
-            // Generate 80 items for smooth spin
             for (let i = 0; i < 80; i++) {
                 spinnerItems.push(getRandomItemFromCase());
             }
@@ -829,20 +874,16 @@
 
             setupSpinnerTrack();
 
-            // Winning index (around 65 to 70 for length)
             const winningIndex = 65;
             const winningItem = spinnerItems[winningIndex];
 
-            const itemWidth = 128; // 32 * 4 (w-32)
+            const itemWidth = 128;
             const viewportWidth = document.querySelector('.spinner-viewport').offsetWidth;
-            
-            // Calculate landing offset with slight randomness inside winning card
             const randomOffset = Math.floor(Math.random() * (itemWidth - 20)) + 10;
             const targetTranslate = (winningIndex * itemWidth) - (viewportWidth / 2) + randomOffset;
 
             const track = document.getElementById('spinner-track');
             
-            // Audio tick simulation during spin
             let ticks = 0;
             const tickInterval = setInterval(() => {
                 ticks++;
@@ -855,20 +896,15 @@
                 track.style.transform = `translateX(-${targetTranslate}px)`;
             }, 50);
 
-            // Finish callback
             setTimeout(() => {
                 isSpinning = false;
                 document.getElementById('open-case-btn').disabled = false;
                 
-                // Add item to inventory
                 inventory.unshift(winningItem);
                 renderInventory();
                 updateKeyValuesText();
 
-                // Sound Effect
                 playUnboxSound(winningItem.rarity);
-
-                // Show Result
                 showUnboxResult(winningItem);
             }, 5700);
         }
@@ -881,7 +917,7 @@
             }
             renderInventory();
             updateKeyValuesText();
-            alert(`Quick Unboxed ${count} items! Check your inventory.`);
+            alert(`Úspešne si rýchlo otvoril ${count} bední! Predmety sú v tvojom inventári.`);
         }
 
         function showUnboxResult(item) {
@@ -901,17 +937,46 @@
             document.getElementById('unbox-result').classList.add('hidden');
         }
 
-        // --- KEYVALUES EXPORT & IMPORT LOGIC ---
+        // --- VALVE KEYVALUES EXPORT & IMPORT LOGIC ---
+        function getRarityCode(rarity) {
+            switch(rarity) {
+                case 'Consumer': return '1';
+                case 'Industrial': return '2';
+                case 'Mil-Spec': return '3';
+                case 'Restricted': return '4';
+                case 'Classified': return '5';
+                case 'Covert': return '6';
+                case 'Special Extraordinary': return '6';
+                default: return '3';
+            }
+        }
+
         function updateKeyValuesText() {
-            let kv = `"items"\n{\n`;
+            let kv = `"inventory"\n{\n`;
             inventory.forEach((item, index) => {
-                kv += `  "${index + 1}"\n  {\n`;
+                const itemIdx = index + 1;
+                kv += `  "${itemIdx}"\n  {\n`;
+                kv += `    "id" "${itemIdx}"\n`;
                 kv += `    "def_index" "${item.defIndex}"\n`;
-                kv += `    "paint_index" "${item.paintIndex}"\n`;
-                kv += `    "rarity" "${item.rarity}"\n`;
-                kv += `    "wear" "${item.wear}"\n`;
-                if (item.stattrak) kv += `    "stattrak" "1"\n`;
-                if (item.nametag) kv += `    "custom_name" "${item.nametag}"\n`;
+                kv += `    "rarity" "${getRarityCode(item.rarity)}"\n`;
+                
+                if (item.equipped && item.equipped !== 'none') {
+                    kv += `    "equipped_state" "${item.equipped}"\n`;
+                }
+
+                if (item.nametag) {
+                    kv += `    "custom_name" "${item.nametag}"\n`;
+                }
+
+                // Attributes Sub-block matching Valve Format
+                kv += `    "attributes"\n    {\n`;
+                kv += `      "6" "${item.paintIndex}"\n`; // Attribute 6 = Paint Kit
+                kv += `      "7" "${item.seed || 1}"\n`;    // Attribute 7 = Seed
+                kv += `      "8" "${parseFloat(item.wear).toFixed(4)}"\n`; // Attribute 8 = Float / Wear
+                if (item.stattrak) {
+                    kv += `      "80" "0"\n`; // StatTrak marker
+                }
+                kv += `    }\n`;
                 kv += `  }\n`;
             });
             kv += `}`;
@@ -922,10 +987,9 @@
         function parseRawKeyValues() {
             const raw = document.getElementById('kv-textarea').value;
             try {
-                // Simple regex block parser for Valve KeyValues
                 const itemBlocks = raw.match(/"\d+"\s*\{[^}]+\}/g);
                 if (!itemBlocks) {
-                    alert("No valid item blocks found in KeyValues text.");
+                    alert("Neboli nájdené žiadne platné bloky predmetov v KeyValues formate.");
                     return;
                 }
 
@@ -937,37 +1001,46 @@
                     };
 
                     const defIndex = parseInt(getVal('def_index')) || 7;
-                    const paintIndex = parseInt(getVal('paint_index')) || 0;
-                    const wear = parseFloat(getVal('wear')) || 0.15;
-                    const stattrak = getVal('stattrak') === "1";
+                    const paintIndex = parseInt(getVal('6')) || parseInt(getVal('paint_index')) || 0;
+                    const wear = parseFloat(getVal('8')) || parseFloat(getVal('wear')) || 0.015;
+                    const seed = parseInt(getVal('7')) || parseInt(getVal('seed')) || 100;
+                    const equipped = getVal('equipped_state') || 'none';
                     const nametag = getVal('custom_name') || "";
-                    const rarity = getVal('rarity') || "Mil-Spec";
+                    
+                    // Match definition index to presets if available
+                    const matchedPreset = WEAPON_PRESETS.find(p => p.defIndex === defIndex && p.paintIndex === paintIndex);
+                    
+                    const weaponName = matchedPreset ? matchedPreset.weapon : (defIndex === 515 ? 'Butterfly Knife' : (defIndex === 507 ? 'Karambit' : (defIndex === 7 ? 'AK-47' : 'Zbraň #' + defIndex)));
+                    const skinName = matchedPreset ? matchedPreset.skin : 'Paint ' + paintIndex;
+                    const rarity = matchedPreset ? matchedPreset.rarity : 'Covert';
 
                     newInventory.push({
                         id: 'kv_item_' + idx + '_' + Date.now(),
-                        weapon: defIndex === 507 ? 'Karambit' : (defIndex === 7 ? 'AK-47' : 'Weapon #' + defIndex),
-                        skin: 'Paint ' + paintIndex,
+                        weapon: weaponName,
+                        skin: skinName,
                         defIndex: defIndex,
                         paintIndex: paintIndex,
                         rarity: rarity,
                         wear: wear,
-                        stattrak: stattrak,
+                        seed: seed,
+                        equipped: equipped,
+                        stattrak: block.includes('"80"'),
                         nametag: nametag
                     });
                 });
 
                 inventory = newInventory;
                 renderInventory();
-                alert(`Successfully parsed and synced ${inventory.length} items to inventory!`);
+                alert(`Úspešne načítaných ${inventory.length} predmetov do inventára!`);
             } catch (err) {
-                alert("Error parsing KeyValues file. Please check block syntax.");
+                alert("Chyba pri spracovaní KeyValues súboru. Skontrolujte syntax.");
             }
         }
 
         function exportToClipboard() {
             const text = document.getElementById('kv-textarea').value;
             navigator.clipboard.writeText(text).then(() => {
-                alert("KeyValues inventory text copied to clipboard!");
+                alert("KeyValues text bol skopírovaný do schránky!");
             });
         }
 
