@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CS:GO Scaleform Inventory Configurator (2016 Edition)</title>
+  <title>CS:GO Scaleform Inventory Configurator (2013-2016 Era)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -89,7 +89,7 @@
       </div>
       <div>
         <h1 class="font-teko text-2xl tracking-wider text-white uppercase leading-none">COUNTER-STRIKE: GLOBAL OFFENSIVE</h1>
-        <p class="text-xs text-blue-300/80 font-mono tracking-widest uppercase">Scaleform 2016 Inventory Manager & KeyValues Generator</p>
+        <p class="text-xs text-blue-300/80 font-mono tracking-widest uppercase">Scaleform 2016 Inventory Manager (2013-2016 Wildfire Era)</p>
       </div>
     </div>
 
@@ -119,60 +119,119 @@
             <i class="fa-solid fa-plus-circle text-sm"></i>
             <span>Add Item To Inventory</span>
           </h2>
-          <span class="text-[10px] bg-blue-950 text-blue-300 border border-blue-800 px-2 py-0.5 rounded font-mono">v1.34.x GC</span>
+          <span class="text-[10px] bg-blue-950 text-blue-300 border border-blue-800 px-2 py-0.5 rounded font-mono">2013-2016 Schema</span>
         </div>
 
         <div class="space-y-3">
           
           <!-- PRESET SELECTION -->
           <div>
-            <label class="block text-xs font-bold text-blue-200/80 mb-1 uppercase tracking-wider">Presets</label>
+            <label class="block text-xs font-bold text-blue-200/80 mb-1 uppercase tracking-wider">All 2013-2016 Presets</label>
             <select id="preset-select" onchange="loadPresetItem()" class="w-full bg-slate-950/90 border border-slate-700/80 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-400">
-              <optgroup label="--- Rare Knives ---">
+              
+              <optgroup label="--- ★ KNIVES (ALL FINISHES) ---">
                 <option value="515_38">★ Butterfly Knife | Fade</option>
                 <option value="515_418">★ Butterfly Knife | Doppler Phase 1</option>
+                <option value="515_12">★ Butterfly Knife | Crimson Web</option>
+                <option value="515_44">★ Butterfly Knife | Case Hardened</option>
+                <option value="515_0">★ Butterfly Knife | Vanilla</option>
                 <option value="507_38">★ Karambit | Fade</option>
-                <option value="507_44">★ Karambit | Case Hardened</option>
+                <option value="507_44">★ Karambit | Case Hardened (Blue Gem)</option>
+                <option value="507_418">★ Karambit | Doppler Phase 1</option>
+                <option value="507_415">★ Karambit | Ruby</option>
+                <option value="507_416">★ Karambit | Sapphire</option>
+                <option value="507_12">★ Karambit | Crimson Web</option>
+                <option value="507_0">★ Karambit | Vanilla</option>
                 <option value="508_419">★ M9 Bayonet | Doppler Phase 2</option>
+                <option value="508_38">★ M9 Bayonet | Fade</option>
                 <option value="508_12">★ M9 Bayonet | Crimson Web</option>
+                <option value="508_0">★ M9 Bayonet | Vanilla</option>
                 <option value="500_415">★ Bayonet | Ruby</option>
+                <option value="500_38">★ Bayonet | Fade</option>
+                <option value="500_0">★ Bayonet | Vanilla</option>
                 <option value="506_38">★ Flip Knife | Fade</option>
+                <option value="506_415">★ Flip Knife | Ruby</option>
                 <option value="505_418">★ Gut Knife | Doppler</option>
                 <option value="512_38">★ Huntsman Knife | Fade</option>
+                <option value="512_12">★ Huntsman Knife | Crimson Web</option>
                 <option value="509_38">★ Falchion Knife | Fade</option>
                 <option value="516_12">★ Shadow Daggers | Crimson Web</option>
-                <option value="514_38">★ Bowie Knife | Fade</option>
+                <option value="516_38">★ Shadow Daggers | Fade</option>
+                <option value="514_38">★ Bowie Knife | Fade (Wildfire)</option>
+                <option value="514_12">★ Bowie Knife | Crimson Web</option>
               </optgroup>
-              <optgroup label="--- Rifles & Snipers ---">
-                <option value="7_38">AK-47 | Redline</option>
-                <option value="7_180">AK-47 | Fire Serpent</option>
-                <option value="7_300">AK-47 | Vulcan</option>
-                <option value="7_490">AK-47 | Frontside Misty</option>
-                <option value="16_255">M4A4 | Asiimov</option>
-                <option value="16_309">M4A4 | Howl</option>
-                <option value="60_440">M4A1-S | Golden Coil</option>
-                <option value="60_321">M4A1-S | Cyrex</option>
-                <option value="60_430">M4A1-S | Hyper Beast</option>
-                <option value="9_344">AWP | Dragon Lore</option>
+
+              <optgroup label="--- COVERTS & ICONIC RIFLES ---">
+                <option value="9_344">AWP | Dragon Lore (Cobblestone)</option>
                 <option value="9_279">AWP | Asiimov</option>
                 <option value="9_422">AWP | Hyper Beast</option>
                 <option value="9_38">AWP | Lightning Strike</option>
+                <option value="9_181">AWP | Corticera</option>
+                <option value="9_340">AWP | Man-o'-war</option>
+                <option value="7_180">AK-47 | Fire Serpent (Bravo)</option>
+                <option value="7_38">AK-47 | Redline</option>
+                <option value="7_300">AK-47 | Vulcan</option>
+                <option value="7_490">AK-47 | Frontside Misty</option>
+                <option value="7_524">AK-47 | Point Disarray (Wildfire)</option>
+                <option value="7_44">AK-47 | Case Hardened</option>
+                <option value="7_172">AK-47 | Black Laminate</option>
+                <option value="16_309">M4A4 | Howl (Contraband)</option>
+                <option value="16_255">M4A4 | Asiimov</option>
+                <option value="16_384">M4A4 | Dragon King</option>
+                <option value="16_512">M4A4 | The Battlestar (Wildfire)</option>
+                <option value="60_430">M4A1-S | Hyper Beast</option>
+                <option value="60_440">M4A1-S | Golden Coil</option>
+                <option value="60_321">M4A1-S | Cyrex</option>
+                <option value="60_257">M4A1-S | Master Piece</option>
+                <option value="60_189">M4A1-S | Atomic Alloy</option>
+                <option value="60_301">M4A1-S | Chantico's Fire</option>
               </optgroup>
-              <optgroup label="--- Pistols & SMGs ---">
+
+              <optgroup label="--- PISTOLS & SMGs ---">
                 <option value="1_180">Desert Eagle | Hypnotic</option>
                 <option value="1_351">Desert Eagle | Conspiracy</option>
                 <option value="1_470">Desert Eagle | Sunset Storm</option>
+                <option value="1_527">Desert Eagle | Kumicho Dragon (Wildfire)</option>
+                <option value="1_231">Desert Eagle | Blaze</option>
                 <option value="4_38">Glock-18 | Fade</option>
                 <option value="4_353">Glock-18 | Water Elemental</option>
+                <option value="4_437">Glock-18 | Reactor</option>
                 <option value="61_501">USP-S | Kill Confirmed</option>
+                <option value="61_313">USP-S | Caiman</option>
+                <option value="61_221">USP-S | Serum</option>
+                <option value="61_290">USP-S | Orion</option>
+
+                <option value="63_522">CZ75-Auto | Victoria</option>
+                <option value="64_523">Revolver R8 | Fade</option>
                 <option value="19_233">P90 | Asiimov</option>
+                <option value="19_182">P90 | Trigon</option>
               </optgroup>
-              <optgroup label="--- Containers & Keys ---">
-                <option value="4001_0">CS:GO Weapon Case</option>
+
+              <optgroup label="--- CASES (2013-2016) ---">
+                <option value="4001_0">CS:GO Weapon Case 1</option>
                 <option value="4004_0">Operation Bravo Case</option>
                 <option value="4008_0">eSports 2013 Winter Case</option>
-                <option value="1201_0">CS:GO Case Key</option>
+                <option value="4009_0">CS:GO Weapon Case 2</option>
+                <option value="4011_0">Operation Phoenix Weapon Case</option>
+                <option value="4013_0">Huntsman Weapon Case</option>
+                <option value="4014_0">Operation Breakout Weapon Case</option>
+                <option value="4015_0">Operation Vanguard Weapon Case</option>
+                <option value="4017_0">Chroma Case</option>
+                <option value="4018_0">Chroma 2 Case</option>
+                <option value="4019_0">Falchion Case</option>
+                <option value="4020_0">Shadow Case</option>
+                <option value="4021_0">Revolver Case</option>
+                <option value="4022_0">Operation Wildfire Case</option>
               </optgroup>
+
+              <optgroup label="--- KEYS & TOOLS ---">
+                <option value="1201_0">CS:GO Case Key</option>
+                <option value="1203_0">Operation Phoenix Key</option>
+                <option value="1204_0">Operation Breakout Key</option>
+                <option value="1209_0">Operation Wildfire Key</option>
+                <option value="1202_0">eSports Key</option>
+              </optgroup>
+
             </select>
           </div>
 
@@ -285,48 +344,114 @@
   </div>
 
   <script>
-    // PRESET WEAPON DATA
+    // EXPANDED 2013-2016 PRESET CATALOGUE
     const PRESETS = {
+      // KNIVES
       "515_38": { name: "★ Butterfly Knife | Fade", def_index: 515, paint_kit: 38, wear: 0.01, seed: 41, rarity: 6 },
       "515_418": { name: "★ Butterfly Knife | Doppler P1", def_index: 515, paint_kit: 418, wear: 0.02, seed: 120, rarity: 6 },
+      "515_12": { name: "★ Butterfly Knife | Crimson Web", def_index: 515, paint_kit: 12, wear: 0.07, seed: 15, rarity: 6 },
+      "515_44": { name: "★ Butterfly Knife | Case Hardened", def_index: 515, paint_kit: 44, wear: 0.12, seed: 99, rarity: 6 },
+      "515_0": { name: "★ Butterfly Knife | Vanilla", def_index: 515, paint_kit: 0, wear: 0, seed: 0, rarity: 6 },
+
       "507_38": { name: "★ Karambit | Fade", def_index: 507, paint_kit: 38, wear: 0.01, seed: 80, rarity: 6 },
       "507_44": { name: "★ Karambit | Case Hardened", def_index: 507, paint_kit: 44, wear: 0.15, seed: 661, rarity: 6 },
+      "507_418": { name: "★ Karambit | Doppler P1", def_index: 507, paint_kit: 418, wear: 0.02, seed: 12, rarity: 6 },
+      "507_415": { name: "★ Karambit | Ruby", def_index: 507, paint_kit: 415, wear: 0.01, seed: 1, rarity: 6 },
+      "507_416": { name: "★ Karambit | Sapphire", def_index: 507, paint_kit: 416, wear: 0.01, seed: 2, rarity: 6 },
+      "507_12": { name: "★ Karambit | Crimson Web", def_index: 507, paint_kit: 12, wear: 0.08, seed: 4, rarity: 6 },
+      "507_0": { name: "★ Karambit | Vanilla", def_index: 507, paint_kit: 0, wear: 0, seed: 0, rarity: 6 },
+
       "508_419": { name: "★ M9 Bayonet | Doppler P2", def_index: 508, paint_kit: 419, wear: 0.03, seed: 21, rarity: 6 },
+      "508_38": { name: "★ M9 Bayonet | Fade", def_index: 508, paint_kit: 38, wear: 0.01, seed: 10, rarity: 6 },
       "508_12": { name: "★ M9 Bayonet | Crimson Web", def_index: 508, paint_kit: 12, wear: 0.07, seed: 33, rarity: 6 },
+      "508_0": { name: "★ M9 Bayonet | Vanilla", def_index: 508, paint_kit: 0, wear: 0, seed: 0, rarity: 6 },
+
       "500_415": { name: "★ Bayonet | Ruby", def_index: 500, paint_kit: 415, wear: 0.01, seed: 1, rarity: 6 },
+      "500_38": { name: "★ Bayonet | Fade", def_index: 500, paint_kit: 38, wear: 0.02, seed: 55, rarity: 6 },
+      "500_0": { name: "★ Bayonet | Vanilla", def_index: 500, paint_kit: 0, wear: 0, seed: 0, rarity: 6 },
+
       "506_38": { name: "★ Flip Knife | Fade", def_index: 506, paint_kit: 38, wear: 0.02, seed: 99, rarity: 6 },
+      "506_415": { name: "★ Flip Knife | Ruby", def_index: 506, paint_kit: 415, wear: 0.01, seed: 3, rarity: 6 },
       "505_418": { name: "★ Gut Knife | Doppler", def_index: 505, paint_kit: 418, wear: 0.03, seed: 15, rarity: 6 },
       "512_38": { name: "★ Huntsman Knife | Fade", def_index: 512, paint_kit: 38, wear: 0.01, seed: 50, rarity: 6 },
+      "512_12": { name: "★ Huntsman Knife | Crimson Web", def_index: 512, paint_kit: 12, wear: 0.08, seed: 77, rarity: 6 },
       "509_38": { name: "★ Falchion Knife | Fade", def_index: 509, paint_kit: 38, wear: 0.02, seed: 12, rarity: 6 },
       "516_12": { name: "★ Shadow Daggers | Crimson Web", def_index: 516, paint_kit: 12, wear: 0.08, seed: 4, rarity: 6 },
+      "516_38": { name: "★ Shadow Daggers | Fade", def_index: 516, paint_kit: 38, wear: 0.01, seed: 8, rarity: 6 },
       "514_38": { name: "★ Bowie Knife | Fade", def_index: 514, paint_kit: 38, wear: 0.01, seed: 30, rarity: 6 },
+      "514_12": { name: "★ Bowie Knife | Crimson Web", def_index: 514, paint_kit: 12, wear: 0.07, seed: 18, rarity: 6 },
 
-      "7_38": { name: "AK-47 | Redline", def_index: 7, paint_kit: 38, wear: 0.15, seed: 10, rarity: 4 },
-      "7_180": { name: "AK-47 | Fire Serpent", def_index: 7, paint_kit: 180, wear: 0.08, seed: 111, rarity: 5 },
-      "7_300": { name: "AK-47 | Vulcan", def_index: 7, paint_kit: 300, wear: 0.05, seed: 44, rarity: 5 },
-      "7_490": { name: "AK-47 | Frontside Misty", def_index: 7, paint_kit: 490, wear: 0.10, seed: 90, rarity: 4 },
-      "16_255": { name: "M4A4 | Asiimov", def_index: 16, paint_kit: 255, wear: 0.22, seed: 32, rarity: 4 },
-      "16_309": { name: "M4A4 | Howl", def_index: 16, paint_kit: 309, wear: 0.04, seed: 77, rarity: 5 },
-      "60_440": { name: "M4A1-S | Golden Coil", def_index: 60, paint_kit: 440, wear: 0.05, seed: 23, rarity: 5 },
-      "60_321": { name: "M4A1-S | Cyrex", def_index: 60, paint_kit: 321, wear: 0.02, seed: 18, rarity: 4 },
-      "60_430": { name: "M4A1-S | Hyper Beast", def_index: 60, paint_kit: 430, wear: 0.06, seed: 5, rarity: 5 },
+      // RIFLES & SNIPERS
       "9_344": { name: "AWP | Dragon Lore", def_index: 9, paint_kit: 344, wear: 0.01, seed: 420, rarity: 5 },
       "9_279": { name: "AWP | Asiimov", def_index: 9, paint_kit: 279, wear: 0.18, seed: 13, rarity: 5 },
       "9_422": { name: "AWP | Hyper Beast", def_index: 9, paint_kit: 422, wear: 0.07, seed: 91, rarity: 5 },
       "9_38": { name: "AWP | Lightning Strike", def_index: 9, paint_kit: 38, wear: 0.01, seed: 2, rarity: 5 },
+      "9_181": { name: "AWP | Corticera", def_index: 9, paint_kit: 181, wear: 0.06, seed: 5, rarity: 4 },
+      "9_340": { name: "AWP | Man-o'-war", def_index: 9, paint_kit: 340, wear: 0.11, seed: 88, rarity: 4 },
 
+      "7_180": { name: "AK-47 | Fire Serpent", def_index: 7, paint_kit: 180, wear: 0.08, seed: 111, rarity: 5 },
+      "7_38": { name: "AK-47 | Redline", def_index: 7, paint_kit: 38, wear: 0.15, seed: 10, rarity: 4 },
+      "7_300": { name: "AK-47 | Vulcan", def_index: 7, paint_kit: 300, wear: 0.05, seed: 44, rarity: 5 },
+      "7_490": { name: "AK-47 | Frontside Misty", def_index: 7, paint_kit: 490, wear: 0.10, seed: 90, rarity: 4 },
+      "7_524": { name: "AK-47 | Point Disarray", def_index: 7, paint_kit: 524, wear: 0.06, seed: 14, rarity: 4 },
+      "7_44": { name: "AK-47 | Case Hardened", def_index: 7, paint_kit: 44, wear: 0.09, seed: 661, rarity: 4 },
+      "7_172": { name: "AK-47 | Black Laminate", def_index: 7, paint_kit: 172, wear: 0.12, seed: 3, rarity: 3 },
+
+      "16_309": { name: "M4A4 | Howl", def_index: 16, paint_kit: 309, wear: 0.04, seed: 77, rarity: 5 },
+      "16_255": { name: "M4A4 | Asiimov", def_index: 16, paint_kit: 255, wear: 0.22, seed: 32, rarity: 4 },
+      "16_384": { name: "M4A4 | Dragon King", def_index: 16, paint_kit: 384, wear: 0.05, seed: 21, rarity: 4 },
+      "16_512": { name: "M4A4 | The Battlestar", def_index: 16, paint_kit: 512, wear: 0.03, seed: 6, rarity: 4 },
+
+      "60_430": { name: "M4A1-S | Hyper Beast", def_index: 60, paint_kit: 430, wear: 0.06, seed: 5, rarity: 5 },
+      "60_440": { name: "M4A1-S | Golden Coil", def_index: 60, paint_kit: 440, wear: 0.05, seed: 23, rarity: 5 },
+      "60_321": { name: "M4A1-S | Cyrex", def_index: 60, paint_kit: 321, wear: 0.02, seed: 18, rarity: 4 },
+      "60_257": { name: "M4A1-S | Master Piece", def_index: 60, paint_kit: 257, wear: 0.08, seed: 40, rarity: 4 },
+      "60_189": { name: "M4A1-S | Atomic Alloy", def_index: 60, paint_kit: 189, wear: 0.04, seed: 12, rarity: 3 },
+      "60_301": { name: "M4A1-S | Chantico's Fire", def_index: 60, paint_kit: 301, wear: 0.02, seed: 9, rarity: 5 },
+
+      // PISTOLS & SMGS
       "1_180": { name: "Desert Eagle | Hypnotic", def_index: 1, paint_kit: 180, wear: 0.01, seed: 8, rarity: 3 },
       "1_351": { name: "Desert Eagle | Conspiracy", def_index: 1, paint_kit: 351, wear: 0.03, seed: 14, rarity: 3 },
       "1_470": { name: "Desert Eagle | Sunset Storm", def_index: 1, paint_kit: 470, wear: 0.02, seed: 55, rarity: 4 },
+      "1_527": { name: "Desert Eagle | Kumicho Dragon", def_index: 1, paint_kit: 527, wear: 0.04, seed: 2, rarity: 4 },
+      "1_231": { name: "Desert Eagle | Blaze", def_index: 1, paint_kit: 231, wear: 0.01, seed: 99, rarity: 3 },
+
       "4_38": { name: "Glock-18 | Fade", def_index: 4, paint_kit: 38, wear: 0.01, seed: 27, rarity: 4 },
       "4_353": { name: "Glock-18 | Water Elemental", def_index: 4, paint_kit: 353, wear: 0.06, seed: 3, rarity: 3 },
-      "61_501": { name: "USP-S | Kill Confirmed", def_index: 61, paint_kit: 501, wear: 0.04, seed: 88, rarity: 5 },
-      "19_233": { name: "P90 | Asiimov", def_index: 19, paint_kit: 233, wear: 0.05, seed: 62, rarity: 5 },
+      "4_437": { name: "Glock-18 | Reactor", def_index: 4, paint_kit: 437, wear: 0.05, seed: 11, rarity: 3 },
 
-      "4001_0": { name: "CS:GO Weapon Case", def_index: 4001, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
+      "61_501": { name: "USP-S | Kill Confirmed", def_index: 61, paint_kit: 501, wear: 0.04, seed: 88, rarity: 5 },
+      "61_313": { name: "USP-S | Caiman", def_index: 61, paint_kit: 313, wear: 0.02, seed: 4, rarity: 3 },
+      "61_221": { name: "USP-S | Serum", def_index: 61, paint_kit: 221, wear: 0.01, seed: 1, rarity: 3 },
+      "61_290": { name: "USP-S | Orion", def_index: 61, paint_kit: 290, wear: 0.02, seed: 50, rarity: 4 },
+
+      "63_522": { name: "CZ75-Auto | Victoria", def_index: 63, paint_kit: 522, wear: 0.03, seed: 7, rarity: 5 },
+      "64_523": { name: "Revolver R8 | Fade", def_index: 64, paint_kit: 523, wear: 0.01, seed: 12, rarity: 4 },
+      "19_233": { name: "P90 | Asiimov", def_index: 19, paint_kit: 233, wear: 0.05, seed: 62, rarity: 5 },
+      "19_182": { name: "P90 | Trigon", def_index: 19, paint_kit: 182, wear: 0.08, seed: 22, rarity: 3 },
+
+      // CASES
+      "4001_0": { name: "CS:GO Weapon Case 1", def_index: 4001, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
       "4004_0": { name: "Operation Bravo Case", def_index: 4004, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
       "4008_0": { name: "eSports 2013 Winter Case", def_index: 4008, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
-      "1201_0": { name: "CS:GO Case Key", def_index: 1201, paint_kit: 0, wear: 0, seed: 0, rarity: 0 }
+      "4009_0": { name: "CS:GO Weapon Case 2", def_index: 4009, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
+      "4011_0": { name: "Operation Phoenix Weapon Case", def_index: 4011, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
+      "4013_0": { name: "Huntsman Weapon Case", def_index: 4013, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
+      "4014_0": { name: "Operation Breakout Weapon Case", def_index: 4014, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
+      "4015_0": { name: "Operation Vanguard Weapon Case", def_index: 4015, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
+      "4017_0": { name: "Chroma Case", def_index: 4017, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
+      "4018_0": { name: "Chroma 2 Case", def_index: 4018, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
+      "4019_0": { name: "Falchion Case", def_index: 4019, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
+      "4020_0": { name: "Shadow Case", def_index: 4020, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
+      "4021_0": { name: "Revolver Case", def_index: 4021, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
+      "4022_0": { name: "Operation Wildfire Case", def_index: 4022, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
+
+      // KEYS
+      "1201_0": { name: "CS:GO Case Key", def_index: 1201, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
+      "1203_0": { name: "Operation Phoenix Key", def_index: 1203, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
+      "1204_0": { name: "Operation Breakout Key", def_index: 1204, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
+      "1209_0": { name: "Operation Wildfire Key", def_index: 1209, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
+      "1202_0": { name: "eSports Key", def_index: 1202, paint_kit: 0, wear: 0, seed: 0, rarity: 0 }
     };
 
     // INVENTORY ARRAY (STARTS EMPTY BY DEFAULT)
@@ -433,6 +558,16 @@
               </linearGradient>
             </defs>
             <path d="M 30,70 L 170,30 L 150,80 L 50,85 Z" fill="url(#fadeGrad)" stroke="#0f172a" stroke-width="2" />
+          </svg>
+        `;
+      }
+
+      // CRIMSON WEB (RED BLADE WITH WEB ACCENTS)
+      if (paintKit === 12) {
+        return `
+          <svg viewBox="0 0 200 120" class="w-full h-24 drop-shadow-lg">
+            <path d="M 30,70 L 170,30 L 150,80 L 50,85 Z" fill="#991b1b" stroke="#0f172a" stroke-width="2" />
+            <path d="M 60,60 L 120,40 M 80,75 L 140,50" stroke="#111827" stroke-width="1.5" />
           </svg>
         `;
       }
