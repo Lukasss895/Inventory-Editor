@@ -1,1237 +1,596 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS:GO 2016 Scaleform Inventory Editor & Case Spinner</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Stratum2&family=Teko:wght@500;600;700&family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS:GO Scaleform Inventory Configurator (2016 Edition)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Teko:wght@500;600;700&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap');
+    
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: radial-gradient(circle at center, #1b2838 0%, #0d121a 70%, #05080c 100%);
+      color: #c6d4df;
+      user-select: none;
+    }
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        sfBg: '#0b0f14',
-                        sfPanel: '#131b24',
-                        sfPanelHeader: '#1c2736',
-                        sfBorder: '#2b3d54',
-                        sfAccent: '#5296d6',
-                        sfGold: '#d6a02b',
-                        sfGreen: '#4e9a3a',
-                        // CS Rarity Colors
-                        rarityConsumer: '#b0c3d9',
-                        rarityIndustrial: '#5e98d9',
-                        rarityMilSpec: '#4b69ff',
-                        rarityRestricted: '#8847ff',
-                        rarityClassified: '#d32ce6',
-                        rarityCovert: '#eb4b4b',
-                        raritySpecial: '#ffd700'
-                    },
-                    fontFamily: {
-                        cs: ['Teko', 'sans-serif'],
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['Fira Code', 'monospace']
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        /* Scaleform Scrollbars & UI Theme */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #080b0e; }
-        ::-webkit-scrollbar-thumb { background: #233448; border-radius: 2px; }
-        ::-webkit-scrollbar-thumb:hover { background: #5296d6; }
+    .font-teko { font-family: 'Teko', sans-serif; }
+    .font-mono { font-family: 'Share Tech Mono', monospace; }
 
-        /* CS:GO 2016 Scaleform Aesthetics */
-        .scaleform-card {
-            background: linear-gradient(180deg, #182330 0%, #0f1722 100%);
-            border: 1px solid #283a50;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 4px 12px rgba(0,0,0,0.5);
-            transition: all 0.15s ease-in-out;
-            position: relative;
-        }
-        .scaleform-card:hover {
-            border-color: #5296d6;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.7), 0 0 10px rgba(82, 150, 214, 0.3);
-        }
+    /* Scaleform Metallic Panel Borders */
+    .scaleform-panel {
+      background: linear-gradient(135deg, rgba(20, 29, 43, 0.9) 0%, rgba(10, 15, 23, 0.95) 100%);
+      border: 1px solid #2a3f5a;
+      box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8), 0 8px 25px rgba(0, 0, 0, 0.6);
+    }
 
-        .sf-header-strip {
-            background: linear-gradient(90deg, #1a2738 0%, #121a24 100%);
-            border-bottom: 2px solid #5296d6;
-        }
+    .scaleform-header {
+      background: linear-gradient(90deg, rgba(42, 63, 90, 0.8) 0%, rgba(18, 28, 42, 0.4) 100%);
+      border-bottom: 2px solid #5478a5;
+    }
 
-        .sf-btn {
-            background: linear-gradient(180deg, #2b3e55 0%, #172332 100%);
-            border: 1px solid #3d5675;
-            color: #d1e3f8;
-            text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            transition: all 0.15s ease;
-        }
-        .sf-btn:hover {
-            background: linear-gradient(180deg, #3d587a 0%, #223247 100%);
-            border-color: #6297d0;
-            color: #ffffff;
-            box-shadow: 0 0 8px rgba(82, 150, 214, 0.4);
-        }
-        .sf-btn-gold {
-            background: linear-gradient(180deg, #d6a02b 0%, #9e7115 100%);
-            border: 1px solid #f3bf4a;
-            color: #0b0f14;
-        }
-        .sf-btn-gold:hover {
-            background: linear-gradient(180deg, #f0b73c 0%, #b8851c 100%);
-            color: #000000;
-            box-shadow: 0 0 12px rgba(214, 160, 43, 0.5);
-        }
+    .scaleform-btn {
+      background: linear-gradient(180deg, #314867 0%, #172435 100%);
+      border: 1px solid #486a95;
+      color: #e1e8f0;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+      transition: all 0.15s ease-in-out;
+    }
 
-        /* CS:GO Rarity Borders (Scaleform bottom stripe) */
-        .rarity-consumer { border-bottom: 4px solid #b0c3d9; }
-        .rarity-industrial { border-bottom: 4px solid #5e98d9; }
-        .rarity-milspec { border-bottom: 4px solid #4b69ff; }
-        .rarity-restricted { border-bottom: 4px solid #8847ff; }
-        .rarity-classified { border-bottom: 4px solid #d32ce6; }
-        .rarity-covert { border-bottom: 4px solid #eb4b4b; }
-        .rarity-special { border-bottom: 4px solid #ffd700; box-shadow: inset 0 -4px 10px rgba(255, 215, 0, 0.2); }
+    .scaleform-btn:hover {
+      background: linear-gradient(180deg, #42628c 0%, #203147 100%);
+      border-color: #6a9bd8;
+      color: #ffffff;
+      box-shadow: 0 0 10px rgba(106, 155, 216, 0.4);
+    }
 
-        .spinner-viewport {
-            overflow: hidden;
-            position: relative;
-            background: #06080b;
-            border: 2px solid #283a50;
-            box-shadow: inset 0 0 35px rgba(0,0,0,0.9);
-        }
+    .scaleform-btn-gold {
+      background: linear-gradient(180deg, #c4962b 0%, #705211 100%);
+      border: 1px solid #e0b343;
+      color: #ffffff;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+    }
 
-        .spinner-line {
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: #d6a02b;
-            z-index: 30;
-            transform: translateX(-50%);
-            box-shadow: 0 0 12px #d6a02b, 0 0 4px #fff;
-        }
+    .scaleform-btn-gold:hover {
+      background: linear-gradient(180deg, #d8a832 0%, #8c6716 100%);
+      border-color: #fce074;
+      box-shadow: 0 0 12px rgba(224, 179, 67, 0.5);
+    }
 
-        .spinner-track {
-            display: flex;
-            will-change: transform;
-        }
+    /* Rarity Glow and Borders */
+    .rarity-2 { border-color: #4b69ff; }
+    .rarity-3 { border-color: #8847ff; }
+    .rarity-4 { border-color: #d32ce6; }
+    .rarity-5 { border-color: #eb4b4b; }
+    .rarity-6 { border-color: #ffd700; }
 
-        /* SVG Render Container */
-        .weapon-svg-container svg {
-            width: 100%;
-            height: 100%;
-            filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.6));
-        }
-    </style>
+    .rarity-glow-2 { box-shadow: inset 0 -30px 30px -10px rgba(75, 105, 255, 0.2); }
+    .rarity-glow-3 { box-shadow: inset 0 -30px 30px -10px rgba(136, 71, 255, 0.2); }
+    .rarity-glow-4 { box-shadow: inset 0 -30px 30px -10px rgba(211, 44, 230, 0.2); }
+    .rarity-glow-5 { box-shadow: inset 0 -30px 30px -10px rgba(235, 75, 75, 0.2); }
+    .rarity-glow-6 { box-shadow: inset 0 -30px 30px -10px rgba(255, 215, 0, 0.25); }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #080c12; }
+    ::-webkit-scrollbar-thumb { background: #22354d; border-radius: 2px; }
+    ::-webkit-scrollbar-thumb:hover { background: #334e73; }
+  </style>
 </head>
-<body class="bg-sfBg text-gray-200 min-h-screen flex flex-col font-sans antialiased selection:bg-sfAccent selection:text-white">
+<body class="min-h-screen flex flex-col justify-between">
 
-    <!-- HEADER / SCALEFORM NAVIGATION -->
-    <header class="sf-header-strip shadow-2xl sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-            <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 bg-sfAccent/20 border border-sfAccent/50 flex items-center justify-center rounded">
-                    <i class="fa-solid fa-crosshairs text-sfGold text-xl"></i>
-                </div>
-                <div>
-                    <h1 class="font-cs text-2xl tracking-wider text-white leading-none">COUNTER-STRIKE: GLOBAL OFFENSIVE</h1>
-                    <p class="text-[10px] text-sfAccent font-mono uppercase tracking-widest">2016 Scaleform UI • Inventory Lab & Case Spinner</p>
-                </div>
-            </div>
-
-            <!-- TABS NAVIGATION -->
-            <nav class="flex space-x-1">
-                <button id="tab-inv-btn" onclick="switchTab('inventory')" class="px-5 py-2 text-xs font-bold uppercase transition flex items-center space-x-2 bg-sfPanel text-sfGold border-t-2 border-sfGold">
-                    <i class="fa-solid fa-boxes-stacked"></i> <span>Inventory (<span id="inv-count">0</span>)</span>
-                </button>
-                <button id="tab-unbox-btn" onclick="switchTab('unboxing')" class="px-5 py-2 text-xs font-bold uppercase text-gray-400 hover:text-white transition flex items-center space-x-2">
-                    <i class="fa-solid fa-box-open"></i> <span>Case Unboxing</span>
-                </button>
-                <button id="tab-kv-btn" onclick="switchTab('keyvalues')" class="px-5 py-2 text-xs font-bold uppercase text-gray-400 hover:text-white transition flex items-center space-x-2">
-                    <i class="fa-solid fa-code"></i> <span>KeyValues (inventory.txt)</span>
-                </button>
-            </nav>
-        </div>
-    </header>
-
-    <!-- MAIN CONTENT AREA -->
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-
-        <!-- TAB 1: INVENTORY MANAGER -->
-        <section id="tab-inventory" class="space-y-6">
-            <!-- Filter & Action Toolbar -->
-            <div class="bg-sfPanel border border-sfBorder p-4 rounded flex flex-wrap items-center justify-between gap-4 shadow-lg">
-                <div class="flex items-center space-x-3 flex-1 min-w-[260px]">
-                    <div class="relative w-full">
-                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-xs"></i>
-                        <input type="text" id="inv-search" oninput="renderInventory()" placeholder="Search skin name, weapon, nametag..." 
-                               class="w-full bg-sfBg border border-sfBorder rounded pl-8 pr-4 py-1.5 text-xs text-gray-200 focus:outline-none focus:border-sfAccent font-mono">
-                    </div>
-                    <select id="rarity-filter" onchange="renderInventory()" class="bg-sfBg border border-sfBorder rounded px-3 py-1.5 text-xs text-gray-300 focus:outline-none focus:border-sfAccent font-sans">
-                        <option value="ALL">All Rarities</option>
-                        <option value="Special Extraordinary">★ Special / Knives</option>
-                        <option value="Covert">Covert (Red)</option>
-                        <option value="Classified">Classified (Pink)</option>
-                        <option value="Restricted">Restricted (Purple)</option>
-                        <option value="Mil-Spec">Mil-Spec (Blue)</option>
-                        <option value="Industrial">Industrial (Light Blue)</option>
-                        <option value="Consumer">Consumer Grade (Gray)</option>
-                    </select>
-                </div>
-
-                <div class="flex items-center space-x-3">
-                    <button onclick="openAddItemModal()" class="sf-btn sf-btn-gold px-4 py-2 rounded text-xs flex items-center space-x-1.5 shadow">
-                        <i class="fa-solid fa-plus"></i> <span>Add Item</span>
-                    </button>
-                    <button onclick="clearInventory()" class="bg-red-950/80 hover:bg-red-900 border border-red-800 text-red-200 text-xs px-3 py-2 rounded transition flex items-center space-x-1 font-semibold uppercase">
-                        <i class="fa-solid fa-trash"></i> <span>Clear Inventory</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Item Display Grid -->
-            <div id="inventory-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
-            
-            <div id="empty-inv-msg" class="hidden text-center py-20 bg-sfPanel/50 rounded border border-dashed border-sfBorder">
-                <i class="fa-solid fa-box-open text-6xl text-gray-600 mb-3"></i>
-                <p class="text-gray-300 font-bold text-lg uppercase tracking-wide">Your inventory is empty</p>
-                <p class="text-xs text-gray-500 max-w-md mx-auto mt-1">Open cases in <span class="text-sfGold font-semibold cursor-pointer underline" onclick="switchTab('unboxing')">Case Unboxing</span> or manually add items!</p>
-            </div>
-        </section>
-
-        <!-- TAB 2: CASE UNBOXING SIMULATOR -->
-        <section id="tab-unboxing" class="hidden space-y-6">
-            <!-- Case Selector Toolbar -->
-            <div class="bg-sfPanel border border-sfBorder p-4 rounded flex flex-wrap items-center justify-between gap-4">
-                <div class="flex items-center space-x-4">
-                    <label class="text-xs font-bold uppercase text-gray-300 flex items-center space-x-2">
-                        <i class="fa-solid fa-box text-sfGold"></i>
-                        <span>Select Case:</span>
-                    </label>
-                    <select id="case-select" onchange="loadSelectedCase()" class="bg-sfBg border border-sfBorder text-sfGold font-semibold rounded px-3 py-1.5 text-xs focus:outline-none focus:border-sfAccent"></select>
-                </div>
-                
-                <div class="flex items-center space-x-5 text-[11px] text-gray-400 font-mono">
-                    <div class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rarityMilSpec inline-block"></span><span>Mil-Spec (79.92%)</span></div>
-                    <div class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rarityRestricted inline-block"></span><span>Restricted (15.98%)</span></div>
-                    <div class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rarityClassified inline-block"></span><span>Classified (3.20%)</span></div>
-                    <div class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rarityCovert inline-block"></span><span>Covert (0.64%)</span></div>
-                    <div class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-raritySpecial inline-block"></span><span>★ Special (0.26%)</span></div>
-                </div>
-            </div>
-
-            <!-- UNBOXING STAGE CONTAINER -->
-            <div class="bg-sfPanel border border-sfBorder rounded p-6 text-center space-y-6 relative overflow-hidden shadow-2xl">
-                <div id="case-display-info" class="space-y-1">
-                    <h2 id="case-title" class="font-cs text-3xl tracking-wider text-white uppercase">CS:GO Weapon Case</h2>
-                    <p class="text-xs text-gray-400">Requires Key: <span id="key-title" class="text-sfGold font-semibold">CS:GO Weapon Case Key</span></p>
-                </div>
-
-                <!-- Spinner Component -->
-                <div class="spinner-viewport h-44 rounded relative my-4">
-                    <div class="spinner-line"></div>
-                    <div id="spinner-track" class="spinner-track h-full"></div>
-                </div>
-
-                <!-- Controls -->
-                <div class="flex items-center justify-center space-x-4">
-                    <button id="open-case-btn" onclick="startUnboxing()" class="sf-btn sf-btn-gold font-cs text-2xl tracking-wider px-10 py-2.5 rounded shadow-xl transition transform active:scale-95 flex items-center space-x-2">
-                        <i class="fa-solid fa-key text-xl"></i>
-                        <span>UNLOCK CASE</span>
-                    </button>
-                    <button id="fast-unbox-btn" onclick="quickUnbox(5)" class="sf-btn px-4 py-3 rounded text-xs flex items-center space-x-2">
-                        <i class="fa-solid fa-forward-fast"></i>
-                        <span>Quick Open (5x)</span>
-                    </button>
-                </div>
-
-                <!-- Dropped Item Reveal Box -->
-                <div id="unbox-result" class="hidden bg-sfBg/95 border-2 border-sfGold rounded p-6 max-w-md mx-auto space-y-4 shadow-2xl animate-fade-in relative z-20">
-                    <div class="text-[10px] font-mono uppercase tracking-widest text-sfGold">YOU UNBOXED</div>
-                    <div id="result-icon" class="w-40 h-28 mx-auto flex items-center justify-center"></div>
-                    <div>
-                        <h3 id="result-name" class="font-cs text-3xl text-white uppercase leading-none">AK-47 | Case Hardened</h3>
-                        <p id="result-wear" class="text-xs font-mono text-gray-400 mt-1">Field-Tested (Float: 0.2241)</p>
-                    </div>
-                    <div id="result-rarity" class="inline-block px-3 py-1 text-xs font-bold rounded uppercase tracking-wider">Classified</div>
-                    <div class="pt-2 flex justify-center space-x-3">
-                        <button onclick="dismissResult()" class="sf-btn sf-btn-gold text-xs px-6 py-2 rounded">
-                            Add to Inventory & Continue
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Case Contents Preview -->
-            <div class="bg-sfPanel border border-sfBorder rounded p-4">
-                <h3 class="text-xs font-bold text-gray-300 uppercase tracking-wider mb-4 border-b border-sfBorder pb-2 flex items-center justify-between">
-                    <span>Case Contents</span>
-                    <span class="text-[10px] text-gray-500 font-mono">CS:GO 2016 Collection</span>
-                </h3>
-                <div id="case-contents-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3"></div>
-            </div>
-        </section>
-
-        <!-- TAB 3: KEYVALUES CONVERTER -->
-        <section id="tab-keyvalues" class="hidden space-y-6">
-            <div class="bg-sfPanel border border-sfBorder p-4 rounded flex items-center justify-between">
-                <div>
-                    <h2 class="text-base font-bold text-white uppercase tracking-wider">Valve Scaleform KeyValues (inventory.txt) Editor</h2>
-                    <p class="text-xs text-gray-400 font-mono">Compatible with CS:GO 2016 GC / Server inventory setups (`"items"` block format).</p>
-                </div>
-                <div class="flex items-center space-x-3">
-                    <button onclick="exportToClipboard()" class="sf-btn px-4 py-2 rounded text-xs flex items-center space-x-1.5">
-                        <i class="fa-regular fa-copy"></i> <span>Copy KeyValues</span>
-                    </button>
-                    <button onclick="downloadKVFile()" class="bg-sfGreen hover:bg-green-600 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow flex items-center space-x-1.5 transition">
-                        <i class="fa-solid fa-download"></i> <span>Download inventory.txt</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Text Editor -->
-                <div class="space-y-2">
-                    <div class="flex justify-between items-center text-xs text-gray-400 font-mono">
-                        <span>KEYVALUES INPUT / OUTPUT</span>
-                        <button onclick="parseRawKeyValues()" class="text-sfGold hover:underline flex items-center space-x-1"><i class="fa-solid fa-rotate"></i> <span>Sync Text -&gt; Inventory</span></button>
-                    </div>
-                    <textarea id="kv-textarea" class="w-full h-[520px] bg-sfBg border border-sfBorder rounded p-4 font-mono text-xs text-emerald-400 focus:outline-none focus:border-sfAccent leading-relaxed resize-none shadow-inner" spellcheck="false"></textarea>
-                </div>
-
-                <!-- Info Block -->
-                <div class="space-y-4 text-xs text-gray-300">
-                    <div class="bg-sfPanel border border-sfBorder rounded p-5 space-y-3">
-                        <h3 class="font-bold text-white uppercase tracking-wider flex items-center space-x-2">
-                            <i class="fa-solid fa-circle-info text-sfAccent"></i>
-                            <span>CS:GO KeyValues Format Specification</span>
-                        </h3>
-                        <p class="leading-relaxed text-gray-400">
-                            KeyValues schema used by CS:GO client & server inventory setups (`csgo_gc`). Key attributes include:
-                        </p>
-                        <ul class="font-mono text-gray-300 space-y-1.5 list-disc list-inside bg-sfBg p-3 border border-sfBorder rounded">
-                            <li><span class="text-sfGold font-bold">"inventory_id"</span>: Unique ID index for the item</li>
-                            <li><span class="text-sfGold font-bold">"def_index"</span>: Item Definition Index (e.g. 507 for Karambit)</li>
-                            <li><span class="text-sfGold font-bold">"custom_name"</span>: Custom NameTag string</li>
-                            <li><span class="text-sfGold font-bold">"6"</span>: Paint Kit ID</li>
-                            <li><span class="text-sfGold font-bold">"7"</span>: Pattern Seed</li>
-                            <li><span class="text-sfGold font-bold">"8"</span>: Float / Wear value</li>
-                            <li><span class="text-sfGold font-bold">"80"</span>: StatTrak Kill Count</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- MODAL: ADD / EDIT CUSTOM ITEM -->
-    <div id="item-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-sfPanel border-2 border-sfBorder rounded max-w-md w-full p-6 space-y-4 shadow-2xl">
-            <div class="flex justify-between items-center border-b border-sfBorder pb-3">
-                <h3 id="modal-title" class="font-cs text-2xl text-white uppercase tracking-wide">ADD ITEM TO INVENTORY</h3>
-                <button onclick="closeModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
-            </div>
-
-            <form id="item-form" onsubmit="saveCustomItem(event)" class="space-y-3 text-xs">
-                <input type="hidden" id="edit-item-id" value="">
-
-                <div>
-                    <label class="block text-gray-400 mb-1">Select Preset Skin / Weapon</label>
-                    <select id="preset-select" onchange="applyPresetSelection()" class="w-full bg-sfBg border border-sfBorder rounded p-2 text-sfGold font-semibold focus:outline-none focus:border-sfAccent">
-                        <option value="">-- Custom Item / Manual Entry --</option>
-                    </select>
-                </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-gray-400 mb-1">Weapon Name</label>
-                        <input type="text" id="form-weapon" required placeholder="e.g. Karambit" class="w-full bg-sfBg border border-sfBorder rounded p-2 text-white focus:outline-none focus:border-sfAccent font-mono">
-                    </div>
-                    <div>
-                        <label class="block text-gray-400 mb-1">Skin Name</label>
-                        <input type="text" id="form-skin" required placeholder="e.g. Case Hardened" class="w-full bg-sfBg border border-sfBorder rounded p-2 text-white focus:outline-none focus:border-sfAccent font-mono">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-gray-400 mb-1">Def Index (def_index)</label>
-                        <input type="number" id="form-defindex" required placeholder="507" class="w-full bg-sfBg border border-sfBorder rounded p-2 text-white focus:outline-none focus:border-sfAccent font-mono">
-                    </div>
-                    <div>
-                        <label class="block text-gray-400 mb-1">Paint Kit ID (6)</label>
-                        <input type="number" id="form-paintindex" required placeholder="44" class="w-full bg-sfBg border border-sfBorder rounded p-2 text-white focus:outline-none focus:border-sfAccent font-mono">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-3 gap-3">
-                    <div>
-                        <label class="block text-gray-400 mb-1">Rarity</label>
-                        <select id="form-rarity" class="w-full bg-sfBg border border-sfBorder rounded p-2 text-white focus:outline-none focus:border-sfAccent">
-                            <option value="Special Extraordinary">★ Special (Gold)</option>
-                            <option value="Covert">Covert (Red)</option>
-                            <option value="Classified">Classified (Pink)</option>
-                            <option value="Restricted">Restricted (Purple)</option>
-                            <option value="Mil-Spec">Mil-Spec (Blue)</option>
-                            <option value="Industrial">Industrial</option>
-                            <option value="Consumer">Consumer</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-gray-400 mb-1">Float (8)</label>
-                        <input type="number" step="0.0001" min="0" max="1" id="form-wear" value="0.0150" class="w-full bg-sfBg border border-sfBorder rounded p-2 text-white focus:outline-none focus:border-sfAccent font-mono">
-                    </div>
-                    <div>
-                        <label class="block text-gray-400 mb-1">Pattern Seed (7)</label>
-                        <input type="number" min="0" max="1000" id="form-seed" value="387" class="w-full bg-sfBg border border-sfBorder rounded p-2 text-white focus:outline-none focus:border-sfAccent font-mono">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-3 pt-1">
-                    <div>
-                        <label class="block text-gray-400 mb-1">Equipped State</label>
-                        <select id="form-equipped" class="w-full bg-sfBg border border-sfBorder rounded p-2 text-white focus:outline-none focus:border-sfAccent font-mono">
-                            <option value="none">Unequipped</option>
-                            <option value="2,3">Both T & CT (2,3)</option>
-                            <option value="2">T Side Only (2)</option>
-                            <option value="3">CT Side Only (3)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-gray-400 mb-1">Custom NameTag</label>
-                        <input type="text" id="form-nametag" placeholder="e.g. Blue Gem" class="w-full bg-sfBg border border-sfBorder rounded p-2 text-white focus:outline-none focus:border-sfAccent font-mono">
-                    </div>
-                </div>
-
-                <div class="flex items-center space-x-4 pt-2">
-                    <label class="flex items-center space-x-2 cursor-pointer">
-                        <input type="checkbox" id="form-stattrak" class="rounded bg-sfBg border-sfBorder text-sfGold focus:ring-0">
-                        <span class="text-sfGold font-bold">StatTrak™</span>
-                    </label>
-                </div>
-
-                <div class="pt-4 flex justify-end space-x-3">
-                    <button type="button" onclick="closeModal()" class="px-4 py-2 rounded bg-sfBg text-gray-300 hover:bg-gray-800 uppercase font-bold text-[11px]">Cancel</button>
-                    <button type="submit" class="sf-btn sf-btn-gold px-5 py-2 rounded text-xs">Save Item</button>
-                </div>
-            </form>
-        </div>
+  <!-- SCALEFORM TOP HEADER -->
+  <header class="scaleform-header px-8 py-3 flex justify-between items-center shadow-2xl">
+    <div class="flex items-center space-x-4">
+      <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-slate-900 border border-blue-400/50 rounded flex items-center justify-center text-amber-400 font-bold text-2xl shadow-lg">
+        <i class="fa-solid fa-crosshairs"></i>
+      </div>
+      <div>
+        <h1 class="font-teko text-2xl tracking-wider text-white uppercase leading-none">COUNTER-STRIKE: GLOBAL OFFENSIVE</h1>
+        <p class="text-xs text-blue-300/80 font-mono tracking-widest uppercase">Scaleform 2016 Inventory Manager & KeyValues Generator</p>
+      </div>
     </div>
 
-    <!-- AUDIO SYNTHESIZER (SCALEFORM CLICKS & UNBOX SOUNDS) -->
-    <script>
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    <!-- HEADER BUTTONS -->
+    <div class="flex items-center space-x-3">
+      <button onclick="copyToClipboard()" class="scaleform-btn px-4 py-2 text-xs font-bold uppercase tracking-wider rounded flex items-center space-x-2">
+        <i class="fa-solid fa-copy text-amber-400"></i>
+        <span>Copy inventory.txt</span>
+      </button>
+      <button onclick="downloadInventoryFile()" class="scaleform-btn-gold px-4 py-2 text-xs font-bold uppercase tracking-wider rounded flex items-center space-x-2">
+        <i class="fa-solid fa-download"></i>
+        <span>Export File</span>
+      </button>
+    </div>
+  </header>
 
-        function playTickSound() {
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(480, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(140, audioCtx.currentTime + 0.025);
-            gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.025);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.025);
+  <!-- MAIN SCALEFORM CONTENT -->
+  <main class="flex-1 max-w-[1700px] w-full mx-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+    <!-- LEFT SIDEBAR: ADD ITEM FORM & KEYVALUES INSPECTOR -->
+    <div class="lg:col-span-4 space-y-6">
+      
+      <!-- ADD ITEM PANEL -->
+      <div class="scaleform-panel rounded-lg p-5 space-y-4">
+        <div class="flex items-center justify-between pb-2 border-b border-blue-500/30">
+          <h2 class="font-teko text-xl text-amber-400 uppercase tracking-wider flex items-center space-x-2">
+            <i class="fa-solid fa-plus-circle text-sm"></i>
+            <span>Add Item To Inventory</span>
+          </h2>
+          <span class="text-[10px] bg-blue-950 text-blue-300 border border-blue-800 px-2 py-0.5 rounded font-mono">v1.34.x GC</span>
+        </div>
+
+        <div class="space-y-3">
+          
+          <!-- PRESET SELECTION -->
+          <div>
+            <label class="block text-xs font-bold text-blue-200/80 mb-1 uppercase tracking-wider">Presets</label>
+            <select id="preset-select" onchange="loadPresetItem()" class="w-full bg-slate-950/90 border border-slate-700/80 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-400">
+              <optgroup label="--- Rare Knives ---">
+                <option value="515_38">★ Butterfly Knife | Fade</option>
+                <option value="515_418">★ Butterfly Knife | Doppler Phase 1</option>
+                <option value="507_38">★ Karambit | Fade</option>
+                <option value="507_44">★ Karambit | Case Hardened</option>
+                <option value="508_419">★ M9 Bayonet | Doppler Phase 2</option>
+                <option value="508_12">★ M9 Bayonet | Crimson Web</option>
+                <option value="500_415">★ Bayonet | Ruby</option>
+                <option value="506_38">★ Flip Knife | Fade</option>
+                <option value="505_418">★ Gut Knife | Doppler</option>
+                <option value="512_38">★ Huntsman Knife | Fade</option>
+                <option value="509_38">★ Falchion Knife | Fade</option>
+                <option value="516_12">★ Shadow Daggers | Crimson Web</option>
+                <option value="514_38">★ Bowie Knife | Fade</option>
+              </optgroup>
+              <optgroup label="--- Rifles & Snipers ---">
+                <option value="7_38">AK-47 | Redline</option>
+                <option value="7_180">AK-47 | Fire Serpent</option>
+                <option value="7_300">AK-47 | Vulcan</option>
+                <option value="7_490">AK-47 | Frontside Misty</option>
+                <option value="16_255">M4A4 | Asiimov</option>
+                <option value="16_309">M4A4 | Howl</option>
+                <option value="60_440">M4A1-S | Golden Coil</option>
+                <option value="60_321">M4A1-S | Cyrex</option>
+                <option value="60_430">M4A1-S | Hyper Beast</option>
+                <option value="9_344">AWP | Dragon Lore</option>
+                <option value="9_279">AWP | Asiimov</option>
+                <option value="9_422">AWP | Hyper Beast</option>
+                <option value="9_38">AWP | Lightning Strike</option>
+              </optgroup>
+              <optgroup label="--- Pistols & SMGs ---">
+                <option value="1_180">Desert Eagle | Hypnotic</option>
+                <option value="1_351">Desert Eagle | Conspiracy</option>
+                <option value="1_470">Desert Eagle | Sunset Storm</option>
+                <option value="4_38">Glock-18 | Fade</option>
+                <option value="4_353">Glock-18 | Water Elemental</option>
+                <option value="61_501">USP-S | Kill Confirmed</option>
+                <option value="19_233">P90 | Asiimov</option>
+              </optgroup>
+              <optgroup label="--- Containers & Keys ---">
+                <option value="4001_0">CS:GO Weapon Case</option>
+                <option value="4004_0">Operation Bravo Case</option>
+                <option value="4008_0">eSports 2013 Winter Case</option>
+                <option value="1201_0">CS:GO Case Key</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <!-- DISPLAY NAME -->
+          <div>
+            <label class="block text-xs font-bold text-blue-200/80 mb-1 uppercase tracking-wider">Item Display Name</label>
+            <input type="text" id="input-item-name" class="w-full bg-slate-950/90 border border-slate-700/80 rounded px-3 py-1.5 text-xs text-white focus:outline-none focus:border-blue-400" value="★ Butterfly Knife | Fade">
+          </div>
+
+          <!-- NAMETAG INPUT -->
+          <div>
+            <label class="block text-xs font-bold text-amber-400 mb-1 flex items-center justify-between uppercase tracking-wider">
+              <span><i class="fa-solid fa-tag mr-1"></i> Name Tag (In-Game Label)</span>
+              <span class="text-[9px] text-slate-400">Optional</span>
+            </label>
+            <input type="text" id="input-nametag" placeholder="e.g. My Favorite Knife" class="w-full bg-slate-950/90 border border-amber-500/50 rounded px-3 py-1.5 font-mono text-xs text-amber-300 focus:outline-none focus:border-amber-400">
+          </div>
+
+          <!-- DEF INDEX AND PAINT KIT -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-blue-200/80 mb-1 uppercase tracking-wider">Def Index</label>
+              <input type="number" id="input-def-index" class="w-full bg-slate-950/90 border border-slate-700/80 rounded px-3 py-1.5 font-mono text-xs text-white focus:outline-none focus:border-blue-400" value="515">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-blue-200/80 mb-1 uppercase tracking-wider">Paint Kit Index</label>
+              <input type="number" id="input-paint-kit" class="w-full bg-slate-950/90 border border-slate-700/80 rounded px-3 py-1.5 font-mono text-xs text-white focus:outline-none focus:border-blue-400" value="38">
+            </div>
+          </div>
+
+          <!-- FLOAT WEAR AND SEED PATTERN -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-blue-200/80 mb-1 uppercase tracking-wider">Float Wear</label>
+              <input type="number" step="0.01" min="0" max="1" id="input-wear" class="w-full bg-slate-950/90 border border-slate-700/80 rounded px-3 py-1.5 font-mono text-xs text-white focus:outline-none focus:border-blue-400" value="0.01">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-blue-200/80 mb-1 uppercase tracking-wider">Pattern Seed</label>
+              <input type="number" id="input-seed" class="w-full bg-slate-950/90 border border-slate-700/80 rounded px-3 py-1.5 font-mono text-xs text-white focus:outline-none focus:border-blue-400" value="41">
+            </div>
+          </div>
+
+          <!-- RARITY -->
+          <div>
+            <label class="block text-xs font-bold text-blue-200/80 mb-1 uppercase tracking-wider">Rarity Category</label>
+            <select id="input-rarity" class="w-full bg-slate-950/90 border border-slate-700/80 rounded px-3 py-1.5 text-xs text-white focus:outline-none focus:border-blue-400">
+              <option value="2">Mil-Spec Grade (Blue)</option>
+              <option value="3">Restricted (Purple)</option>
+              <option value="4">Classified (Pink)</option>
+              <option value="5">Covert (Red)</option>
+              <option value="6" selected>★ Special Item / Knife (Gold)</option>
+            </select>
+          </div>
+
+          <!-- ADD BUTTON -->
+          <button onclick="addItemFromForm()" class="scaleform-btn-gold w-full mt-2 py-2.5 rounded font-teko text-lg uppercase tracking-wider shadow-lg">
+            <i class="fa-solid fa-plus-square mr-1"></i> Add To Inventory
+          </button>
+
+        </div>
+      </div>
+
+      <!-- KEYVALUES PREVIEW -->
+      <div class="scaleform-panel rounded-lg p-5 space-y-2">
+        <div class="flex justify-between items-center pb-2 border-b border-blue-500/30">
+          <h2 class="font-teko text-lg text-blue-200 uppercase tracking-wider">KeyValues Inspector</h2>
+          <span class="font-mono text-[10px] text-amber-400">inventory.txt</span>
+        </div>
+        <textarea id="kv-output" class="w-full h-52 bg-slate-950/90 border border-slate-800 rounded p-3 font-mono text-[11px] text-emerald-400 focus:outline-none resize-none leading-relaxed" readonly></textarea>
+      </div>
+
+    </div>
+
+    <!-- RIGHT GRID: INVENTORY ITEMS DISPLAY -->
+    <div class="lg:col-span-8 space-y-6">
+      
+      <!-- INVENTORY TOOLBAR -->
+      <div class="scaleform-panel rounded-lg p-4 flex flex-wrap justify-between items-center gap-4">
+        <div>
+          <h2 class="font-teko text-2xl text-white uppercase tracking-wider leading-none flex items-center space-x-2">
+            <i class="fa-solid fa-boxes-stacked text-amber-400 text-lg"></i>
+            <span>Loadout & Equipped Items</span>
+          </h2>
+          <p id="inventory-count" class="text-xs font-mono text-blue-300/80 mt-0.5">0 items loaded</p>
+        </div>
+
+        <button onclick="clearInventory()" class="scaleform-btn px-4 py-2 text-xs font-bold uppercase tracking-wider rounded border-red-500/40 text-red-300 hover:border-red-400">
+          <i class="fa-solid fa-trash-can mr-1"></i> Clear All
+        </button>
+      </div>
+
+      <!-- INVENTORY CARDS GRID -->
+      <div id="inventory-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <!-- Rendered dynamically -->
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- BOTTOM FOOTER -->
+  <footer class="bg-slate-950/80 border-t border-slate-800 px-8 py-2.5 text-center text-xs text-slate-500 font-mono">
+    CS:GO Scaleform GC Inventory Sync &bull; Built for Offline Clients & Local Game Coordinators
+  </footer>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="fixed bottom-6 right-6 bg-amber-500 text-slate-950 px-5 py-3 rounded shadow-2xl font-bold text-sm transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50 flex items-center space-x-2 border border-amber-300">
+    <i class="fa-solid fa-check-circle"></i>
+    <span id="toast-msg">Notification</span>
+  </div>
+
+  <script>
+    // PRESET WEAPON DATA
+    const PRESETS = {
+      "515_38": { name: "★ Butterfly Knife | Fade", def_index: 515, paint_kit: 38, wear: 0.01, seed: 41, rarity: 6 },
+      "515_418": { name: "★ Butterfly Knife | Doppler P1", def_index: 515, paint_kit: 418, wear: 0.02, seed: 120, rarity: 6 },
+      "507_38": { name: "★ Karambit | Fade", def_index: 507, paint_kit: 38, wear: 0.01, seed: 80, rarity: 6 },
+      "507_44": { name: "★ Karambit | Case Hardened", def_index: 507, paint_kit: 44, wear: 0.15, seed: 661, rarity: 6 },
+      "508_419": { name: "★ M9 Bayonet | Doppler P2", def_index: 508, paint_kit: 419, wear: 0.03, seed: 21, rarity: 6 },
+      "508_12": { name: "★ M9 Bayonet | Crimson Web", def_index: 508, paint_kit: 12, wear: 0.07, seed: 33, rarity: 6 },
+      "500_415": { name: "★ Bayonet | Ruby", def_index: 500, paint_kit: 415, wear: 0.01, seed: 1, rarity: 6 },
+      "506_38": { name: "★ Flip Knife | Fade", def_index: 506, paint_kit: 38, wear: 0.02, seed: 99, rarity: 6 },
+      "505_418": { name: "★ Gut Knife | Doppler", def_index: 505, paint_kit: 418, wear: 0.03, seed: 15, rarity: 6 },
+      "512_38": { name: "★ Huntsman Knife | Fade", def_index: 512, paint_kit: 38, wear: 0.01, seed: 50, rarity: 6 },
+      "509_38": { name: "★ Falchion Knife | Fade", def_index: 509, paint_kit: 38, wear: 0.02, seed: 12, rarity: 6 },
+      "516_12": { name: "★ Shadow Daggers | Crimson Web", def_index: 516, paint_kit: 12, wear: 0.08, seed: 4, rarity: 6 },
+      "514_38": { name: "★ Bowie Knife | Fade", def_index: 514, paint_kit: 38, wear: 0.01, seed: 30, rarity: 6 },
+
+      "7_38": { name: "AK-47 | Redline", def_index: 7, paint_kit: 38, wear: 0.15, seed: 10, rarity: 4 },
+      "7_180": { name: "AK-47 | Fire Serpent", def_index: 7, paint_kit: 180, wear: 0.08, seed: 111, rarity: 5 },
+      "7_300": { name: "AK-47 | Vulcan", def_index: 7, paint_kit: 300, wear: 0.05, seed: 44, rarity: 5 },
+      "7_490": { name: "AK-47 | Frontside Misty", def_index: 7, paint_kit: 490, wear: 0.10, seed: 90, rarity: 4 },
+      "16_255": { name: "M4A4 | Asiimov", def_index: 16, paint_kit: 255, wear: 0.22, seed: 32, rarity: 4 },
+      "16_309": { name: "M4A4 | Howl", def_index: 16, paint_kit: 309, wear: 0.04, seed: 77, rarity: 5 },
+      "60_440": { name: "M4A1-S | Golden Coil", def_index: 60, paint_kit: 440, wear: 0.05, seed: 23, rarity: 5 },
+      "60_321": { name: "M4A1-S | Cyrex", def_index: 60, paint_kit: 321, wear: 0.02, seed: 18, rarity: 4 },
+      "60_430": { name: "M4A1-S | Hyper Beast", def_index: 60, paint_kit: 430, wear: 0.06, seed: 5, rarity: 5 },
+      "9_344": { name: "AWP | Dragon Lore", def_index: 9, paint_kit: 344, wear: 0.01, seed: 420, rarity: 5 },
+      "9_279": { name: "AWP | Asiimov", def_index: 9, paint_kit: 279, wear: 0.18, seed: 13, rarity: 5 },
+      "9_422": { name: "AWP | Hyper Beast", def_index: 9, paint_kit: 422, wear: 0.07, seed: 91, rarity: 5 },
+      "9_38": { name: "AWP | Lightning Strike", def_index: 9, paint_kit: 38, wear: 0.01, seed: 2, rarity: 5 },
+
+      "1_180": { name: "Desert Eagle | Hypnotic", def_index: 1, paint_kit: 180, wear: 0.01, seed: 8, rarity: 3 },
+      "1_351": { name: "Desert Eagle | Conspiracy", def_index: 1, paint_kit: 351, wear: 0.03, seed: 14, rarity: 3 },
+      "1_470": { name: "Desert Eagle | Sunset Storm", def_index: 1, paint_kit: 470, wear: 0.02, seed: 55, rarity: 4 },
+      "4_38": { name: "Glock-18 | Fade", def_index: 4, paint_kit: 38, wear: 0.01, seed: 27, rarity: 4 },
+      "4_353": { name: "Glock-18 | Water Elemental", def_index: 4, paint_kit: 353, wear: 0.06, seed: 3, rarity: 3 },
+      "61_501": { name: "USP-S | Kill Confirmed", def_index: 61, paint_kit: 501, wear: 0.04, seed: 88, rarity: 5 },
+      "19_233": { name: "P90 | Asiimov", def_index: 19, paint_kit: 233, wear: 0.05, seed: 62, rarity: 5 },
+
+      "4001_0": { name: "CS:GO Weapon Case", def_index: 4001, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
+      "4004_0": { name: "Operation Bravo Case", def_index: 4004, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
+      "4008_0": { name: "eSports 2013 Winter Case", def_index: 4008, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
+      "1201_0": { name: "CS:GO Case Key", def_index: 1201, paint_kit: 0, wear: 0, seed: 0, rarity: 0 }
+    };
+
+    // INVENTORY ARRAY (STARTS EMPTY BY DEFAULT)
+    let inventory = [];
+
+    window.onload = function() {
+      renderInventory();
+    };
+
+    function loadPresetItem() {
+      const selectedVal = document.getElementById('preset-select').value;
+      const preset = PRESETS[selectedVal];
+      if (preset) {
+        document.getElementById('input-item-name').value = preset.name;
+        document.getElementById('input-def-index').value = preset.def_index;
+        document.getElementById('input-paint-kit').value = preset.paint_kit;
+        document.getElementById('input-wear').value = preset.wear;
+        document.getElementById('input-seed').value = preset.seed;
+        document.getElementById('input-rarity').value = preset.rarity;
+      }
+    }
+
+    function addItemFromForm() {
+      const name = document.getElementById('input-item-name').value.trim() || "Custom Weapon";
+      const nametag = document.getElementById('input-nametag').value.trim();
+      const def_index = parseInt(document.getElementById('input-def-index').value) || 7;
+      const paint_kit = parseInt(document.getElementById('input-paint-kit').value) || 0;
+      const wear = parseFloat(document.getElementById('input-wear').value) || 0.01;
+      const seed = parseInt(document.getElementById('input-seed').value) || 1;
+      const rarity = parseInt(document.getElementById('input-rarity').value) || 2;
+
+      const maxId = inventory.reduce((max, item) => Math.max(max, item.id), 1);
+      const maxInvId = inventory.reduce((max, item) => Math.max(max, item.inventory_id), 0);
+
+      inventory.push({
+        id: maxId + 1,
+        inventory_id: maxInvId + 1,
+        def_index: def_index,
+        paint_kit: paint_kit,
+        wear: wear,
+        seed: seed,
+        rarity: rarity,
+        equipped: "0",
+        name: name,
+        nametag: nametag
+      });
+
+      renderInventory();
+      showToast("Item added to inventory");
+    }
+
+    function deleteItem(id) {
+      inventory = inventory.filter(i => i.id !== id);
+      renderInventory();
+      showToast("Item deleted");
+    }
+
+    function toggleEquip(id, side) {
+      const item = inventory.find(i => i.id === id);
+      if (item) {
+        item.equipped = item.equipped === side ? "0" : side;
+        renderInventory();
+        showToast("Equip status updated");
+      }
+    }
+
+    function clearInventory() {
+      if (confirm("Clear all items from inventory?")) {
+        inventory = [];
+        renderInventory();
+        showToast("Inventory cleared");
+      }
+    }
+
+    // SVG ARTWORK GENERATOR
+    function getSkinArtworkSvg(defIndex, paintKit) {
+      // KARAMBIT CASE HARDENED (BLUE GEM / GOLD BLADE)
+      if (defIndex === 507 && paintKit === 44) {
+        return `
+          <svg viewBox="0 0 200 120" class="w-full h-24 drop-shadow-lg">
+            <defs>
+              <linearGradient id="chGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#3b82f6" />
+                <stop offset="45%" stop-color="#1d4ed8" />
+                <stop offset="70%" stop-color="#eab308" />
+                <stop offset="100%" stop-color="#ca8a04" />
+              </linearGradient>
+            </defs>
+            <path d="M 40,80 Q 80,10 160,25 Q 120,45 80,85 Z" fill="url(#chGradient)" stroke="#1e293b" stroke-width="2" />
+            <circle cx="35" cy="82" r="12" fill="#0f172a" stroke="#475569" stroke-width="3" />
+          </svg>
+        `;
+      }
+
+      // FADE FINISH (PINK / VIOLET / GOLD GRADIENT)
+      if (paintKit === 38) {
+        return `
+          <svg viewBox="0 0 200 120" class="w-full h-24 drop-shadow-lg">
+            <defs>
+              <linearGradient id="fadeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#e11d48" />
+                <stop offset="50%" stop-color="#a855f7" />
+                <stop offset="100%" stop-color="#eab308" />
+              </linearGradient>
+            </defs>
+            <path d="M 30,70 L 170,30 L 150,80 L 50,85 Z" fill="url(#fadeGrad)" stroke="#0f172a" stroke-width="2" />
+          </svg>
+        `;
+      }
+
+      // GENERIC WEAPON GRAPHIC
+      return `
+        <svg viewBox="0 0 200 120" class="w-full h-24 opacity-80">
+          <rect x="30" y="45" width="140" height="30" rx="4" fill="#334155" stroke="#64748b" stroke-width="2" />
+          <path d="M 130,45 L 160,20 L 170,45 Z" fill="#475569" />
+        </svg>
+      `;
+    }
+
+    function renderInventory() {
+      const grid = document.getElementById('inventory-grid');
+      const countEl = document.getElementById('inventory-count');
+      grid.innerHTML = "";
+      countEl.innerText = `${inventory.length} items loaded`;
+
+      if (inventory.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full scaleform-panel rounded-lg p-12 text-center text-blue-200/50">
+            <i class="fa-solid fa-box-open text-4xl mb-3 text-slate-600"></i>
+            <p class="font-teko text-2xl uppercase tracking-wider text-slate-400">Your Inventory Is Empty</p>
+            <p class="text-xs">Add items using the panel on the left to generate your <span class="font-mono text-amber-400">inventory.txt</span> file.</p>
+          </div>
+        `;
+        updateKeyValuesOutput();
+        return;
+      }
+
+      inventory.forEach(item => {
+        const card = document.createElement('div');
+        card.className = `scaleform-panel border-b-4 rounded-lg p-4 flex flex-col justify-between space-y-3 rarity-${item.rarity} rarity-glow-${item.rarity} relative overflow-hidden`;
+
+        let badge = "";
+        if (item.equipped === "2") badge = `<span class="bg-amber-500 text-slate-950 font-black text-[9px] px-2 py-0.5 rounded uppercase">T Equipped</span>`;
+        if (item.equipped === "3") badge = `<span class="bg-blue-500 text-white font-black text-[9px] px-2 py-0.5 rounded uppercase">CT Equipped</span>`;
+
+        card.innerHTML = `
+          <div class="flex justify-between items-start">
+            <div>
+              <span class="text-[10px] text-blue-300/60 font-mono">ID: #${item.id} (Def ${item.def_index})</span>
+              <h3 class="font-teko text-lg text-white uppercase tracking-wider leading-tight">${item.name}</h3>
+              ${item.nametag ? `<div class="text-[10px] text-amber-300 font-mono mt-0.5"><i class="fa-solid fa-tag text-[9px] mr-1"></i>"${item.nametag}"</div>` : ''}
+            </div>
+            ${badge}
+          </div>
+
+          <!-- DYNAMIC ARTWORK -->
+          <div class="py-1">
+            ${getSkinArtworkSvg(item.def_index, item.paint_kit)}
+          </div>
+
+          ${item.paint_kit > 0 ? `
+            <div class="space-y-1 text-[10px] font-mono bg-slate-950/80 p-2 rounded border border-slate-800">
+              <div class="flex justify-between"><span class="text-slate-400">PaintKit:</span> <span class="text-amber-400">${item.paint_kit}</span></div>
+              <div class="flex justify-between"><span class="text-slate-400">Float:</span> <span class="text-slate-200">${item.wear}</span></div>
+              <div class="flex justify-between"><span class="text-slate-400">Seed:</span> <span class="text-slate-200">${item.seed}</span></div>
+            </div>
+          ` : `
+            <div class="text-[10px] text-slate-400 italic py-1 font-mono">Container / Key</div>
+          `}
+
+          <div class="flex space-x-1.5 pt-2 border-t border-slate-800">
+            <button onclick="toggleEquip(${item.id}, '2')" class="scaleform-btn flex-1 py-1 text-[10px] font-bold uppercase">
+              T
+            </button>
+            <button onclick="toggleEquip(${item.id}, '3')" class="scaleform-btn flex-1 py-1 text-[10px] font-bold uppercase">
+              CT
+            </button>
+            <button onclick="deleteItem(${item.id})" class="scaleform-btn px-2.5 py-1 text-[10px] border-red-500/40 text-red-300">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+
+      updateKeyValuesOutput();
+    }
+
+    function generateKeyValues() {
+      let kv = `"items"\n{\n`;
+
+      inventory.forEach(item => {
+        kv += `\t"${item.id}"\n`;
+        kv += `\t{\n`;
+        kv += `\t\t"inventory"\t\t"${item.inventory_id}"\n`;
+        kv += `\t\t"def_index"\t\t"${item.def_index}"\n`;
+        kv += `\t\t"level"\t\t"1"\n`;
+        kv += `\t\t"quality"\t\t"${item.rarity === 6 ? '3' : '4'}"\n`;
+        kv += `\t\t"flags"\t\t"0"\n`;
+        kv += `\t\t"origin"\t\t"24"\n`;
+        kv += `\t\t"in_use"\t\t"0"\n`;
+        kv += `\t\t"rarity"\t\t"${item.rarity}"\n`;
+
+        if (item.nametag) {
+          kv += `\t\t"custom_name"\t\t"${item.nametag}"\n`;
         }
 
-        function playUnboxSound(rarity) {
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            const now = audioCtx.currentTime;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-
-            if (rarity === 'Special Extraordinary' || rarity === 'Covert') {
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(523.25, now);
-                osc.frequency.setValueAtTime(659.25, now + 0.1);
-                osc.frequency.setValueAtTime(783.99, now + 0.2);
-                osc.frequency.setValueAtTime(1046.50, now + 0.3);
-                gain.gain.setValueAtTime(0.3, now);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
-            } else {
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(320, now);
-                osc.frequency.exponentialRampToValueAtTime(640, now + 0.2);
-                gain.gain.setValueAtTime(0.2, now);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
-            }
-
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(now + 1.2);
-        }
-    </script>
-
-    <!-- CORE DATA & APP LOGIC -->
-    <script>
-        // --- CUSTOM DYNAMIC SVG GRAPHICS GENERATOR FOR WEAPONS & KNIVES ---
-        function getSkinColors(skinName) {
-            const s = skinName.toLowerCase();
-            if (s.includes('case hardened')) return { primary: '#4182b8', secondary: '#d1aa36', accent: '#9d324b' }; // Blue gem & Gold
-            if (s.includes('fade')) return { primary: '#e03e72', secondary: '#8822bb', accent: '#f8b432' };
-            if (s.includes('doppler')) return { primary: '#1a2238', secondary: '#9b2bb8', accent: '#3b88d8' };
-            if (s.includes('crimson web')) return { primary: '#b81414', secondary: '#1c1919', accent: '#400808' };
-            if (s.includes('dragon lore')) return { primary: '#31442c', secondary: '#cb9332', accent: '#a62d22' };
-            if (s.includes('asiimov')) return { primary: '#ffffff', secondary: '#ea5d1f', accent: '#212529' };
-            if (s.includes('redline')) return { primary: '#222225', secondary: '#d82222', accent: '#111112' };
-            if (s.includes('fire serpent')) return { primary: '#283626', secondary: '#2e8b57', accent: '#b85e1d' };
-            if (s.includes('vulcan')) return { primary: '#e6e6e6', secondary: '#1e73be', accent: '#1f242b' };
-            if (s.includes('printstream')) return { primary: '#eaeaea', secondary: '#b5b5b5', accent: '#d946ef' };
-            if (s.includes('cyrex')) return { primary: '#1c1c1e', secondary: '#e62e2e', accent: '#f2f2f2' };
-            if (s.includes('water elemental')) return { primary: '#d63031', secondary: '#0984e3', accent: '#74b9ff' };
-            if (s.includes('blaze')) return { primary: '#111111', secondary: '#f39c12', accent: '#e74c3c' };
-            return { primary: '#556270', secondary: '#4ecdc4', accent: '#c7f464' };
+        if (item.paint_kit > 0) {
+          kv += `\t\t"attributes"\n`;
+          kv += `\t\t{\n`;
+          kv += `\t\t\t"6"\t\t"${item.paint_kit}.000000"\n`;
+          kv += `\t\t\t"7"\t\t"${item.seed}.000000"\n`;
+          kv += `\t\t\t"8"\t\t"${item.wear.toFixed(6)}"\n`;
+          kv += `\t\t}\n`;
         }
 
-        function getItemSVG(weapon, skin) {
-            const cols = getSkinColors(skin);
-            const w = weapon.toLowerCase();
-
-            if (w.includes('karambit')) {
-                return `
-                <div class="weapon-svg-container w-32 h-20 mx-auto flex items-center justify-center">
-                    <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="kg_${skin.replace(/\s+/g, '')}" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="${cols.primary}" />
-                                <stop offset="50%" stop-color="${cols.secondary}" />
-                                <stop offset="100%" stop-color="${cols.accent}" />
-                            </linearGradient>
-                        </defs>
-                        <!-- Karambit Handle & Ring -->
-                        <path d="M 40,80 A 18,18 0 1,0 40,44 A 18,18 0 1,0 40,80 Z" fill="none" stroke="#1c2430" stroke-width="10"/>
-                        <path d="M 50,50 L 95,35 C 105,32 115,40 110,50 L 90,75 C 85,82 70,78 60,68 Z" fill="#18202a" stroke="#2c3b4e" stroke-width="2"/>
-                        <!-- Curved Blade -->
-                        <path d="M 95,35 C 130,30 165,50 180,95 C 145,75 115,70 90,75 Z" fill="url(#kg_${skin.replace(/\s+/g, '')})" stroke="#ffffff" stroke-opacity="0.3" stroke-width="1.5"/>
-                    </svg>
-                </div>`;
-            } else if (w.includes('butterfly')) {
-                return `
-                <div class="weapon-svg-container w-32 h-20 mx-auto flex items-center justify-center">
-                    <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="bfg_${skin.replace(/\s+/g, '')}" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="${cols.primary}" />
-                                <stop offset="50%" stop-color="${cols.secondary}" />
-                                <stop offset="100%" stop-color="${cols.accent}" />
-                            </linearGradient>
-                        </defs>
-                        <!-- Butterfly Handles -->
-                        <rect x="20" y="42" width="65" height="10" rx="3" fill="#18202a" stroke="#2c3b4e" stroke-width="2" transform="rotate(-10 20 42)"/>
-                        <rect x="20" y="62" width="65" height="10" rx="3" fill="#18202a" stroke="#2c3b4e" stroke-width="2" transform="rotate(10 20 62)"/>
-                        <!-- Blade -->
-                        <path d="M 80,55 L 175,50 C 185,52 170,62 140,65 L 80,60 Z" fill="url(#bfg_${skin.replace(/\s+/g, '')})" stroke="#ffffff" stroke-opacity="0.3" stroke-width="1.5"/>
-                    </svg>
-                </div>`;
-            } else if (w.includes('m9') || w.includes('bayonet')) {
-                return `
-                <div class="weapon-svg-container w-32 h-20 mx-auto flex items-center justify-center">
-                    <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="m9g_${skin.replace(/\s+/g, '')}" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="${cols.primary}" />
-                                <stop offset="50%" stop-color="${cols.secondary}" />
-                                <stop offset="100%" stop-color="${cols.accent}" />
-                            </linearGradient>
-                        </defs>
-                        <rect x="25" y="52" width="45" height="14" rx="2" fill="#18202a" stroke="#2c3b4e" stroke-width="2"/>
-                        <rect x="70" y="44" width="6" height="30" rx="1" fill="#3a4d63"/>
-                        <path d="M 76,48 L 175,48 L 185,58 L 165,66 L 76,66 Z" fill="url(#m9g_${skin.replace(/\s+/g, '')})" stroke="#ffffff" stroke-opacity="0.3" stroke-width="1.5"/>
-                    </svg>
-                </div>`;
-            } else if (w.includes('ak-47')) {
-                return `
-                <div class="weapon-svg-container w-32 h-20 mx-auto flex items-center justify-center">
-                    <svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="akg_${skin.replace(/\s+/g, '')}" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="${cols.primary}" />
-                                <stop offset="50%" stop-color="${cols.secondary}" />
-                                <stop offset="100%" stop-color="${cols.accent}" />
-                            </linearGradient>
-                        </defs>
-                        <!-- Stock & Grip -->
-                        <path d="M 20,55 L 50,52 L 55,68 L 25,75 Z" fill="#4a3525"/>
-                        <path d="M 70,58 L 80,82 L 92,80 L 85,58 Z" fill="#1c2430"/>
-                        <!-- Body Receiver -->
-                        <rect x="50" y="46" width="65" height="14" fill="url(#akg_${skin.replace(/\s+/g, '')})" stroke="#ffffff" stroke-opacity="0.2"/>
-                        <!-- Barrel & Magazine -->
-                        <rect x="115" y="50" width="65" height="5" fill="#2c3b4e"/>
-                        <path d="M 85,60 C 95,75 105,90 115,92 L 125,88 C 115,75 105,60 98,60 Z" fill="#222b37"/>
-                    </svg>
-                </div>`;
-            } else if (w.includes('awp')) {
-                return `
-                <div class="weapon-svg-container w-32 h-20 mx-auto flex items-center justify-center">
-                    <svg viewBox="0 0 220 100" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="awpg_${skin.replace(/\s+/g, '')}" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="${cols.primary}" />
-                                <stop offset="50%" stop-color="${cols.secondary}" />
-                                <stop offset="100%" stop-color="${cols.accent}" />
-                            </linearGradient>
-                        </defs>
-                        <!-- Body & Scope -->
-                        <rect x="80" y="34" width="35" height="8" fill="#111822"/>
-                        <path d="M 25,52 L 130,50 L 125,64 L 35,66 Z" fill="url(#awpg_${skin.replace(/\s+/g, '')})" stroke="#ffffff" stroke-opacity="0.2"/>
-                        <rect x="130" y="53" width="75" height="4" fill="#2c3b4e"/>
-                    </svg>
-                </div>`;
-            }
-
-            // Generic Pistol / Rifle Silhouette
-            return `
-            <div class="weapon-svg-container w-32 h-20 mx-auto flex items-center justify-center">
-                <svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="geng_${skin.replace(/\s+/g, '')}" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" stop-color="${cols.primary}" />
-                            <stop offset="100%" stop-color="${cols.secondary}" />
-                        </linearGradient>
-                    </defs>
-                    <path d="M 50,60 L 65,85 L 78,82 L 70,60 L 150,55 L 150,45 L 50,45 Z" fill="url(#geng_${skin.replace(/\s+/g, '')})" stroke="#ffffff" stroke-opacity="0.2"/>
-                </svg>
-            </div>`;
+        if (item.equipped && item.equipped !== "0") {
+          kv += `\t\t"equipped_state"\n`;
+          kv += `\t\t{\n`;
+          kv += `\t\t\t"${item.equipped}"\t\t"0"\n`;
+          kv += `\t\t}\n`;
         }
 
-        // --- WEAPON & KNIFE DEFINITION PRESETS ---
-        const WEAPON_PRESETS = [
-            // Knives
-            { weapon: 'Karambit', skin: 'Case Hardened', defIndex: 507, paintIndex: 44, rarity: 'Special Extraordinary', seed: 387 },
-            { weapon: 'Karambit', skin: 'Fade', defIndex: 507, paintIndex: 38, rarity: 'Special Extraordinary', seed: 90 },
-            { weapon: 'Butterfly Knife', skin: 'Fade', defIndex: 515, paintIndex: 38, rarity: 'Special Extraordinary', seed: 412 },
-            { weapon: 'Butterfly Knife', skin: 'Doppler Phase 2', defIndex: 515, paintIndex: 419, rarity: 'Special Extraordinary', seed: 122 },
-            { weapon: 'Butterfly Knife', skin: 'Crimson Web', defIndex: 515, paintIndex: 12, rarity: 'Special Extraordinary', seed: 88 },
-            { weapon: 'M9 Bayonet', skin: 'Crimson Web', defIndex: 508, paintIndex: 12, rarity: 'Special Extraordinary', seed: 101 },
-            { weapon: 'M9 Bayonet', skin: 'Doppler', defIndex: 508, paintIndex: 418, rarity: 'Special Extraordinary', seed: 21 },
-            
-            // AK-47
-            { weapon: 'AK-47', skin: 'Case Hardened', defIndex: 7, paintIndex: 44, rarity: 'Classified', seed: 661 },
-            { weapon: 'AK-47', skin: 'Fire Serpent', defIndex: 7, paintIndex: 180, rarity: 'Covert', seed: 15 },
-            { weapon: 'AK-47', skin: 'Redline', defIndex: 7, paintIndex: 282, rarity: 'Classified', seed: 44 },
-            { weapon: 'AK-47', skin: 'Vulcan', defIndex: 7, paintIndex: 302, rarity: 'Covert', seed: 101 },
-
-            // AWP
-            { weapon: 'AWP', skin: 'Dragon Lore', defIndex: 9, paintIndex: 344, rarity: 'Covert', seed: 1 },
-            { weapon: 'AWP', skin: 'Asiimov', defIndex: 9, paintIndex: 279, rarity: 'Covert', seed: 99 },
-            { weapon: 'AWP', skin: 'Lightning Strike', defIndex: 9, paintIndex: 51, rarity: 'Covert', seed: 4 },
-
-            // M4A4 & M4A1-S
-            { weapon: 'M4A4', skin: 'Howl', defIndex: 16, paintIndex: 309, rarity: 'Covert', seed: 77 },
-            { weapon: 'M4A1-S', skin: 'Printstream', defIndex: 60, paintIndex: 984, rarity: 'Covert', seed: 55 },
-
-            // Desert Eagle
-            { weapon: 'Desert Eagle', skin: 'Printstream', defIndex: 1, paintIndex: 983, rarity: 'Classified', seed: 200 },
-            { weapon: 'Desert Eagle', skin: 'Blaze', defIndex: 1, paintIndex: 37, rarity: 'Restricted', seed: 420 }
-        ];
-
-        // --- CS:GO CASES ---
-        const CSGO_CASES = [
-            {
-                id: 'csgo_case_1',
-                name: 'CS:GO Weapon Case 1',
-                key: 'CS:GO Weapon Case Key',
-                items: [
-                    { weapon: 'MP7', skin: 'Skulls', defIndex: 33, paintIndex: 11, rarity: 'Mil-Spec' },
-                    { weapon: 'SG 553', skin: 'Ultraviolet', defIndex: 39, paintIndex: 98, rarity: 'Mil-Spec' },
-                    { weapon: 'USP-S', skin: 'Dark Water', defIndex: 61, paintIndex: 60, rarity: 'Restricted' },
-                    { weapon: 'AK-47', skin: 'Case Hardened', defIndex: 7, paintIndex: 44, rarity: 'Classified' },
-                    { weapon: 'AWP', skin: 'Lightning Strike', defIndex: 9, paintIndex: 51, rarity: 'Covert' },
-                    { weapon: 'Karambit', skin: 'Case Hardened', defIndex: 507, paintIndex: 44, rarity: 'Special Extraordinary' },
-                    { weapon: 'Karambit', skin: 'Fade', defIndex: 507, paintIndex: 38, rarity: 'Special Extraordinary' }
-                ]
-            },
-            {
-                id: 'breakout_case',
-                name: 'Operation Breakout Weapon Case',
-                key: 'Operation Breakout Key',
-                items: [
-                    { weapon: 'MP7', skin: 'Urban Hazard', defIndex: 33, paintIndex: 351, rarity: 'Mil-Spec' },
-                    { weapon: 'CZ75-Auto', skin: 'Tigris', defIndex: 63, paintIndex: 350, rarity: 'Mil-Spec' },
-                    { weapon: 'P250', skin: 'Supernova', defIndex: 36, paintIndex: 358, rarity: 'Restricted' },
-                    { weapon: 'Glock-18', skin: 'Water Elemental', defIndex: 4, paintIndex: 353, rarity: 'Restricted' },
-                    { weapon: 'Desert Eagle', skin: 'Conspiracy', defIndex: 1, paintIndex: 351, rarity: 'Classified' },
-                    { weapon: 'M4A1-S', skin: 'Cyrex', defIndex: 60, paintIndex: 360, rarity: 'Covert' },
-                    { weapon: 'Butterfly Knife', skin: 'Fade', defIndex: 515, paintIndex: 38, rarity: 'Special Extraordinary' },
-                    { weapon: 'Butterfly Knife', skin: 'Crimson Web', defIndex: 515, paintIndex: 12, rarity: 'Special Extraordinary' }
-                ]
-            }
-        ];
-
-        // --- GLOBAL APP STATE ---
-        let inventory = [
-            {
-                id: '1',
-                weapon: 'Karambit',
-                skin: 'Case Hardened',
-                defIndex: 507,
-                paintIndex: 44,
-                rarity: 'Special Extraordinary',
-                wear: 0.0820,
-                seed: 387,
-                stattrak: true,
-                equipped: '2,3',
-                nametag: 'Blue Gem 387'
-            },
-            {
-                id: '2',
-                weapon: 'AK-47',
-                skin: 'Case Hardened',
-                defIndex: 7,
-                paintIndex: 44,
-                rarity: 'Classified',
-                wear: 0.1240,
-                seed: 661,
-                stattrak: false,
-                equipped: '2',
-                nametag: 'Scar Pattern'
-            },
-            {
-                id: '3',
-                weapon: 'AWP',
-                skin: 'Dragon Lore',
-                defIndex: 9,
-                paintIndex: 344,
-                rarity: 'Covert',
-                wear: 0.0120,
-                seed: 1,
-                stattrak: false,
-                equipped: '3',
-                nametag: ''
-            }
-        ];
-
-        let selectedCase = CSGO_CASES[0];
-        let isSpinning = false;
-
-        // --- INITIALIZATION ---
-        window.onload = function() {
-            populatePresetDropdown();
-            populateCaseDropdown();
-            renderInventory();
-            renderCaseContents();
-            updateKeyValuesText();
-        };
-
-        // --- TAB SWITCHING ---
-        function switchTab(tab) {
-            document.getElementById('tab-inventory').classList.add('hidden');
-            document.getElementById('tab-unboxing').classList.add('hidden');
-            document.getElementById('tab-keyvalues').classList.add('hidden');
-
-            document.getElementById('tab-inv-btn').className = "px-5 py-2 text-xs font-bold uppercase text-gray-400 hover:text-white transition flex items-center space-x-2";
-            document.getElementById('tab-unbox-btn').className = "px-5 py-2 text-xs font-bold uppercase text-gray-400 hover:text-white transition flex items-center space-x-2";
-            document.getElementById('tab-kv-btn').className = "px-5 py-2 text-xs font-bold uppercase text-gray-400 hover:text-white transition flex items-center space-x-2";
-
-            if (tab === 'inventory') {
-                document.getElementById('tab-inventory').classList.remove('hidden');
-                document.getElementById('tab-inv-btn').className = "px-5 py-2 text-xs font-bold uppercase transition flex items-center space-x-2 bg-sfPanel text-sfGold border-t-2 border-sfGold";
-            } else if (tab === 'unboxing') {
-                document.getElementById('tab-unboxing').classList.remove('hidden');
-                document.getElementById('tab-unbox-btn').className = "px-5 py-2 text-xs font-bold uppercase transition flex items-center space-x-2 bg-sfPanel text-sfGold border-t-2 border-sfGold";
-            } else if (tab === 'keyvalues') {
-                document.getElementById('tab-keyvalues').classList.remove('hidden');
-                document.getElementById('tab-kv-btn').className = "px-5 py-2 text-xs font-bold uppercase transition flex items-center space-x-2 bg-sfPanel text-sfGold border-t-2 border-sfGold";
-                updateKeyValuesText();
-            }
-        }
-
-        // --- HELPER FUNCTIONS ---
-        function getRarityClass(rarity) {
-            switch(rarity) {
-                case 'Consumer': return 'rarity-consumer';
-                case 'Industrial': return 'rarity-industrial';
-                case 'Mil-Spec': return 'rarity-milspec';
-                case 'Restricted': return 'rarity-restricted';
-                case 'Classified': return 'rarity-classified';
-                case 'Covert': return 'rarity-covert';
-                case 'Special Extraordinary': return 'rarity-special';
-                default: return 'rarity-consumer';
-            }
-        }
-
-        function getRarityBg(rarity) {
-            switch(rarity) {
-                case 'Mil-Spec': return 'bg-rarityMilSpec';
-                case 'Restricted': return 'bg-rarityRestricted';
-                case 'Classified': return 'bg-rarityClassified';
-                case 'Covert': return 'bg-rarityCovert';
-                case 'Special Extraordinary': return 'bg-raritySpecial text-black';
-                default: return 'bg-gray-600';
-            }
-        }
-
-        function getWearName(wear) {
-            if (wear < 0.07) return 'Factory New';
-            if (wear < 0.15) return 'Minimal Wear';
-            if (wear < 0.38) return 'Field-Tested';
-            if (wear < 0.45) return 'Well-Worn';
-            return 'Battle-Scarred';
-        }
-
-        function populatePresetDropdown() {
-            const select = document.getElementById('preset-select');
-            select.innerHTML = '<option value="">-- Custom Item / Manual Entry --</option>';
-            WEAPON_PRESETS.forEach((p, idx) => {
-                const opt = document.createElement('option');
-                opt.value = idx;
-                opt.innerText = `${p.weapon} | ${p.skin} (def: ${p.defIndex}, paint: ${p.paintIndex})`;
-                select.appendChild(opt);
-            });
-        }
-
-        function applyPresetSelection() {
-            const val = document.getElementById('preset-select').value;
-            if (val === '') return;
-            const p = WEAPON_PRESETS[parseInt(val)];
-            if (!p) return;
-
-            document.getElementById('form-weapon').value = p.weapon;
-            document.getElementById('form-skin').value = p.skin;
-            document.getElementById('form-defindex').value = p.defIndex;
-            document.getElementById('form-paintindex').value = p.paintIndex;
-            document.getElementById('form-rarity').value = p.rarity;
-            if (p.seed) document.getElementById('form-seed').value = p.seed;
-        }
-
-        // --- INVENTORY MANAGER LOGIC ---
-        function renderInventory() {
-            const grid = document.getElementById('inventory-grid');
-            const search = document.getElementById('inv-search').value.toLowerCase();
-            const rarityFilter = document.getElementById('rarity-filter').value;
-            const emptyMsg = document.getElementById('empty-inv-msg');
-
-            grid.innerHTML = '';
-            
-            const filtered = inventory.filter(item => {
-                const nameMatch = `${item.weapon} ${item.skin} ${item.nametag}`.toLowerCase().includes(search);
-                const rarityMatch = rarityFilter === 'ALL' || item.rarity === rarityFilter;
-                return nameMatch && rarityMatch;
-            });
-
-            document.getElementById('inv-count').innerText = inventory.length;
-
-            if (filtered.length === 0) {
-                emptyMsg.classList.remove('hidden');
-                return;
-            } else {
-                emptyMsg.classList.add('hidden');
-            }
-
-            filtered.forEach(item => {
-                const card = document.createElement('div');
-                card.className = `scaleform-card p-3 rounded flex flex-col justify-between ${getRarityClass(item.rarity)}`;
-                
-                card.innerHTML = `
-                    <div>
-                        <div class="flex items-center justify-between text-[10px] text-gray-400 font-mono mb-1">
-                            <span>def:${item.defIndex} | paint:${item.paintIndex}</span>
-                            ${item.stattrak ? '<span class="text-[9px] font-bold text-sfGold bg-yellow-950/80 px-1 py-0.2 border border-sfGold/40 rounded">StatTrak™</span>' : ''}
-                        </div>
-                        
-                        <!-- SVG Display Graphics -->
-                        <div class="my-2">
-                            ${getItemSVG(item.weapon, item.skin)}
-                        </div>
-
-                        <div class="text-center space-y-0.5">
-                            <h4 class="font-cs text-lg leading-none text-white font-bold tracking-wide uppercase">
-                                ${item.weapon}
-                            </h4>
-                            <p class="text-xs text-sfAccent font-semibold truncate">${item.skin}</p>
-                            ${item.nametag ? `<p class="text-[11px] text-sfGold font-mono font-bold bg-sfGold/10 px-1.5 py-0.5 rounded border border-sfGold/30 inline-block mt-1">"${item.nametag}"</p>` : ''}
-                        </div>
-                    </div>
-
-                    <div class="mt-3 pt-2 border-t border-sfBorder flex items-center justify-between text-[10px] text-gray-400 font-mono">
-                        <span>${getWearName(item.wear)}</span>
-                        <div class="space-x-2">
-                            <button onclick="editItem('${item.id}')" class="hover:text-sfAccent" title="Edit Item"><i class="fa-solid fa-pen"></i></button>
-                            <button onclick="deleteItem('${item.id}')" class="hover:text-red-400" title="Delete Item"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        function deleteItem(id) {
-            inventory = inventory.filter(i => i.id !== id);
-            renderInventory();
-            updateKeyValuesText();
-        }
-
-        function clearInventory() {
-            if (confirm("Are you sure you want to clear your entire inventory?")) {
-                inventory = [];
-                renderInventory();
-                updateKeyValuesText();
-            }
-        }
-
-        function openAddItemModal() {
-            document.getElementById('modal-title').innerText = "ADD ITEM TO INVENTORY";
-            document.getElementById('edit-item-id').value = "";
-            document.getElementById('item-form').reset();
-            document.getElementById('preset-select').value = "";
-            document.getElementById('item-modal').classList.remove('hidden');
-        }
-
-        function editItem(id) {
-            const item = inventory.find(i => i.id === id);
-            if (!item) return;
-
-            document.getElementById('modal-title').innerText = "EDIT INVENTORY ITEM";
-            document.getElementById('edit-item-id').value = item.id;
-            document.getElementById('preset-select').value = "";
-            document.getElementById('form-weapon').value = item.weapon;
-            document.getElementById('form-skin').value = item.skin;
-            document.getElementById('form-defindex').value = item.defIndex;
-            document.getElementById('form-paintindex').value = item.paintIndex;
-            document.getElementById('form-rarity').value = item.rarity;
-            document.getElementById('form-wear').value = item.wear;
-            document.getElementById('form-seed').value = item.seed || 1;
-            document.getElementById('form-equipped').value = item.equipped || 'none';
-            document.getElementById('form-stattrak').checked = item.stattrak;
-            document.getElementById('form-nametag').value = item.nametag || '';
-
-            document.getElementById('item-modal').classList.remove('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('item-modal').classList.add('hidden');
-        }
-
-        function saveCustomItem(e) {
-            e.preventDefault();
-            const id = document.getElementById('edit-item-id').value;
-            
-            const itemData = {
-                id: id || String(Date.now()),
-                weapon: document.getElementById('form-weapon').value,
-                skin: document.getElementById('form-skin').value,
-                defIndex: parseInt(document.getElementById('form-defindex').value) || 507,
-                paintIndex: parseInt(document.getElementById('form-paintindex').value) || 0,
-                rarity: document.getElementById('form-rarity').value,
-                wear: parseFloat(document.getElementById('form-wear').value) || 0.0150,
-                seed: parseInt(document.getElementById('form-seed').value) || 387,
-                equipped: document.getElementById('form-equipped').value,
-                stattrak: document.getElementById('form-stattrak').checked,
-                nametag: document.getElementById('form-nametag').value
-            };
-
-            if (id) {
-                const index = inventory.findIndex(i => i.id === id);
-                if (index !== -1) inventory[index] = itemData;
-            } else {
-                inventory.unshift(itemData);
-            }
-
-            closeModal();
-            renderInventory();
-            updateKeyValuesText();
-        }
-
-        // --- CASE UNBOXING LOGIC ---
-        function populateCaseDropdown() {
-            const select = document.getElementById('case-select');
-            select.innerHTML = '';
-            CSGO_CASES.forEach(c => {
-                const opt = document.createElement('option');
-                opt.value = c.id;
-                opt.innerText = c.name;
-                select.appendChild(opt);
-            });
-            loadSelectedCase();
-        }
-
-        function loadSelectedCase() {
-            const id = document.getElementById('case-select').value;
-            selectedCase = CSGO_CASES.find(c => c.id === id);
-            document.getElementById('case-title').innerText = selectedCase.name;
-            document.getElementById('key-title').innerText = selectedCase.key;
-            renderCaseContents();
-            setupSpinnerTrack();
-        }
-
-        function renderCaseContents() {
-            const grid = document.getElementById('case-contents-grid');
-            grid.innerHTML = '';
-            selectedCase.items.forEach(item => {
-                const card = document.createElement('div');
-                card.className = `bg-sfBg border border-sfBorder rounded p-2 text-center ${getRarityClass(item.rarity)}`;
-                card.innerHTML = `
-                    <div class="h-12 flex items-center justify-center">${getItemSVG(item.weapon, item.skin)}</div>
-                    <div class="font-cs text-xs text-white font-bold uppercase truncate">${item.weapon}</div>
-                    <div class="text-[10px] text-sfAccent truncate">${item.skin}</div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        function getRandomItemFromCase() {
-            const rand = Math.random() * 100;
-            let targetRarity = 'Mil-Spec';
-
-            if (rand < 0.26) targetRarity = 'Special Extraordinary';
-            else if (rand < 0.26 + 0.64) targetRarity = 'Covert';
-            else if (rand < 0.26 + 0.64 + 3.20) targetRarity = 'Classified';
-            else if (rand < 0.26 + 0.64 + 3.20 + 15.98) targetRarity = 'Restricted';
-            else targetRarity = 'Mil-Spec';
-
-            let pool = selectedCase.items.filter(i => i.rarity === targetRarity);
-            if (pool.length === 0) pool = selectedCase.items;
-
-            const selected = pool[Math.floor(Math.random() * pool.length)];
-            const wear = parseFloat((Math.random() * 0.99).toFixed(4));
-            const seed = Math.floor(Math.random() * 1000) + 1;
-            const stattrak = Math.random() < 0.10;
-
-            return {
-                ...selected,
-                id: String(Date.now() + Math.floor(Math.random() * 1000)),
-                wear: wear,
-                seed: seed,
-                stattrak: stattrak,
-                equipped: 'none',
-                nametag: ''
-            };
-        }
-
-        let spinnerItems = [];
-
-        function setupSpinnerTrack() {
-            const track = document.getElementById('spinner-track');
-            track.style.transition = 'none';
-            track.style.transform = 'translateX(0px)';
-            track.innerHTML = '';
-
-            spinnerItems = [];
-            for (let i = 0; i < 80; i++) {
-                spinnerItems.push(getRandomItemFromCase());
-            }
-
-            spinnerItems.forEach(item => {
-                const card = document.createElement('div');
-                card.className = `w-36 h-full flex-shrink-0 bg-sfBg border-r border-sfBorder flex flex-col items-center justify-center p-2 relative ${getRarityClass(item.rarity)}`;
-                card.innerHTML = `
-                    <div class="w-full h-20">${getItemSVG(item.weapon, item.skin)}</div>
-                    <div class="font-cs text-sm font-bold text-white text-center leading-none uppercase truncate w-full mt-1">${item.weapon}</div>
-                    <div class="text-[10px] text-sfAccent font-semibold text-center truncate w-full">${item.skin}</div>
-                `;
-                track.appendChild(card);
-            });
-        }
-
-        function startUnboxing() {
-            if (isSpinning) return;
-            isSpinning = true;
-
-            document.getElementById('open-case-btn').disabled = true;
-            document.getElementById('unbox-result').classList.add('hidden');
-
-            setupSpinnerTrack();
-
-            const winningIndex = 65;
-            const winningItem = spinnerItems[winningIndex];
-
-            const itemWidth = 144;
-            const viewportWidth = document.querySelector('.spinner-viewport').offsetWidth;
-            const randomOffset = Math.floor(Math.random() * (itemWidth - 20)) + 10;
-            const targetTranslate = (winningIndex * itemWidth) - (viewportWidth / 2) + randomOffset;
-
-            const track = document.getElementById('spinner-track');
-            
-            let ticks = 0;
-            const tickInterval = setInterval(() => {
-                ticks++;
-                playTickSound();
-                if (ticks > 25) clearInterval(tickInterval);
-            }, 180);
-
-            setTimeout(() => {
-                track.style.transition = 'transform 5.5s cubic-bezier(0.08, 0.82, 0.17, 1)';
-                track.style.transform = `translateX(-${targetTranslate}px)`;
-            }, 50);
-
-            setTimeout(() => {
-                isSpinning = false;
-                document.getElementById('open-case-btn').disabled = false;
-                
-                inventory.unshift(winningItem);
-                renderInventory();
-                updateKeyValuesText();
-
-                playUnboxSound(winningItem.rarity);
-                showUnboxResult(winningItem);
-            }, 5700);
-        }
-
-        function quickUnbox(count) {
-            if (isSpinning) return;
-            for (let i = 0; i < count; i++) {
-                const item = getRandomItemFromCase();
-                inventory.unshift(item);
-            }
-            renderInventory();
-            updateKeyValuesText();
-            alert(`Quickly opened ${count} cases! Items added to your inventory.`);
-        }
-
-        function showUnboxResult(item) {
-            const resBox = document.getElementById('unbox-result');
-            document.getElementById('result-icon').innerHTML = getItemSVG(item.weapon, item.skin);
-            document.getElementById('result-name').innerText = `${item.weapon} | ${item.skin}`;
-            document.getElementById('result-wear').innerText = `${getWearName(item.wear)} (Float: ${item.wear})`;
-            
-            const rarityTag = document.getElementById('result-rarity');
-            rarityTag.innerText = item.rarity;
-            rarityTag.className = `inline-block px-3 py-1 text-xs font-bold rounded uppercase tracking-wider ${getRarityBg(item.rarity)}`;
-
-            resBox.classList.remove('hidden');
-        }
-
-        function dismissResult() {
-            document.getElementById('unbox-result').classList.add('hidden');
-        }
-
-        // --- SCALEFORM CS:GO 2016 KEYVALUES EXPORT & IMPORT LOGIC ---
-        function getRarityCode(rarity) {
-            switch(rarity) {
-                case 'Consumer': return '1';
-                case 'Industrial': return '2';
-                case 'Mil-Spec': return '3';
-                case 'Restricted': return '4';
-                case 'Classified': return '5';
-                case 'Covert': return '6';
-                case 'Special Extraordinary': return '6';
-                default: return '3';
-            }
-        }
-
-        function updateKeyValuesText() {
-            let kv = `"items"\n{\n`;
-            inventory.forEach((item, index) => {
-                const itemIdx = index + 1;
-                kv += `  "${itemIdx}"\n  {\n`;
-                kv += `    "inventory_id" "${itemIdx}"\n`;
-                kv += `    "def_index" "${item.defIndex}"\n`;
-                kv += `    "level" "1"\n`;
-                kv += `    "quality" "4"\n`;
-                kv += `    "flags" "0"\n`;
-                kv += `    "origin" "8"\n`;
-                kv += `    "rarity" "${getRarityCode(item.rarity)}"\n`;
-                
-                if (item.equipped && item.equipped !== 'none') {
-                    kv += `    "equipped_state" "${item.equipped}"\n`;
-                    kv += `    "in_use" "1"\n`;
-                } else {
-                    kv += `    "in_use" "0"\n`;
-                }
-
-                if (item.nametag) {
-                    kv += `    "custom_name" "${item.nametag}"\n`;
-                }
-
-                // Attributes Sub-block matching CS:GO 2016 GC KeyValues
-                kv += `    "attributes"\n    {\n`;
-                kv += `      "6" "${item.paintIndex}"\n`;  // Paint Kit ID
-                kv += `      "7" "${item.seed || 387}"\n`;   // Pattern Seed
-                kv += `      "8" "${parseFloat(item.wear).toFixed(4)}"\n`; // Float Wear
-                if (item.stattrak) {
-                    kv += `      "80" "0"\n`; // StatTrak marker
-                }
-                kv += `    }\n`;
-                kv += `  }\n`;
-            });
-            kv += `}`;
-            
-            document.getElementById('kv-textarea').value = kv;
-        }
-
-        function parseRawKeyValues() {
-            const raw = document.getElementById('kv-textarea').value;
-            try {
-                const itemBlocks = raw.match(/"\d+"\s*\{[^}]+\}/g);
-                if (!itemBlocks) {
-                    alert("No valid item blocks found in KeyValues text.");
-                    return;
-                }
-
-                const newInventory = [];
-                itemBlocks.forEach((block, idx) => {
-                    const getVal = (key) => {
-                        const m = block.match(new RegExp(`"${key}"\\s+"([^"]+)"`));
-                        return m ? m[1] : null;
-                    };
-
-                    const defIndex = parseInt(getVal('def_index')) || 507;
-                    const paintIndex = parseInt(getVal('6')) || parseInt(getVal('paint_index')) || 0;
-                    const wear = parseFloat(getVal('8')) || parseFloat(getVal('wear')) || 0.015;
-                    const seed = parseInt(getVal('7')) || parseInt(getVal('seed')) || 387;
-                    const equipped = getVal('equipped_state') || 'none';
-                    const nametag = getVal('custom_name') || "";
-                    
-                    const matchedPreset = WEAPON_PRESETS.find(p => p.defIndex === defIndex && p.paintIndex === paintIndex);
-                    
-                    const weaponName = matchedPreset ? matchedPreset.weapon : (defIndex === 507 ? 'Karambit' : (defIndex === 515 ? 'Butterfly Knife' : (defIndex === 7 ? 'AK-47' : 'Weapon #' + defIndex)));
-                    const skinName = matchedPreset ? matchedPreset.skin : 'Paint Kit ' + paintIndex;
-                    const rarity = matchedPreset ? matchedPreset.rarity : 'Covert';
-
-                    newInventory.push({
-                        id: String(Date.now() + idx),
-                        weapon: weaponName,
-                        skin: skinName,
-                        defIndex: defIndex,
-                        paintIndex: paintIndex,
-                        rarity: rarity,
-                        wear: wear,
-                        seed: seed,
-                        equipped: equipped,
-                        stattrak: block.includes('"80"'),
-                        nametag: nametag
-                    });
-                });
-
-                inventory = newInventory;
-                renderInventory();
-                alert(`Successfully loaded ${inventory.length} items from KeyValues!`);
-            } catch (err) {
-                alert("Error parsing KeyValues file. Please check format syntax.");
-            }
-        }
-
-        function exportToClipboard() {
-            const text = document.getElementById('kv-textarea').value;
-            navigator.clipboard.writeText(text).then(() => {
-                alert("KeyValues copied to clipboard!");
-            });
-        }
-
-        function downloadKVFile() {
-            const text = document.getElementById('kv-textarea').value;
-            const blob = new Blob([text], { type: 'text/plain' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = 'inventory.txt';
-            a.click();
-        }
-    </script>
+        kv += `\t}\n`;
+      });
+
+      kv += `}\n`;
+      kv += `"default_equips"\n{\n}\n`;
+
+      return kv;
+    }
+
+    function updateKeyValuesOutput() {
+      document.getElementById('kv-output').value = generateKeyValues();
+    }
+
+    function copyToClipboard() {
+      navigator.clipboard.writeText(generateKeyValues()).then(() => {
+        showToast("KeyValues copied to clipboard!");
+      });
+    }
+
+    function downloadInventoryFile() {
+      const blob = new Blob([generateKeyValues()], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'inventory.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast("inventory.txt downloaded!");
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2500);
+    }
+  </script>
 </body>
 </html>
