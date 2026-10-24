@@ -60,17 +60,21 @@
     }
 
     /* Rarity Glow and Borders */
-    .rarity-2 { border-color: #4b69ff; }
-    .rarity-3 { border-color: #8847ff; }
-    .rarity-4 { border-color: #d32ce6; }
-    .rarity-5 { border-color: #eb4b4b; }
-    .rarity-6 { border-color: #ffd700; }
+    .rarity-1 { border-color: #b0c3d9; }
+    .rarity-2 { border-color: #5e98d9; }
+    .rarity-3 { border-color: #4b69ff; }
+    .rarity-4 { border-color: #8847ff; }
+    .rarity-5 { border-color: #d32ce6; }
+    .rarity-6 { border-color: #eb4b4b; }
+    .rarity-7 { border-color: #ffd700; }
 
-    .rarity-glow-2 { box-shadow: inset 0 -30px 30px -10px rgba(75, 105, 255, 0.2); }
-    .rarity-glow-3 { box-shadow: inset 0 -30px 30px -10px rgba(136, 71, 255, 0.2); }
-    .rarity-glow-4 { box-shadow: inset 0 -30px 30px -10px rgba(211, 44, 230, 0.2); }
-    .rarity-glow-5 { box-shadow: inset 0 -30px 30px -10px rgba(235, 75, 75, 0.2); }
-    .rarity-glow-6 { box-shadow: inset 0 -30px 30px -10px rgba(255, 215, 0, 0.25); }
+    .rarity-glow-1 { box-shadow: inset 0 -30px 30px -10px rgba(176, 195, 217, 0.15); }
+    .rarity-glow-2 { box-shadow: inset 0 -30px 30px -10px rgba(94, 152, 217, 0.2); }
+    .rarity-glow-3 { box-shadow: inset 0 -30px 30px -10px rgba(75, 105, 255, 0.2); }
+    .rarity-glow-4 { box-shadow: inset 0 -30px 30px -10px rgba(136, 71, 255, 0.2); }
+    .rarity-glow-5 { box-shadow: inset 0 -30px 30px -10px rgba(211, 44, 230, 0.2); }
+    .rarity-glow-6 { box-shadow: inset 0 -30px 30px -10px rgba(235, 75, 75, 0.2); }
+    .rarity-glow-7 { box-shadow: inset 0 -30px 30px -10px rgba(255, 215, 0, 0.25); }
 
     /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -127,111 +131,8 @@
           <!-- PRESET SELECTION -->
           <div>
             <label class="block text-xs font-bold text-blue-200/80 mb-1 uppercase tracking-wider">All 2013-2016 Presets</label>
+            <input type="text" id="preset-filter" oninput="filterPresets()" placeholder="Search skin / knife / case..." class="w-full mb-1.5 bg-slate-950/90 border border-slate-700/80 rounded px-3 py-1.5 text-xs text-white focus:outline-none focus:border-blue-400">
             <select id="preset-select" onchange="loadPresetItem()" class="w-full bg-slate-950/90 border border-slate-700/80 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-400">
-              
-              <optgroup label="--- ★ KNIVES (ALL FINISHES) ---">
-                <option value="515_38">★ Butterfly Knife | Fade</option>
-                <option value="515_418">★ Butterfly Knife | Doppler Phase 1</option>
-                <option value="515_12">★ Butterfly Knife | Crimson Web</option>
-                <option value="515_44">★ Butterfly Knife | Case Hardened</option>
-                <option value="515_0">★ Butterfly Knife | Vanilla</option>
-                <option value="507_38">★ Karambit | Fade</option>
-                <option value="507_44">★ Karambit | Case Hardened (Blue Gem)</option>
-                <option value="507_418">★ Karambit | Doppler Phase 1</option>
-                <option value="507_415">★ Karambit | Ruby</option>
-                <option value="507_416">★ Karambit | Sapphire</option>
-                <option value="507_12">★ Karambit | Crimson Web</option>
-                <option value="507_0">★ Karambit | Vanilla</option>
-                <option value="508_419">★ M9 Bayonet | Doppler Phase 2</option>
-                <option value="508_38">★ M9 Bayonet | Fade</option>
-                <option value="508_12">★ M9 Bayonet | Crimson Web</option>
-                <option value="508_0">★ M9 Bayonet | Vanilla</option>
-                <option value="500_415">★ Bayonet | Ruby</option>
-                <option value="500_38">★ Bayonet | Fade</option>
-                <option value="500_0">★ Bayonet | Vanilla</option>
-                <option value="506_38">★ Flip Knife | Fade</option>
-                <option value="506_415">★ Flip Knife | Ruby</option>
-                <option value="505_418">★ Gut Knife | Doppler</option>
-                <option value="512_38">★ Huntsman Knife | Fade</option>
-                <option value="512_12">★ Huntsman Knife | Crimson Web</option>
-                <option value="509_38">★ Falchion Knife | Fade</option>
-                <option value="516_12">★ Shadow Daggers | Crimson Web</option>
-                <option value="516_38">★ Shadow Daggers | Fade</option>
-                <option value="514_38">★ Bowie Knife | Fade (Wildfire)</option>
-                <option value="514_12">★ Bowie Knife | Crimson Web</option>
-              </optgroup>
-
-              <optgroup label="--- COVERTS & ICONIC RIFLES ---">
-                <option value="9_344">AWP | Dragon Lore (Cobblestone)</option>
-                <option value="9_279">AWP | Asiimov</option>
-                <option value="9_422">AWP | Hyper Beast</option>
-                <option value="9_38">AWP | Lightning Strike</option>
-                <option value="9_181">AWP | Corticera</option>
-                <option value="9_340">AWP | Man-o'-war</option>
-                <option value="7_180">AK-47 | Fire Serpent (Bravo)</option>
-                <option value="7_38">AK-47 | Redline</option>
-                <option value="7_300">AK-47 | Vulcan</option>
-                <option value="7_490">AK-47 | Frontside Misty</option>
-                <option value="7_524">AK-47 | Point Disarray (Wildfire)</option>
-                <option value="7_44">AK-47 | Case Hardened</option>
-                <option value="7_172">AK-47 | Black Laminate</option>
-                <option value="16_309">M4A4 | Howl (Contraband)</option>
-                <option value="16_255">M4A4 | Asiimov</option>
-                <option value="16_384">M4A4 | Dragon King</option>
-                <option value="16_512">M4A4 | The Battlestar (Wildfire)</option>
-                <option value="60_430">M4A1-S | Hyper Beast</option>
-                <option value="60_440">M4A1-S | Golden Coil</option>
-                <option value="60_321">M4A1-S | Cyrex</option>
-                <option value="60_257">M4A1-S | Master Piece</option>
-                <option value="60_189">M4A1-S | Atomic Alloy</option>
-                <option value="60_301">M4A1-S | Chantico's Fire</option>
-              </optgroup>
-
-              <optgroup label="--- PISTOLS & SMGs ---">
-                <option value="1_180">Desert Eagle | Hypnotic</option>
-                <option value="1_351">Desert Eagle | Conspiracy</option>
-                <option value="1_470">Desert Eagle | Sunset Storm</option>
-                <option value="1_527">Desert Eagle | Kumicho Dragon (Wildfire)</option>
-                <option value="1_231">Desert Eagle | Blaze</option>
-                <option value="4_38">Glock-18 | Fade</option>
-                <option value="4_353">Glock-18 | Water Elemental</option>
-                <option value="4_437">Glock-18 | Reactor</option>
-                <option value="61_501">USP-S | Kill Confirmed</option>
-                <option value="61_313">USP-S | Caiman</option>
-                <option value="61_221">USP-S | Serum</option>
-                <option value="61_290">USP-S | Orion</option>
-
-                <option value="63_522">CZ75-Auto | Victoria</option>
-                <option value="64_523">Revolver R8 | Fade</option>
-                <option value="19_233">P90 | Asiimov</option>
-                <option value="19_182">P90 | Trigon</option>
-              </optgroup>
-
-              <optgroup label="--- CASES (2013-2016) ---">
-                <option value="4001_0">CS:GO Weapon Case 1</option>
-                <option value="4004_0">Operation Bravo Case</option>
-                <option value="4008_0">eSports 2013 Winter Case</option>
-                <option value="4009_0">CS:GO Weapon Case 2</option>
-                <option value="4011_0">Operation Phoenix Weapon Case</option>
-                <option value="4013_0">Huntsman Weapon Case</option>
-                <option value="4014_0">Operation Breakout Weapon Case</option>
-                <option value="4015_0">Operation Vanguard Weapon Case</option>
-                <option value="4017_0">Chroma Case</option>
-                <option value="4018_0">Chroma 2 Case</option>
-                <option value="4019_0">Falchion Case</option>
-                <option value="4020_0">Shadow Case</option>
-                <option value="4021_0">Revolver Case</option>
-                <option value="4022_0">Operation Wildfire Case</option>
-              </optgroup>
-
-              <optgroup label="--- KEYS & TOOLS ---">
-                <option value="1201_0">CS:GO Case Key</option>
-                <option value="1203_0">Operation Phoenix Key</option>
-                <option value="1204_0">Operation Breakout Key</option>
-                <option value="1209_0">Operation Wildfire Key</option>
-                <option value="1202_0">eSports Key</option>
-              </optgroup>
-
             </select>
           </div>
 
@@ -270,7 +171,8 @@
             </div>
             <div>
               <label class="block text-xs font-bold text-blue-200/80 mb-1 uppercase tracking-wider">Pattern Seed</label>
-              <input type="number" id="input-seed" class="w-full bg-slate-950/90 border border-slate-700/80 rounded px-3 py-1.5 font-mono text-xs text-white focus:outline-none focus:border-blue-400" value="41">
+              <input type="number" id="input-seed" min="0" max="1000" class="w-full bg-slate-950/90 border border-slate-700/80 rounded px-3 py-1.5 font-mono text-xs text-white focus:outline-none focus:border-blue-400" value="41">
+              <p class="text-[9px] text-slate-400 mt-1 font-mono leading-snug">Case Hardened look depends on the seed (0-1000). AK-47 blue gems: 661, 670, 955, 179, 387, 151, 321.</p>
             </div>
           </div>
 
@@ -278,11 +180,13 @@
           <div>
             <label class="block text-xs font-bold text-blue-200/80 mb-1 uppercase tracking-wider">Rarity Category</label>
             <select id="input-rarity" class="w-full bg-slate-950/90 border border-slate-700/80 rounded px-3 py-1.5 text-xs text-white focus:outline-none focus:border-blue-400">
-              <option value="2">Mil-Spec Grade (Blue)</option>
-              <option value="3">Restricted (Purple)</option>
-              <option value="4">Classified (Pink)</option>
-              <option value="5">Covert (Red)</option>
-              <option value="6" selected>★ Special Item / Knife (Gold)</option>
+              <option value="1">Consumer Grade (White)</option>
+              <option value="2">Industrial Grade (Light Blue)</option>
+              <option value="3">Mil-Spec Grade (Blue)</option>
+              <option value="4">Restricted (Purple)</option>
+              <option value="5">Classified (Pink)</option>
+              <option value="6" selected>Covert (Red) / ★ Knife (Gold)</option>
+              <option value="7">Contraband (Orange)</option>
             </select>
           </div>
 
@@ -344,120 +248,78 @@
   </div>
 
   <script>
-    // EXPANDED 2013-2016 PRESET CATALOGUE
-    const PRESETS = {
-      // KNIVES
-      "515_38": { name: "★ Butterfly Knife | Fade", def_index: 515, paint_kit: 38, wear: 0.01, seed: 41, rarity: 6 },
-      "515_418": { name: "★ Butterfly Knife | Doppler P1", def_index: 515, paint_kit: 418, wear: 0.02, seed: 120, rarity: 6 },
-      "515_12": { name: "★ Butterfly Knife | Crimson Web", def_index: 515, paint_kit: 12, wear: 0.07, seed: 15, rarity: 6 },
-      "515_44": { name: "★ Butterfly Knife | Case Hardened", def_index: 515, paint_kit: 44, wear: 0.12, seed: 99, rarity: 6 },
-      "515_0": { name: "★ Butterfly Knife | Vanilla", def_index: 515, paint_kit: 0, wear: 0, seed: 0, rarity: 6 },
+    // CATALOGUE generated from the game's own items_game.txt (2013 - Operation Wildfire, Feb 2016)
+    // skins:  [key, name, def_index, paint_kit, rarity, loadout_slot, group]
+    // knives: [key, name, def_index, paint_kit]      crates: [key, name, def_index, key_def_index]
+    const DATA = {"groups":["Arms Deal","eSports 2013","Bravo","Arms Deal 2","eSports 2013 Winter","Winter Offensive","Arms Deal 3","Phoenix","Huntsman","Breakout","eSports 2014 Summer","Vanguard","Chroma","Chroma 2","Falchion","Shadow","Revolver Case","Wildfire","Dust","Aztec","Vertigo","Inferno","Militia","Nuke","Office","Assault","Alpha","Dust 2","Train","Mirage","Italy","Lake","Safehouse","Bank","Overpass","Cobblestone","Baggage","Cache","Gods and Monsters","Contraband"],"skins":[["7_474","AK-47 | Aquamarine Revenge",7,474,6,15,"Falchion"],["7_172","AK-47 | Black Laminate",7,172,3,15,"Vertigo"],["7_226","AK-47 | Blue Laminate",7,226,4,15,"eSports 2013 Winter"],["7_394","AK-47 | Cartel",7,394,5,15,"Chroma"],["7_44","AK-47 | Case Hardened",7,44,5,15,"Arms Deal"],["7_422","AK-47 | Elite Build",7,422,3,15,"Chroma 2"],["7_300","AK-47 | Emerald Pinstripe",7,300,4,15,"Bank"],["7_180","AK-47 | Fire Serpent",7,180,6,15,"Bravo"],["7_341","AK-47 | First Class",7,341,4,15,"Baggage"],["7_490","AK-47 | Frontside Misty",7,490,5,15,"Shadow"],["7_524","AK-47 | Fuel Injector",7,524,6,15,"Wildfire"],["7_316","AK-47 | Jaguar",7,316,6,15,"eSports 2014 Summer"],["7_340","AK-47 | Jet Set",7,340,5,15,"Baggage"],["7_122","AK-47 | Jungle Spray",7,122,2,15,"Aztec"],["7_506","AK-47 | Point Disarray",7,506,5,15,"Revolver Case"],["7_170","AK-47 | Predator",7,170,2,15,"Dust"],["7_14","AK-47 | Red Laminate",7,14,5,15,"eSports 2013"],["7_282","AK-47 | Redline",7,282,5,15,"Phoenix"],["7_72","AK-47 | Safari Mesh",7,72,2,15,"Dust 2"],["7_302","AK-47 | Vulcan",7,302,6,15,"Huntsman"],["7_380","AK-47 | Wasteland Rebel",7,380,6,15,"Vanguard"],["8_197","AUG | Anodized Navy",8,197,3,17,"Alpha"],["8_9","AUG | Bengal Tiger",8,9,5,17,"eSports 2014 Summer"],["8_280","AUG | Chameleon",8,280,6,17,"Phoenix"],["8_47","AUG | Colony",8,47,1,17,"Mirage"],["8_110","AUG | Condemned",8,110,2,17,"Safehouse"],["8_46","AUG | Contractor",8,46,1,17,"Italy"],["8_10","AUG | Copperhead",8,10,3,17,"Dust"],["8_444","AUG | Daedalus",8,444,1,17,"Gods and Monsters"],["8_33","AUG | Hot Rod",8,33,3,17,"Assault"],["8_375","AUG | Radiation Hazard",8,375,2,17,"Cache"],["8_507","AUG | Ricochet",8,507,3,17,"Revolver Case"],["8_100","AUG | Storm",8,100,1,17,"Lake"],["8_305","AUG | Torque",8,305,4,17,"Huntsman"],["8_73","AUG | Wings",8,73,3,17,"Arms Deal"],["9_279","AWP | Asiimov",9,279,6,18,"Phoenix"],["9_174","AWP | BOOM",9,174,5,18,"eSports 2013"],["9_181","AWP | Corticera",9,181,5,18,"eSports 2014 Summer"],["9_344","AWP | Dragon Lore",9,344,6,18,"Cobblestone"],["9_227","AWP | Electric Hive",9,227,5,18,"eSports 2013 Winter"],["9_525","AWP | Elite Build",9,525,5,18,"Wildfire"],["9_212","AWP | Graphite",9,212,5,18,"Bravo"],["9_475","AWP | Hyper Beast",9,475,6,18,"Falchion"],["9_51","AWP | Lightning Strike",9,51,6,18,"Arms Deal"],["9_395","AWP | Man-o'-war",9,395,6,18,"Chroma"],["9_446","AWP | Medusa",9,446,6,18,"Gods and Monsters"],["9_84","AWP | Pink DDPAT",9,84,4,18,"Overpass"],["9_251","AWP | Pit Viper",9,251,4,18,"Italy"],["9_259","AWP | Redline",9,259,5,18,"Winter Offensive"],["9_72","AWP | Safari Mesh",9,72,2,18,"Lake"],["9_30","AWP | Snake Camo",9,30,3,18,"Dust"],["9_451","AWP | Sun in Leo",9,451,2,18,"Gods and Monsters"],["9_424","AWP | Worm God",9,424,4,18,"Chroma 2"],["26_306","PP-Bizon | Antique",26,306,4,12,"Huntsman"],["26_13","PP-Bizon | Blue Streak",26,13,4,12,"eSports 2014 Summer"],["26_159","PP-Bizon | Brass",26,159,3,12,"Dust 2"],["26_70","PP-Bizon | Carbon Fiber",26,70,2,12,"Vertigo"],["26_376","PP-Bizon | Chemical Green",26,376,2,12,"Cache"],["26_267","PP-Bizon | Cobalt Halftone",26,267,3,12,"Winter Offensive"],["26_25","PP-Bizon | Forest Leaves",26,25,1,12,"Militia"],["26_508","PP-Bizon | Fuel Rod",26,508,4,12,"Revolver Case"],["26_171","PP-Bizon | Irradiated Alert",26,171,1,12,"Nuke"],["26_164","PP-Bizon | Modern Hunter",26,164,3,12,"Militia"],["26_236","PP-Bizon | Night Ops",26,236,2,12,"Lake"],["26_349","PP-Bizon | Osiris",26,349,4,12,"Breakout"],["26_526","PP-Bizon | Photic Zone",26,526,3,12,"Wildfire"],["26_203","PP-Bizon | Rust Coat",26,203,3,12,"Alpha"],["26_148","PP-Bizon | Sand Dashed",26,148,1,12,"Italy"],["26_149","PP-Bizon | Urban Dashed",26,149,1,12,"Train"],["26_224","PP-Bizon | Water Sigil",26,224,3,12,"eSports 2013 Winter"],["63_325","CZ75-Auto | Chalice",63,325,4,5,"Cobblestone"],["63_12","CZ75-Auto | Crimson Web",63,12,3,5,"Arms Deal 3"],["63_366","CZ75-Auto | Green Plaid",63,366,1,5,"Baggage"],["63_218","CZ75-Auto | Hexane",63,218,3,5,"eSports 2014 Summer"],["63_322","CZ75-Auto | Nitro",63,322,3,5,"Overpass"],["63_315","CZ75-Auto | Poison Dart",63,315,3,5,"Huntsman"],["63_435","CZ75-Auto | Pole Position",63,435,4,5,"Chroma 2"],["63_269","CZ75-Auto | The Fuschia Is Now",63,269,5,5,"Arms Deal 3"],["63_350","CZ75-Auto | Tigris",63,350,4,5,"Breakout"],["63_268","CZ75-Auto | Tread Plate",63,268,4,5,"Arms Deal 3"],["63_297","CZ75-Auto | Tuxedo",63,297,3,5,"Bank"],["63_334","CZ75-Auto | Twist",63,334,3,5,"Huntsman"],["63_270","CZ75-Auto | Victoria",63,270,6,5,"Arms Deal 3"],["63_476","CZ75-Auto | Yellow Jacket",63,476,5,5,"Falchion"],["1_37","Desert Eagle | Blaze",1,37,4,6,"Dust"],["1_425","Desert Eagle | Bronze Deco",1,425,3,6,"Chroma 2"],["1_231","Desert Eagle | Cobalt Disruption",1,231,5,6,"eSports 2013 Winter"],["1_351","Desert Eagle | Conspiracy",1,351,5,6,"Breakout"],["1_509","Desert Eagle | Corinthian",1,509,3,6,"Revolver Case"],["1_232","Desert Eagle | Crimson Web",1,232,4,6,"eSports 2014 Summer"],["1_185","Desert Eagle | Golden Koi",1,185,6,6,"Bravo"],["1_328","Desert Eagle | Hand Cannon",1,328,4,6,"Cobblestone"],["1_273","Desert Eagle | Heirloom",1,273,4,6,"Arms Deal 3"],["1_61","Desert Eagle | Hypnotic",1,61,5,6,"Arms Deal"],["1_527","Desert Eagle | Kumicho Dragon",1,527,5,6,"Wildfire"],["1_296","Desert Eagle | Meteorite",1,296,3,6,"Bank"],["1_90","Desert Eagle | Mudder",1,90,2,6,"Lake"],["1_397","Desert Eagle | Naga",1,397,4,6,"Chroma"],["1_347","Desert Eagle | Pilot",1,347,4,6,"Baggage"],["1_17","Desert Eagle | Urban DDPAT",1,17,2,6,"Overpass"],["1_237","Desert Eagle | Urban Rubble",1,237,3,6,"Train"],["2_28","Dual Berettas | Anodized Navy",2,28,3,3,"Inferno"],["2_190","Dual Berettas | Black Limba",2,190,3,3,"Bravo"],["2_330","Dual Berettas | Briar",2,330,1,3,"Cobblestone"],["2_528","Dual Berettas | Cartel",2,528,3,3,"Wildfire"],["2_249","Dual Berettas | Cobalt Quartz",2,249,4,3,"Lake"],["2_47","Dual Berettas | Colony",2,47,1,3,"Train"],["2_46","Dual Berettas | Contractor",2,46,1,3,"Safehouse"],["2_153","Dual Berettas | Demolition",2,153,4,3,"Vertigo"],["2_491","Dual Berettas | Dualing Dragons",2,491,3,3,"Shadow"],["2_220","Dual Berettas | Hemoglobin",2,220,4,3,"Arms Deal 2"],["2_261","Dual Berettas | Marina",2,261,4,3,"Winter Offensive"],["2_450","Dual Berettas | Moon in Libra",2,450,1,3,"Gods and Monsters"],["2_276","Dual Berettas | Panther",2,276,3,3,"Arms Deal 3"],["2_307","Dual Berettas | Retribution",2,307,3,3,"Huntsman"],["2_43","Dual Berettas | Stained",2,43,2,3,"Italy"],["2_396","Dual Berettas | Urban Shock",2,396,4,3,"Chroma"],["10_154","FAMAS | Afterimage",10,154,5,14,"eSports 2013 Winter"],["10_47","FAMAS | Colony",10,47,1,14,"Italy"],["10_22","FAMAS | Contrast Spray",10,22,1,14,"Office"],["10_92","FAMAS | Cyanospatter",10,92,2,14,"Lake"],["10_429","FAMAS | Djinn",10,429,5,14,"Chroma 2"],["10_178","FAMAS | Doomkitty",10,178,3,14,"eSports 2013"],["10_218","FAMAS | Hexane",10,218,3,14,"Arms Deal 2"],["10_477","FAMAS | Neural Net",10,477,4,14,"Falchion"],["10_260","FAMAS | Pulse",10,260,4,14,"Winter Offensive"],["10_288","FAMAS | Sergeant",10,288,4,14,"Phoenix"],["10_194","FAMAS | Spitfire",10,194,4,14,"Alpha"],["10_371","FAMAS | Styx",10,371,4,14,"Cache"],["10_492","FAMAS | Survivor Z",10,492,3,14,"Shadow"],["10_244","FAMAS | Teardown",10,244,3,14,"Safehouse"],["10_529","FAMAS | Valence",10,529,4,14,"Wildfire"],["3_210","Five-SeveN | Anodized Gunmetal",3,210,1,5,"Alpha"],["3_3","Five-SeveN | Candy Apple",3,3,2,5,"Assault"],["3_44","Five-SeveN | Case Hardened",3,44,4,5,"Arms Deal 2"],["3_46","Five-SeveN | Contractor",3,46,1,5,"Mirage"],["3_274","Five-SeveN | Copper Galaxy",3,274,4,5,"Arms Deal 3"],["3_78","Five-SeveN | Forest Night",3,78,1,5,"Train"],["3_352","Five-SeveN | Fowl Play",3,352,5,5,"Breakout"],["3_377","Five-SeveN | Hot Shot",3,377,2,5,"Cache"],["3_151","Five-SeveN | Jungle",3,151,1,5,"Aztec"],["3_265","Five-SeveN | Kami",3,265,3,5,"Winter Offensive"],["3_427","Five-SeveN | Monkey Business",3,427,5,5,"Chroma 2"],["3_223","Five-SeveN | Nightshade",3,223,3,5,"eSports 2013 Winter"],["3_141","Five-SeveN | Orange Peel",3,141,2,5,"Dust 2"],["3_510","Five-SeveN | Retrobution",3,510,4,5,"Revolver Case"],["3_252","Five-SeveN | Silver Quartz",3,252,3,5,"Safehouse"],["3_530","Five-SeveN | Triumvirate",3,530,4,5,"Wildfire"],["3_387","Five-SeveN | Urban Hazard",3,387,3,5,"Vanguard"],["11_6","G3SG1 | Arctic Camo",11,6,2,19,"Office"],["11_229","G3SG1 | Azure Zebra",11,229,3,19,"eSports 2013 Winter"],["11_438","G3SG1 | Chronos",11,438,4,19,"Gods and Monsters"],["11_46","G3SG1 | Contractor",11,46,1,19,"Baggage"],["11_195","G3SG1 | Demeter",11,195,3,19,"Bravo"],["11_8","G3SG1 | Desert Storm",11,8,1,19,"Dust 2"],["11_493","G3SG1 | Flux",11,493,5,19,"Shadow"],["11_294","G3SG1 | Green Apple",11,294,2,19,"Bank"],["11_147","G3SG1 | Jungle Dashed",11,147,1,19,"Lake"],["11_382","G3SG1 | Murky",11,382,3,19,"Vanguard"],["11_74","G3SG1 | Polar Camo",11,74,1,19,"Train"],["11_72","G3SG1 | Safari Mesh",11,72,1,19,"Mirage"],["11_511","G3SG1 | The Executioner",11,511,5,19,"Revolver Case"],["11_235","G3SG1 | VariCamo",11,235,2,19,"Safehouse"],["13_216","Galil AR | Blue Titanium",13,216,3,14,"eSports 2013 Winter"],["13_379","Galil AR | Cerberus",13,379,4,14,"Cache"],["13_398","Galil AR | Chatterbox",13,398,6,14,"Chroma"],["13_428","Galil AR | Eco",13,428,5,14,"Chroma 2"],["13_241","Galil AR | Hunting Blind",13,241,1,14,"Mirage"],["13_308","Galil AR | Kami",13,308,3,14,"Huntsman"],["13_83","Galil AR | Orange DDPAT",13,83,4,14,"eSports 2013"],["13_478","Galil AR | Rocket Pop",13,478,3,14,"Falchion"],["13_119","Galil AR | Sage Spray",13,119,1,14,"Lake"],["13_264","Galil AR | Sandstorm",13,264,3,14,"Winter Offensive"],["13_192","Galil AR | Shattered",13,192,3,14,"Bravo"],["13_494","Galil AR | Stone Cold",13,494,4,14,"Shadow"],["13_297","Galil AR | Tuxedo",13,297,3,14,"Bank"],["13_235","Galil AR | VariCamo",13,235,2,14,"Safehouse"],["13_76","Galil AR | Winter Forest",13,76,2,14,"Office"],["4_278","Glock-18 | Blue Fissure",4,278,3,2,"Arms Deal 3"],["4_159","Glock-18 | Brass",4,159,4,2,"Dust"],["4_479","Glock-18 | Bunsen Burner",4,479,3,2,"Falchion"],["4_3","Glock-18 | Candy Apple",4,3,3,2,"Italy"],["4_399","Glock-18 | Catacombs",4,399,3,2,"Chroma"],["4_293","Glock-18 | Death Rattle",4,293,2,2,"Bank"],["4_48","Glock-18 | Dragon Tattoo",4,48,4,2,"Arms Deal"],["4_38","Glock-18 | Fade",4,38,4,2,"Assault"],["4_381","Glock-18 | Grinder",4,381,4,2,"Vanguard"],["4_2","Glock-18 | Groundwater",4,2,2,2,"Mirage"],["4_40","Glock-18 | Night",4,40,2,2,"Overpass"],["4_367","Glock-18 | Reactor",4,367,3,2,"Cache"],["4_532","Glock-18 | Royal Legion",4,532,4,2,"Wildfire"],["4_208","Glock-18 | Sand Dune",4,208,2,2,"Alpha"],["4_230","Glock-18 | Steel Disruption",4,230,4,2,"eSports 2014 Summer"],["4_353","Glock-18 | Water Elemental",4,353,5,2,"Breakout"],["4_495","Glock-18 | Wraiths",4,495,3,2,"Shadow"],["32_246","P2000 | Amber Fade",32,246,4,2,"Dust 2"],["32_327","P2000 | Chainmail",32,327,3,2,"Cobblestone"],["32_346","P2000 | Coach Class",32,346,2,2,"Baggage"],["32_184","P2000 | Corticera",32,184,5,2,"eSports 2014 Summer"],["32_389","P2000 | Fire Elemental",32,389,6,2,"Vanguard"],["32_21","P2000 | Granite Marbleized",32,21,2,2,"Italy"],["32_95","P2000 | Grassland",32,95,2,2,"Overpass"],["32_104","P2000 | Grassland Leaves",32,104,2,2,"Militia"],["32_485","P2000 | Handgun",32,485,4,2,"Falchion"],["32_515","P2000 | Imperial",32,515,3,2,"Revolver Case"],["32_357","P2000 | Ivory",32,357,3,2,"Breakout"],["32_211","P2000 | Ocean Foam",32,211,5,2,"Bravo"],["32_443","P2000 | Pathfinder",32,443,2,2,"Gods and Monsters"],["32_338","P2000 | Pulse",32,338,3,2,"Huntsman"],["32_275","P2000 | Red FragCam",32,275,3,2,"Arms Deal 3"],["32_71","P2000 | Scorpion",32,71,4,2,"Dust"],["32_32","P2000 | Silver",32,32,3,2,"Office"],["14_75","M249 | Blizzard Marbleized",14,75,2,23,"Office"],["14_22","M249 | Contrast Spray",14,22,1,23,"Overpass"],["14_243","M249 | Gator Mesh",14,243,2,23,"Safehouse"],["14_202","M249 | Jungle DDPAT",14,202,1,23,"Alpha"],["14_266","M249 | Magma",14,266,3,23,"Winter Offensive"],["14_496","M249 | Nebula Crusader",14,496,4,23,"Shadow"],["14_452","M249 | Shipping Forecast",14,452,2,23,"Gods and Monsters"],["14_401","M249 | System Lock",14,401,3,23,"Chroma"],["16_255","M4A4 | Asiimov",16,255,6,15,"Winter Offensive"],["16_155","M4A4 | Bullet Rain",16,155,6,15,"eSports 2014 Summer"],["16_8","M4A4 | Desert Storm",16,8,2,15,"Dust"],["16_336","M4A4 | Desert-Strike",16,336,6,15,"Huntsman"],["16_480","M4A4 | Evil Daimyo",16,480,4,15,"Falchion"],["16_176","M4A4 | Faded Zebra",16,176,3,15,"eSports 2013"],["16_384","M4A4 | Griffin",16,384,4,15,"Vanguard"],["16_16","M4A4 | Jungle Tiger",16,16,2,15,"Aztec"],["16_164","M4A4 | Modern Hunter",16,164,4,15,"Militia"],["16_449","M4A4 | Poseidon",16,449,5,15,"Gods and Monsters"],["16_167","M4A4 | Radiation Hazard",16,167,3,15,"Nuke"],["16_512","M4A4 | Royal Paladin",16,512,6,15,"Revolver Case"],["16_533","M4A4 | The Battlestar",16,533,6,15,"Wildfire"],["16_101","M4A4 | Tornado",16,101,2,15,"Inferno"],["16_17","M4A4 | Urban DDPAT",16,17,2,15,"Train"],["16_215","M4A4 | X-Ray",16,215,6,15,"eSports 2013 Winter"],["16_187","M4A4 | Zirka",16,187,4,15,"Bravo"],["16_400","M4A4 | 龍王 (Dragon King)",16,400,5,15,"Chroma"],["60_301","M4A1-S | Atomic Alloy",60,301,5,15,"Huntsman"],["60_383","M4A1-S | Basilisk",60,383,4,15,"Vanguard"],["60_217","M4A1-S | Blood Tiger",60,217,3,15,"Arms Deal 2"],["60_77","M4A1-S | Boreal Forest",60,77,2,15,"Italy"],["60_189","M4A1-S | Bright Water",60,189,4,15,"Bravo"],["60_360","M4A1-S | Cyrex",60,360,6,15,"Breakout"],["60_60","M4A1-S | Dark Water",60,60,4,15,"Arms Deal"],["60_497","M4A1-S | Golden Coil",60,497,6,15,"Shadow"],["60_257","M4A1-S | Guardian",60,257,5,15,"Winter Offensive"],["60_430","M4A1-S | Hyper Beast",60,430,6,15,"Chroma 2"],["60_440","M4A1-S | Icarus Fell",60,440,4,15,"Gods and Monsters"],["60_326","M4A1-S | Knight",60,326,5,15,"Cobblestone"],["60_321","M4A1-S | Master Piece",60,321,5,15,"Overpass"],["60_254","M4A1-S | Nitro",60,254,4,15,"Safehouse"],["60_235","M4A1-S | VariCamo",60,235,3,15,"Dust 2"],["17_246","MAC-10 | Amber Fade",17,246,3,8,"Mirage"],["17_3","MAC-10 | Candy Apple",17,3,2,8,"Train"],["17_343","MAC-10 | Commuter",17,343,2,8,"Baggage"],["17_310","MAC-10 | Curse",17,310,4,8,"Huntsman"],["17_188","MAC-10 | Graven",17,188,4,8,"Bravo"],["17_284","MAC-10 | Heat",17,284,4,8,"Phoenix"],["17_333","MAC-10 | Indigo",17,333,1,8,"Cobblestone"],["17_534","MAC-10 | Lapis Gator",17,534,3,8,"Wildfire"],["17_402","MAC-10 | Malachite",17,402,4,8,"Chroma"],["17_433","MAC-10 | Neon Rider",17,433,6,8,"Chroma 2"],["17_372","MAC-10 | Nuclear Garden",17,372,3,8,"Cache"],["17_157","MAC-10 | Palm",17,157,2,8,"Dust 2"],["17_498","MAC-10 | Rangeen",17,498,3,8,"Shadow"],["17_32","MAC-10 | Silver",17,32,2,8,"Bank"],["17_337","MAC-10 | Tatter",17,337,4,8,"Huntsman"],["17_101","MAC-10 | Tornado",17,101,1,8,"Militia"],["17_98","MAC-10 | Ultraviolet",17,98,3,8,"eSports 2014 Summer"],["17_17","MAC-10 | Urban DDPAT",17,17,1,8,"Vertigo"],["27_39","MAG-7 | Bulldozer",27,39,4,22,"Mirage"],["27_499","MAG-7 | Cobalt Core",27,499,3,22,"Shadow"],["27_385","MAG-7 | Firestarter",27,385,3,22,"Vanguard"],["27_198","MAG-7 | Hazard",27,198,3,22,"Alpha"],["27_431","MAG-7 | Heat",27,431,4,22,"Chroma 2"],["27_291","MAG-7 | Heaven Guard",27,291,3,22,"Phoenix"],["27_171","MAG-7 | Irradiated Alert",27,171,1,22,"Nuke"],["27_177","MAG-7 | Memento",27,177,3,22,"eSports 2013"],["27_34","MAG-7 | Metallic DDPAT",27,34,2,22,"Train"],["27_535","MAG-7 | Praetorian",27,535,4,22,"Wildfire"],["27_99","MAG-7 | Sand Dune",27,99,1,22,"Inferno"],["27_32","MAG-7 | Silver",27,32,2,22,"Cobblestone"],["27_100","MAG-7 | Storm",27,100,1,22,"Overpass"],["33_28","MP7 | Anodized Navy",33,28,3,9,"Italy"],["33_423","MP7 | Armor Core",33,423,3,9,"Chroma 2"],["33_245","MP7 | Army Recon",33,245,1,9,"Safehouse"],["33_442","MP7 | Asterion",33,442,1,9,"Gods and Monsters"],["33_5","MP7 | Forest DDPAT",33,5,1,9,"Bank"],["33_209","MP7 | Groundwater",33,209,1,9,"Alpha"],["33_15","MP7 | Gunsmoke",33,15,2,9,"Overpass"],["33_536","MP7 | Impire",33,536,4,9,"Wildfire"],["33_481","MP7 | Nemesis",33,481,5,9,"Falchion"],["33_213","MP7 | Ocean Foam",33,213,4,9,"eSports 2014 Summer"],["33_365","MP7 | Olive Plaid",33,365,1,9,"Baggage"],["33_141","MP7 | Orange Peel",33,141,2,9,"Mirage"],["33_11","MP7 | Skulls",33,11,3,9,"Arms Deal"],["33_500","MP7 | Special Delivery",33,500,4,9,"Shadow"],["33_354","MP7 | Urban Hazard",33,354,3,9,"Breakout"],["33_102","MP7 | Whiteout",33,102,3,9,"Office"],["34_39","MP9 | Bulldozer",34,39,4,8,"Assault"],["34_329","MP9 | Dark Age",34,329,3,8,"Cobblestone"],["34_386","MP9 | Dart",34,386,3,8,"Vanguard"],["34_403","MP9 | Deadly Poison",34,403,3,8,"Chroma"],["34_199","MP9 | Dry Season",34,199,1,8,"Alpha"],["34_366","MP9 | Green Plaid",34,366,1,8,"Baggage"],["34_33","MP9 | Hot Rod",34,33,3,8,"Mirage"],["34_61","MP9 | Hypnotic",34,61,4,8,"Arms Deal 2"],["34_141","MP9 | Orange Peel",34,141,2,8,"Safehouse"],["34_448","MP9 | Pandora's Box",34,448,3,8,"Gods and Monsters"],["34_262","MP9 | Rose Iron",34,262,4,8,"Winter Offensive"],["34_482","MP9 | Ruby Poison Dart",34,482,4,8,"Falchion"],["34_148","MP9 | Sand Dashed",34,148,1,8,"Dust 2"],["34_368","MP9 | Setting Sun",34,368,3,8,"Cache"],["34_100","MP9 | Storm",34,100,1,8,"Overpass"],["28_28","Negev | Anodized Navy",28,28,3,24,"Assault"],["28_298","Negev | Army Sheen",28,298,1,24,"Bank"],["28_317","Negev | Bratatat",28,317,3,24,"eSports 2014 Summer"],["28_240","Negev | CaliCamo",28,240,2,24,"Mirage"],["28_355","Negev | Desert-Strike",28,355,3,24,"Breakout"],["28_483","Negev | Loudmouth",28,483,4,24,"Falchion"],["28_432","Negev | Man-o'-war",28,432,3,24,"Chroma 2"],["28_369","Negev | Nuclear Waste",28,369,2,24,"Cache"],["28_201","Negev | Palm",28,201,2,24,"Alpha"],["28_514","Negev | Power Loader",28,514,4,24,"Revolver Case"],["28_285","Negev | Terrain",28,285,3,24,"Phoenix"],["35_286","Nova | Antique",35,286,5,20,"Phoenix"],["35_166","Nova | Blaze Orange",35,166,3,20,"Militia"],["35_62","Nova | Bloomstick",35,62,5,20,"eSports 2014 Summer"],["35_299","Nova | Caged Steel",35,299,2,20,"Bank"],["35_3","Nova | Candy Apple",35,3,2,20,"Italy"],["35_25","Nova | Forest Leaves",35,25,1,20,"Aztec"],["35_225","Nova | Ghost Camo",35,225,3,20,"eSports 2013 Winter"],["35_214","Nova | Graphite",35,214,4,20,"Arms Deal 2"],["35_294","Nova | Green Apple",35,294,2,20,"Cobblestone"],["35_537","Nova | Hyper Beast",35,537,5,20,"Wildfire"],["35_356","Nova | Koi",35,356,4,20,"Breakout"],["35_164","Nova | Modern Hunter",35,164,3,20,"Militia"],["35_450","Nova | Moon in Libra",35,450,1,20,"Gods and Monsters"],["35_107","Nova | Polar Mesh",35,107,1,20,"Train"],["35_170","Nova | Predator",35,170,1,20,"Dust 2"],["35_484","Nova | Ranger",35,484,3,20,"Falchion"],["35_263","Nova | Rising Skull",35,263,4,20,"Winter Offensive"],["35_99","Nova | Sand Dune",35,99,1,20,"Italy"],["35_191","Nova | Tempest",35,191,3,20,"Bravo"],["35_158","Nova | Walnut",35,158,1,20,"Inferno"],["36_27","P250 | Bone Mask",36,27,1,4,"Mirage"],["36_77","P250 | Boreal Forest",36,77,1,4,"Lake"],["36_388","P250 | Cartel",36,388,5,4,"Vanguard"],["36_373","P250 | Contamination",36,373,2,4,"Cache"],["36_207","P250 | Facets",36,207,2,4,"Alpha"],["36_295","P250 | Franklin",36,295,5,4,"Bank"],["36_15","P250 | Gunsmoke",36,15,2,4,"Inferno"],["36_219","P250 | Hive",36,219,3,4,"Arms Deal 2"],["36_258","P250 | Mehndi",36,258,5,4,"Winter Offensive"],["36_34","P250 | Metallic DDPAT",36,34,2,4,"Train"],["36_164","P250 | Modern Hunter",36,164,3,4,"Militia"],["36_404","P250 | Muertos",36,404,5,4,"Chroma"],["36_168","P250 | Nuclear Threat",36,168,4,4,"Nuke"],["36_99","P250 | Sand Dune",36,99,1,4,"Dust 2"],["36_162","P250 | Splash",36,162,4,4,"eSports 2013"],["36_230","P250 | Steel Disruption",36,230,3,4,"eSports 2013 Winter"],["36_358","P250 | Supernova",36,358,4,4,"Breakout"],["36_271","P250 | Undertow",36,271,5,4,"Arms Deal 3"],["36_426","P250 | Valence",36,426,3,4,"Chroma 2"],["36_501","P250 | Wingshot",36,501,4,4,"Shadow"],["19_234","P90 | Ash Wood",19,234,2,11,"Train"],["19_359","P90 | Asiimov",19,359,6,11,"Breakout"],["19_228","P90 | Blind Spot",19,228,4,11,"eSports 2013 Winter"],["19_67","P90 | Cold Blooded",19,67,5,11,"Arms Deal 2"],["19_156","P90 | Death by Kitty",19,156,6,11,"eSports 2013"],["19_311","P90 | Desert Warfare",19,311,3,11,"Huntsman"],["19_486","P90 | Elite Build",19,486,3,11,"Falchion"],["19_182","P90 | Emerald Dragon",19,182,5,11,"Bravo"],["19_169","P90 | Fallout Warning",19,169,2,11,"Nuke"],["19_111","P90 | Glacier Mesh",19,111,3,11,"Vertigo"],["19_342","P90 | Leather",19,342,2,11,"Baggage"],["19_335","P90 | Module",19,335,3,11,"Huntsman"],["19_124","P90 | Sand Spray",19,124,1,11,"Dust 2"],["19_175","P90 | Scorched",19,175,1,11,"Mirage"],["19_516","P90 | Shapewood",19,516,5,11,"Revolver Case"],["19_100","P90 | Storm",19,100,1,11,"Cobblestone"],["19_244","P90 | Teardown",19,244,3,11,"Lake"],["19_283","P90 | Trigon",19,283,5,11,"Phoenix"],["19_20","P90 | Virus",19,20,4,11,"eSports 2014 Summer"],["64_523","R8 Revolver | Amber Fade",64,523,5,6,"Dust 2"],["64_27","R8 Revolver | Bone Mask",64,27,1,6,"Bank"],["64_12","R8 Revolver | Crimson Web",64,12,3,6,"Revolver Case"],["64_522","R8 Revolver | Fade",64,522,6,6,"Revolver Case"],["29_246","Sawed-Off | Amber Fade",29,246,3,22,"Train"],["29_41","Sawed-Off | Copper",29,41,3,22,"Dust"],["29_345","Sawed-Off | First Class",29,345,3,22,"Baggage"],["29_5","Sawed-Off | Forest DDPAT",29,5,1,22,"Bank"],["29_250","Sawed-Off | Full Stop",29,250,3,22,"Italy"],["29_390","Sawed-Off | Highwayman",29,390,4,22,"Vanguard"],["29_171","Sawed-Off | Irradiated Alert",29,171,1,22,"Nuke"],["29_204","Sawed-Off | Mosaico",29,204,2,22,"Alpha"],["29_83","Sawed-Off | Orange DDPAT",29,83,4,22,"eSports 2013"],["29_434","Sawed-Off | Origami",29,434,3,22,"Chroma 2"],["29_323","Sawed-Off | Rust Coat",29,323,2,22,"Cobblestone"],["29_119","Sawed-Off | Sage Spray",29,119,1,22,"Overpass"],["29_405","Sawed-Off | Serenity",29,405,4,22,"Chroma"],["29_30","Sawed-Off | Snake Camo",29,30,2,22,"Dust 2"],["29_256","Sawed-Off | The Kraken",29,256,6,22,"Winter Offensive"],["29_517","Sawed-Off | Yorick",29,517,3,22,"Revolver Case"],["38_70","SCAR-20 | Carbon Fiber",38,70,2,19,"Train"],["38_391","SCAR-20 | Cardiac",38,391,5,19,"Vanguard"],["38_46","SCAR-20 | Contractor",38,46,1,19,"Safehouse"],["38_232","SCAR-20 | Crimson Web",38,232,3,19,"Arms Deal 2"],["38_312","SCAR-20 | Cyrex",38,312,5,19,"Huntsman"],["38_196","SCAR-20 | Emerald",38,196,4,19,"Alpha"],["38_502","SCAR-20 | Green Marine",38,502,3,19,"Shadow"],["38_406","SCAR-20 | Grotto",38,406,3,19,"Chroma"],["38_518","SCAR-20 | Outbreak",38,518,3,19,"Revolver Case"],["38_157","SCAR-20 | Palm",38,157,2,19,"Dust"],["38_116","SCAR-20 | Sand Mesh",38,116,1,19,"Dust 2"],["38_165","SCAR-20 | Splash Jam",38,165,5,19,"Militia"],["38_100","SCAR-20 | Storm",38,100,1,19,"Cobblestone"],["39_28","SG 553 | Anodized Navy",39,28,3,17,"Lake"],["39_298","SG 553 | Army Sheen",39,298,1,17,"Bank"],["39_487","SG 553 | Cyrex",39,487,5,17,"Falchion"],["39_247","SG 553 | Damascus Steel",39,247,3,17,"Dust 2"],["39_378","SG 553 | Fallout Warning",39,378,2,17,"Cache"],["39_243","SG 553 | Gator Mesh",39,243,2,17,"Mirage"],["39_287","SG 553 | Pulse",39,287,4,17,"Phoenix"],["39_519","SG 553 | Tiger Moth",39,519,4,17,"Revolver Case"],["39_101","SG 553 | Tornado",39,101,1,17,"Assault"],["39_363","SG 553 | Traveler",39,363,2,17,"Baggage"],["39_98","SG 553 | Ultraviolet",39,98,3,17,"Arms Deal"],["39_186","SG 553 | Wave Spray",39,186,3,17,"Bravo"],["39_136","SG 553 | Waves Perforated",39,136,1,17,"Lake"],["40_361","SSG 08 | Abyss",40,361,3,16,"Breakout"],["40_253","SSG 08 | Acid Fade",40,253,3,16,"Safehouse"],["40_503","SSG 08 | Big Iron",40,503,5,16,"Shadow"],["40_222","SSG 08 | Blood in the Water",40,222,6,16,"Arms Deal 2"],["40_96","SSG 08 | Blue Spruce",40,96,1,16,"Safehouse"],["40_60","SSG 08 | Dark Water",40,60,3,16,"eSports 2014 Summer"],["40_319","SSG 08 | Detour",40,319,3,16,"Overpass"],["40_26","SSG 08 | Lichen Dashed",40,26,1,16,"Aztec"],["40_200","SSG 08 | Mayan Dreams",40,200,2,16,"Alpha"],["40_538","SSG 08 | Necropos",40,538,3,16,"Wildfire"],["40_99","SSG 08 | Sand Dune",40,99,1,16,"Baggage"],["40_304","SSG 08 | Slashed",40,304,3,16,"Huntsman"],["40_233","SSG 08 | Tropical Storm",40,233,2,16,"Mirage"],["30_242","Tec-9 | Army Mesh",30,242,1,5,"Safehouse"],["30_520","Tec-9 | Avalanche",30,520,4,5,"Revolver Case"],["30_216","Tec-9 | Blue Titanium",30,216,3,5,"Arms Deal 2"],["30_159","Tec-9 | Brass",30,159,3,5,"Inferno"],["30_2","Tec-9 | Groundwater",30,2,1,5,"Italy"],["30_439","Tec-9 | Hades",30,439,2,5,"Gods and Monsters"],["30_303","Tec-9 | Isaac",30,303,3,5,"Huntsman"],["30_539","Tec-9 | Jambiya",30,539,3,5,"Wildfire"],["30_179","Tec-9 | Nuclear Threat",30,179,4,5,"Nuke"],["30_36","Tec-9 | Ossified",30,36,3,5,"Aztec"],["30_248","Tec-9 | Red Quartz",30,248,4,5,"Train"],["30_289","Tec-9 | Sandstorm",30,289,3,5,"Phoenix"],["30_272","Tec-9 | Titanium Bit",30,272,4,5,"Arms Deal 3"],["30_206","Tec-9 | Tornado",30,206,1,5,"Alpha"],["30_374","Tec-9 | Toxic",30,374,3,5,"Cache"],["30_17","Tec-9 | Urban DDPAT",30,17,1,5,"Bank"],["30_235","Tec-9 | VariCamo",30,235,2,5,"Dust 2"],["24_37","UMP-45 | Blaze",24,37,3,10,"Mirage"],["24_193","UMP-45 | Bone Pile",24,193,3,10,"Bravo"],["24_93","UMP-45 | Caramel",24,93,1,10,"Assault"],["24_70","UMP-45 | Carbon Fiber",24,70,2,10,"Bank"],["24_281","UMP-45 | Corporal",24,281,3,10,"Phoenix"],["24_392","UMP-45 | Delusion",24,392,3,10,"Vanguard"],["24_169","UMP-45 | Fallout Warning",24,169,2,10,"Nuke"],["24_436","UMP-45 | Grand Prix",24,436,4,10,"Chroma 2"],["24_15","UMP-45 | Gunsmoke",24,15,2,10,"Italy"],["24_333","UMP-45 | Indigo",24,333,1,10,"Cobblestone"],["24_362","UMP-45 | Labyrinth",24,362,3,10,"Breakout"],["24_441","UMP-45 | Minotaur's Labyrinth",24,441,3,10,"Gods and Monsters"],["24_488","UMP-45 | Riot",24,488,3,10,"Falchion"],["24_175","UMP-45 | Scorched",24,175,1,10,"Overpass"],["24_17","UMP-45 | Urban DDPAT",24,17,1,10,"Train"],["61_217","USP-S | Blood Tiger",61,217,3,2,"eSports 2014 Summer"],["61_364","USP-S | Business Class",61,364,3,2,"Baggage"],["61_339","USP-S | Caiman",61,339,5,2,"Huntsman"],["61_60","USP-S | Dark Water",61,60,4,2,"Arms Deal"],["61_25","USP-S | Forest Leaves",61,25,2,2,"Safehouse"],["61_290","USP-S | Guardian",61,290,4,2,"Phoenix"],["61_504","USP-S | Kill Confirmed",61,504,6,2,"Shadow"],["61_540","USP-S | Lead Conduit",61,540,3,2,"Wildfire"],["61_236","USP-S | Night Ops",61,236,3,2,"Lake"],["61_313","USP-S | Orion",61,313,5,2,"Huntsman"],["61_183","USP-S | Overgrowth",61,183,4,2,"Bravo"],["61_318","USP-S | Road Rash",61,318,4,2,"Overpass"],["61_332","USP-S | Royal Blue",61,332,2,2,"Cobblestone"],["61_221","USP-S | Serum",61,221,5,2,"Arms Deal 2"],["61_277","USP-S | Stainless",61,277,3,2,"Arms Deal 3"],["61_489","USP-S | Torque",61,489,3,2,"Falchion"],["25_166","XM1014 | Blaze Orange",25,166,3,21,"Militia"],["25_96","XM1014 | Blue Spruce",25,96,1,21,"Lake"],["25_42","XM1014 | Blue Steel",25,42,2,21,"Lake"],["25_370","XM1014 | Bone Machine",25,370,3,21,"Cache"],["25_240","XM1014 | CaliCamo",25,240,2,21,"Italy"],["25_169","XM1014 | Fallout Warning",25,169,2,21,"Nuke"],["25_95","XM1014 | Grassland",25,95,1,21,"Militia"],["25_314","XM1014 | Heaven Guard",25,314,4,21,"Huntsman"],["25_205","XM1014 | Jungle",25,205,1,21,"Alpha"],["25_407","XM1014 | Quicksilver",25,407,3,21,"Chroma"],["25_348","XM1014 | Red Leather",25,348,3,21,"Baggage"],["25_320","XM1014 | Red Python",25,320,3,21,"eSports 2014 Summer"],["25_505","XM1014 | Scumbria",25,505,3,21,"Shadow"],["25_521","XM1014 | Teclu Burner",25,521,4,21,"Revolver Case"],["25_393","XM1014 | Tranquility",25,393,5,21,"Vanguard"],["25_135","XM1014 | Urban Perforated",25,135,1,21,"Vertigo"],["25_238","XM1014 | VariCamo Blue",25,238,3,21,"Overpass"],["16_309","M4A4 | Howl",16,309,7,15,"Contraband"]],"knives":[["500_0","★ Bayonet",500,0],["500_38","★ Bayonet | Fade",500,38],["500_12","★ Bayonet | Crimson Web",500,12],["500_44","★ Bayonet | Case Hardened",500,44],["500_42","★ Bayonet | Blue Steel",500,42],["500_77","★ Bayonet | Boreal Forest",500,77],["500_5","★ Bayonet | Forest DDPAT",500,5],["500_40","★ Bayonet | Night",500,40],["500_72","★ Bayonet | Safari Mesh",500,72],["500_175","★ Bayonet | Scorched",500,175],["500_59","★ Bayonet | Slaughter",500,59],["500_43","★ Bayonet | Stained",500,43],["500_143","★ Bayonet | Urban Masked",500,143],["500_415","★ Bayonet | Ruby",500,415],["500_416","★ Bayonet | Sapphire",500,416],["500_417","★ Bayonet | Black Pearl",500,417],["500_418","★ Bayonet | Doppler Phase 1",500,418],["500_419","★ Bayonet | Doppler Phase 2",500,419],["500_420","★ Bayonet | Doppler Phase 3",500,420],["500_421","★ Bayonet | Doppler Phase 4",500,421],["500_413","★ Bayonet | Marble Fade",500,413],["500_409","★ Bayonet | Tiger Tooth",500,409],["500_410","★ Bayonet | Damascus Steel",500,410],["500_98","★ Bayonet | Ultraviolet",500,98],["500_414","★ Bayonet | Rust Coat",500,414],["505_0","★ Flip Knife",505,0],["505_38","★ Flip Knife | Fade",505,38],["505_12","★ Flip Knife | Crimson Web",505,12],["505_44","★ Flip Knife | Case Hardened",505,44],["505_42","★ Flip Knife | Blue Steel",505,42],["505_77","★ Flip Knife | Boreal Forest",505,77],["505_5","★ Flip Knife | Forest DDPAT",505,5],["505_40","★ Flip Knife | Night",505,40],["505_72","★ Flip Knife | Safari Mesh",505,72],["505_175","★ Flip Knife | Scorched",505,175],["505_59","★ Flip Knife | Slaughter",505,59],["505_43","★ Flip Knife | Stained",505,43],["505_143","★ Flip Knife | Urban Masked",505,143],["505_415","★ Flip Knife | Ruby",505,415],["505_416","★ Flip Knife | Sapphire",505,416],["505_417","★ Flip Knife | Black Pearl",505,417],["505_418","★ Flip Knife | Doppler Phase 1",505,418],["505_419","★ Flip Knife | Doppler Phase 2",505,419],["505_420","★ Flip Knife | Doppler Phase 3",505,420],["505_421","★ Flip Knife | Doppler Phase 4",505,421],["505_413","★ Flip Knife | Marble Fade",505,413],["505_409","★ Flip Knife | Tiger Tooth",505,409],["505_410","★ Flip Knife | Damascus Steel",505,410],["505_98","★ Flip Knife | Ultraviolet",505,98],["505_414","★ Flip Knife | Rust Coat",505,414],["506_0","★ Gut Knife",506,0],["506_38","★ Gut Knife | Fade",506,38],["506_12","★ Gut Knife | Crimson Web",506,12],["506_44","★ Gut Knife | Case Hardened",506,44],["506_42","★ Gut Knife | Blue Steel",506,42],["506_77","★ Gut Knife | Boreal Forest",506,77],["506_5","★ Gut Knife | Forest DDPAT",506,5],["506_40","★ Gut Knife | Night",506,40],["506_72","★ Gut Knife | Safari Mesh",506,72],["506_175","★ Gut Knife | Scorched",506,175],["506_59","★ Gut Knife | Slaughter",506,59],["506_43","★ Gut Knife | Stained",506,43],["506_143","★ Gut Knife | Urban Masked",506,143],["506_415","★ Gut Knife | Ruby",506,415],["506_416","★ Gut Knife | Sapphire",506,416],["506_417","★ Gut Knife | Black Pearl",506,417],["506_418","★ Gut Knife | Doppler Phase 1",506,418],["506_419","★ Gut Knife | Doppler Phase 2",506,419],["506_420","★ Gut Knife | Doppler Phase 3",506,420],["506_421","★ Gut Knife | Doppler Phase 4",506,421],["506_413","★ Gut Knife | Marble Fade",506,413],["506_409","★ Gut Knife | Tiger Tooth",506,409],["506_410","★ Gut Knife | Damascus Steel",506,410],["506_98","★ Gut Knife | Ultraviolet",506,98],["506_414","★ Gut Knife | Rust Coat",506,414],["507_0","★ Karambit",507,0],["507_38","★ Karambit | Fade",507,38],["507_12","★ Karambit | Crimson Web",507,12],["507_44","★ Karambit | Case Hardened",507,44],["507_42","★ Karambit | Blue Steel",507,42],["507_77","★ Karambit | Boreal Forest",507,77],["507_5","★ Karambit | Forest DDPAT",507,5],["507_40","★ Karambit | Night",507,40],["507_72","★ Karambit | Safari Mesh",507,72],["507_175","★ Karambit | Scorched",507,175],["507_59","★ Karambit | Slaughter",507,59],["507_43","★ Karambit | Stained",507,43],["507_143","★ Karambit | Urban Masked",507,143],["507_415","★ Karambit | Ruby",507,415],["507_416","★ Karambit | Sapphire",507,416],["507_417","★ Karambit | Black Pearl",507,417],["507_418","★ Karambit | Doppler Phase 1",507,418],["507_419","★ Karambit | Doppler Phase 2",507,419],["507_420","★ Karambit | Doppler Phase 3",507,420],["507_421","★ Karambit | Doppler Phase 4",507,421],["507_413","★ Karambit | Marble Fade",507,413],["507_409","★ Karambit | Tiger Tooth",507,409],["507_410","★ Karambit | Damascus Steel",507,410],["507_98","★ Karambit | Ultraviolet",507,98],["507_414","★ Karambit | Rust Coat",507,414],["508_0","★ M9 Bayonet",508,0],["508_38","★ M9 Bayonet | Fade",508,38],["508_12","★ M9 Bayonet | Crimson Web",508,12],["508_44","★ M9 Bayonet | Case Hardened",508,44],["508_42","★ M9 Bayonet | Blue Steel",508,42],["508_77","★ M9 Bayonet | Boreal Forest",508,77],["508_5","★ M9 Bayonet | Forest DDPAT",508,5],["508_40","★ M9 Bayonet | Night",508,40],["508_72","★ M9 Bayonet | Safari Mesh",508,72],["508_175","★ M9 Bayonet | Scorched",508,175],["508_59","★ M9 Bayonet | Slaughter",508,59],["508_43","★ M9 Bayonet | Stained",508,43],["508_143","★ M9 Bayonet | Urban Masked",508,143],["508_415","★ M9 Bayonet | Ruby",508,415],["508_416","★ M9 Bayonet | Sapphire",508,416],["508_417","★ M9 Bayonet | Black Pearl",508,417],["508_418","★ M9 Bayonet | Doppler Phase 1",508,418],["508_419","★ M9 Bayonet | Doppler Phase 2",508,419],["508_420","★ M9 Bayonet | Doppler Phase 3",508,420],["508_421","★ M9 Bayonet | Doppler Phase 4",508,421],["508_413","★ M9 Bayonet | Marble Fade",508,413],["508_409","★ M9 Bayonet | Tiger Tooth",508,409],["508_410","★ M9 Bayonet | Damascus Steel",508,410],["508_98","★ M9 Bayonet | Ultraviolet",508,98],["508_414","★ M9 Bayonet | Rust Coat",508,414],["509_0","★ Huntsman Knife",509,0],["509_38","★ Huntsman Knife | Fade",509,38],["509_12","★ Huntsman Knife | Crimson Web",509,12],["509_44","★ Huntsman Knife | Case Hardened",509,44],["509_42","★ Huntsman Knife | Blue Steel",509,42],["509_77","★ Huntsman Knife | Boreal Forest",509,77],["509_5","★ Huntsman Knife | Forest DDPAT",509,5],["509_40","★ Huntsman Knife | Night",509,40],["509_72","★ Huntsman Knife | Safari Mesh",509,72],["509_175","★ Huntsman Knife | Scorched",509,175],["509_59","★ Huntsman Knife | Slaughter",509,59],["509_43","★ Huntsman Knife | Stained",509,43],["509_143","★ Huntsman Knife | Urban Masked",509,143],["509_415","★ Huntsman Knife | Ruby",509,415],["509_416","★ Huntsman Knife | Sapphire",509,416],["509_417","★ Huntsman Knife | Black Pearl",509,417],["509_418","★ Huntsman Knife | Doppler Phase 1",509,418],["509_419","★ Huntsman Knife | Doppler Phase 2",509,419],["509_420","★ Huntsman Knife | Doppler Phase 3",509,420],["509_421","★ Huntsman Knife | Doppler Phase 4",509,421],["509_413","★ Huntsman Knife | Marble Fade",509,413],["509_409","★ Huntsman Knife | Tiger Tooth",509,409],["509_410","★ Huntsman Knife | Damascus Steel",509,410],["509_98","★ Huntsman Knife | Ultraviolet",509,98],["509_414","★ Huntsman Knife | Rust Coat",509,414],["512_0","★ Falchion Knife",512,0],["512_38","★ Falchion Knife | Fade",512,38],["512_12","★ Falchion Knife | Crimson Web",512,12],["512_44","★ Falchion Knife | Case Hardened",512,44],["512_42","★ Falchion Knife | Blue Steel",512,42],["512_77","★ Falchion Knife | Boreal Forest",512,77],["512_5","★ Falchion Knife | Forest DDPAT",512,5],["512_40","★ Falchion Knife | Night",512,40],["512_72","★ Falchion Knife | Safari Mesh",512,72],["512_175","★ Falchion Knife | Scorched",512,175],["512_59","★ Falchion Knife | Slaughter",512,59],["512_43","★ Falchion Knife | Stained",512,43],["512_143","★ Falchion Knife | Urban Masked",512,143],["512_415","★ Falchion Knife | Ruby",512,415],["512_416","★ Falchion Knife | Sapphire",512,416],["512_417","★ Falchion Knife | Black Pearl",512,417],["512_418","★ Falchion Knife | Doppler Phase 1",512,418],["512_419","★ Falchion Knife | Doppler Phase 2",512,419],["512_420","★ Falchion Knife | Doppler Phase 3",512,420],["512_421","★ Falchion Knife | Doppler Phase 4",512,421],["512_413","★ Falchion Knife | Marble Fade",512,413],["512_409","★ Falchion Knife | Tiger Tooth",512,409],["512_410","★ Falchion Knife | Damascus Steel",512,410],["512_98","★ Falchion Knife | Ultraviolet",512,98],["512_414","★ Falchion Knife | Rust Coat",512,414],["514_0","★ Bowie Knife",514,0],["514_38","★ Bowie Knife | Fade",514,38],["514_12","★ Bowie Knife | Crimson Web",514,12],["514_44","★ Bowie Knife | Case Hardened",514,44],["514_42","★ Bowie Knife | Blue Steel",514,42],["514_77","★ Bowie Knife | Boreal Forest",514,77],["514_5","★ Bowie Knife | Forest DDPAT",514,5],["514_40","★ Bowie Knife | Night",514,40],["514_72","★ Bowie Knife | Safari Mesh",514,72],["514_175","★ Bowie Knife | Scorched",514,175],["514_59","★ Bowie Knife | Slaughter",514,59],["514_43","★ Bowie Knife | Stained",514,43],["514_143","★ Bowie Knife | Urban Masked",514,143],["514_415","★ Bowie Knife | Ruby",514,415],["514_416","★ Bowie Knife | Sapphire",514,416],["514_417","★ Bowie Knife | Black Pearl",514,417],["514_418","★ Bowie Knife | Doppler Phase 1",514,418],["514_419","★ Bowie Knife | Doppler Phase 2",514,419],["514_420","★ Bowie Knife | Doppler Phase 3",514,420],["514_421","★ Bowie Knife | Doppler Phase 4",514,421],["514_413","★ Bowie Knife | Marble Fade",514,413],["514_409","★ Bowie Knife | Tiger Tooth",514,409],["514_410","★ Bowie Knife | Damascus Steel",514,410],["514_98","★ Bowie Knife | Ultraviolet",514,98],["514_414","★ Bowie Knife | Rust Coat",514,414],["515_0","★ Butterfly Knife",515,0],["515_38","★ Butterfly Knife | Fade",515,38],["515_12","★ Butterfly Knife | Crimson Web",515,12],["515_44","★ Butterfly Knife | Case Hardened",515,44],["515_42","★ Butterfly Knife | Blue Steel",515,42],["515_77","★ Butterfly Knife | Boreal Forest",515,77],["515_5","★ Butterfly Knife | Forest DDPAT",515,5],["515_40","★ Butterfly Knife | Night",515,40],["515_72","★ Butterfly Knife | Safari Mesh",515,72],["515_175","★ Butterfly Knife | Scorched",515,175],["515_59","★ Butterfly Knife | Slaughter",515,59],["515_43","★ Butterfly Knife | Stained",515,43],["515_143","★ Butterfly Knife | Urban Masked",515,143],["515_415","★ Butterfly Knife | Ruby",515,415],["515_416","★ Butterfly Knife | Sapphire",515,416],["515_417","★ Butterfly Knife | Black Pearl",515,417],["515_418","★ Butterfly Knife | Doppler Phase 1",515,418],["515_419","★ Butterfly Knife | Doppler Phase 2",515,419],["515_420","★ Butterfly Knife | Doppler Phase 3",515,420],["515_421","★ Butterfly Knife | Doppler Phase 4",515,421],["515_413","★ Butterfly Knife | Marble Fade",515,413],["515_409","★ Butterfly Knife | Tiger Tooth",515,409],["515_410","★ Butterfly Knife | Damascus Steel",515,410],["515_98","★ Butterfly Knife | Ultraviolet",515,98],["515_414","★ Butterfly Knife | Rust Coat",515,414],["516_0","★ Shadow Daggers",516,0],["516_38","★ Shadow Daggers | Fade",516,38],["516_12","★ Shadow Daggers | Crimson Web",516,12],["516_44","★ Shadow Daggers | Case Hardened",516,44],["516_42","★ Shadow Daggers | Blue Steel",516,42],["516_77","★ Shadow Daggers | Boreal Forest",516,77],["516_5","★ Shadow Daggers | Forest DDPAT",516,5],["516_40","★ Shadow Daggers | Night",516,40],["516_72","★ Shadow Daggers | Safari Mesh",516,72],["516_175","★ Shadow Daggers | Scorched",516,175],["516_59","★ Shadow Daggers | Slaughter",516,59],["516_43","★ Shadow Daggers | Stained",516,43],["516_143","★ Shadow Daggers | Urban Masked",516,143],["516_415","★ Shadow Daggers | Ruby",516,415],["516_416","★ Shadow Daggers | Sapphire",516,416],["516_417","★ Shadow Daggers | Black Pearl",516,417],["516_418","★ Shadow Daggers | Doppler Phase 1",516,418],["516_419","★ Shadow Daggers | Doppler Phase 2",516,419],["516_420","★ Shadow Daggers | Doppler Phase 3",516,420],["516_421","★ Shadow Daggers | Doppler Phase 4",516,421],["516_413","★ Shadow Daggers | Marble Fade",516,413],["516_409","★ Shadow Daggers | Tiger Tooth",516,409],["516_410","★ Shadow Daggers | Damascus Steel",516,410],["516_98","★ Shadow Daggers | Ultraviolet",516,98],["516_414","★ Shadow Daggers | Rust Coat",516,414]],"crates":[["4001_0","CS:GO Weapon Case",4001,1203],["4002_0","eSports 2013 Case",4002,1204],["4003_0","Operation Bravo Case",4003,1203],["4004_0","CS:GO Weapon Case 2",4004,1203],["4005_0","eSports 2013 Winter Case",4005,1204],["4009_0","Winter Offensive Weapon Case",4009,1214],["4010_0","CS:GO Weapon Case 3",4010,1203],["4011_0","Operation Phoenix Weapon Case",4011,1303],["4017_0","Huntsman Weapon Case",4017,1307],["4018_0","Operation Breakout Weapon Case",4018,1313],["4019_0","eSports 2014 Summer Case",4019,1204],["4029_0","Operation Vanguard Weapon Case",4029,1322],["4061_0","Chroma Case",4061,1323],["4089_0","Chroma 2 Case",4089,1325],["4091_0","Falchion Case",4091,1330],["4138_0","Shadow Case",4138,1333],["4186_0","Revolver Case",4186,1334],["4187_0","Operation Wildfire Case",4187,7000]]};
 
-      "507_38": { name: "★ Karambit | Fade", def_index: 507, paint_kit: 38, wear: 0.01, seed: 80, rarity: 6 },
-      "507_44": { name: "★ Karambit | Case Hardened", def_index: 507, paint_kit: 44, wear: 0.15, seed: 661, rarity: 6 },
-      "507_418": { name: "★ Karambit | Doppler P1", def_index: 507, paint_kit: 418, wear: 0.02, seed: 12, rarity: 6 },
-      "507_415": { name: "★ Karambit | Ruby", def_index: 507, paint_kit: 415, wear: 0.01, seed: 1, rarity: 6 },
-      "507_416": { name: "★ Karambit | Sapphire", def_index: 507, paint_kit: 416, wear: 0.01, seed: 2, rarity: 6 },
-      "507_12": { name: "★ Karambit | Crimson Web", def_index: 507, paint_kit: 12, wear: 0.08, seed: 4, rarity: 6 },
-      "507_0": { name: "★ Karambit | Vanilla", def_index: 507, paint_kit: 0, wear: 0, seed: 0, rarity: 6 },
+    const PRESETS = {};
+    const SLOT_BY_DEF = {};   // def_index -> loadout slot used by equipped_state
 
-      "508_419": { name: "★ M9 Bayonet | Doppler P2", def_index: 508, paint_kit: 419, wear: 0.03, seed: 21, rarity: 6 },
-      "508_38": { name: "★ M9 Bayonet | Fade", def_index: 508, paint_kit: 38, wear: 0.01, seed: 10, rarity: 6 },
-      "508_12": { name: "★ M9 Bayonet | Crimson Web", def_index: 508, paint_kit: 12, wear: 0.07, seed: 33, rarity: 6 },
-      "508_0": { name: "★ M9 Bayonet | Vanilla", def_index: 508, paint_kit: 0, wear: 0, seed: 0, rarity: 6 },
+    DATA.skins.forEach(s => {
+      PRESETS[s[0]] = { name: s[1], def_index: s[2], paint_kit: s[3], wear: 0.07, seed: 1, rarity: s[4], slot: s[5] };
+      SLOT_BY_DEF[s[2]] = s[5];
+    });
+    DATA.knives.forEach(k => {
+      PRESETS[k[0]] = { name: k[1], def_index: k[2], paint_kit: k[3], wear: k[3] ? 0.01 : 0, seed: 1, rarity: 6, slot: 0, knife: true };
+      SLOT_BY_DEF[k[2]] = 0;
+    });
+    DATA.crates.forEach(c => {
+      PRESETS[c[0]] = { name: c[1], def_index: c[2], paint_kit: 0, wear: 0, seed: 0, rarity: 1, container: true };
+      if (c[3]) {
+        const kk = c[3] + "_0";
+        if (!PRESETS[kk]) PRESETS[kk] = { name: "Key for " + c[1], def_index: c[3], paint_kit: 0, wear: 0, seed: 0, rarity: 1, container: true };
+        else PRESETS[kk].name = PRESETS[kk].name.replace(/^Key for .*/, m => m + " / " + c[1]);
+      }
+    });
+    // Well-known patterns
+    PRESETS["7_44"].seed = 661; PRESETS["7_44"].wear = 0.01;
 
-      "500_415": { name: "★ Bayonet | Ruby", def_index: 500, paint_kit: 415, wear: 0.01, seed: 1, rarity: 6 },
-      "500_38": { name: "★ Bayonet | Fade", def_index: 500, paint_kit: 38, wear: 0.02, seed: 55, rarity: 6 },
-      "500_0": { name: "★ Bayonet | Vanilla", def_index: 500, paint_kit: 0, wear: 0, seed: 0, rarity: 6 },
+    const KNIFE_DEFS = DATA.knives.reduce((o, k) => { o[k[2]] = true; return o; }, {});
+    const isKnifeDef = d => !!KNIFE_DEFS[d];
+    const isKeyDef = d => (d >= 1200 && d < 4000) || d === 7000;
+    const isCrateDef = d => d >= 4000 && d < 5000;
 
-      "506_38": { name: "★ Flip Knife | Fade", def_index: 506, paint_kit: 38, wear: 0.02, seed: 99, rarity: 6 },
-      "506_415": { name: "★ Flip Knife | Ruby", def_index: 506, paint_kit: 415, wear: 0.01, seed: 3, rarity: 6 },
-      "505_418": { name: "★ Gut Knife | Doppler", def_index: 505, paint_kit: 418, wear: 0.03, seed: 15, rarity: 6 },
-      "512_38": { name: "★ Huntsman Knife | Fade", def_index: 512, paint_kit: 38, wear: 0.01, seed: 50, rarity: 6 },
-      "512_12": { name: "★ Huntsman Knife | Crimson Web", def_index: 512, paint_kit: 12, wear: 0.08, seed: 77, rarity: 6 },
-      "509_38": { name: "★ Falchion Knife | Fade", def_index: 509, paint_kit: 38, wear: 0.02, seed: 12, rarity: 6 },
-      "516_12": { name: "★ Shadow Daggers | Crimson Web", def_index: 516, paint_kit: 12, wear: 0.08, seed: 4, rarity: 6 },
-      "516_38": { name: "★ Shadow Daggers | Fade", def_index: 516, paint_kit: 38, wear: 0.01, seed: 8, rarity: 6 },
-      "514_38": { name: "★ Bowie Knife | Fade", def_index: 514, paint_kit: 38, wear: 0.01, seed: 30, rarity: 6 },
-      "514_12": { name: "★ Bowie Knife | Crimson Web", def_index: 514, paint_kit: 12, wear: 0.07, seed: 18, rarity: 6 },
+    function buildPresetSelect() {
+      const sel = document.getElementById('preset-select');
+      const filter = (document.getElementById('preset-filter').value || '').toLowerCase().trim();
+      const match = n => !filter || n.toLowerCase().includes(filter);
+      let html = '';
 
-      // RIFLES & SNIPERS
-      "9_344": { name: "AWP | Dragon Lore", def_index: 9, paint_kit: 344, wear: 0.01, seed: 420, rarity: 5 },
-      "9_279": { name: "AWP | Asiimov", def_index: 9, paint_kit: 279, wear: 0.18, seed: 13, rarity: 5 },
-      "9_422": { name: "AWP | Hyper Beast", def_index: 9, paint_kit: 422, wear: 0.07, seed: 91, rarity: 5 },
-      "9_38": { name: "AWP | Lightning Strike", def_index: 9, paint_kit: 38, wear: 0.01, seed: 2, rarity: 5 },
-      "9_181": { name: "AWP | Corticera", def_index: 9, paint_kit: 181, wear: 0.06, seed: 5, rarity: 4 },
-      "9_340": { name: "AWP | Man-o'-war", def_index: 9, paint_kit: 340, wear: 0.11, seed: 88, rarity: 4 },
+      // KNIVES grouped by knife model
+      const byKnife = {};
+      DATA.knives.forEach(k => { const m = k[1].split(' | ')[0]; (byKnife[m] = byKnife[m] || []).push(k); });
+      Object.keys(byKnife).forEach(m => {
+        const rows = byKnife[m].filter(k => match(k[1]));
+        if (rows.length) html += `<optgroup label="--- ${m} ---">` + rows.map(k => `<option value="${k[0]}">${k[1]}</option>`).join('') + `</optgroup>`;
+      });
 
-      "7_180": { name: "AK-47 | Fire Serpent", def_index: 7, paint_kit: 180, wear: 0.08, seed: 111, rarity: 5 },
-      "7_38": { name: "AK-47 | Redline", def_index: 7, paint_kit: 38, wear: 0.15, seed: 10, rarity: 4 },
-      "7_300": { name: "AK-47 | Vulcan", def_index: 7, paint_kit: 300, wear: 0.05, seed: 44, rarity: 5 },
-      "7_490": { name: "AK-47 | Frontside Misty", def_index: 7, paint_kit: 490, wear: 0.10, seed: 90, rarity: 4 },
-      "7_524": { name: "AK-47 | Point Disarray", def_index: 7, paint_kit: 524, wear: 0.06, seed: 14, rarity: 4 },
-      "7_44": { name: "AK-47 | Case Hardened", def_index: 7, paint_kit: 44, wear: 0.09, seed: 661, rarity: 4 },
-      "7_172": { name: "AK-47 | Black Laminate", def_index: 7, paint_kit: 172, wear: 0.12, seed: 3, rarity: 3 },
+      // SKINS grouped by case / collection
+      DATA.groups.forEach(g => {
+        const rows = DATA.skins.filter(s => s[6] === g && match(s[1]));
+        if (rows.length) html += `<optgroup label="--- ${g} ---">` + rows.map(s => `<option value="${s[0]}">${s[1]}</option>`).join('') + `</optgroup>`;
+      });
 
-      "16_309": { name: "M4A4 | Howl", def_index: 16, paint_kit: 309, wear: 0.04, seed: 77, rarity: 5 },
-      "16_255": { name: "M4A4 | Asiimov", def_index: 16, paint_kit: 255, wear: 0.22, seed: 32, rarity: 4 },
-      "16_384": { name: "M4A4 | Dragon King", def_index: 16, paint_kit: 384, wear: 0.05, seed: 21, rarity: 4 },
-      "16_512": { name: "M4A4 | The Battlestar", def_index: 16, paint_kit: 512, wear: 0.03, seed: 6, rarity: 4 },
+      // CASES & KEYS
+      const caseRows = DATA.crates.filter(c => match(c[1]));
+      if (caseRows.length) {
+        html += `<optgroup label="--- CASES (2013-2016) ---">` + caseRows.map(c => `<option value="${c[0]}">${c[1]}</option>`).join('') + `</optgroup>`;
+        const seen = {};
+        let keys = '';
+        caseRows.forEach(c => { if (c[3] && !seen[c[3]]) { seen[c[3]] = 1; keys += `<option value="${c[3]}_0">${PRESETS[c[3] + '_0'].name}</option>`; } });
+        html += `<optgroup label="--- KEYS ---">` + keys + `</optgroup>`;
+      }
+      sel.innerHTML = html;
+    }
 
-      "60_430": { name: "M4A1-S | Hyper Beast", def_index: 60, paint_kit: 430, wear: 0.06, seed: 5, rarity: 5 },
-      "60_440": { name: "M4A1-S | Golden Coil", def_index: 60, paint_kit: 440, wear: 0.05, seed: 23, rarity: 5 },
-      "60_321": { name: "M4A1-S | Cyrex", def_index: 60, paint_kit: 321, wear: 0.02, seed: 18, rarity: 4 },
-      "60_257": { name: "M4A1-S | Master Piece", def_index: 60, paint_kit: 257, wear: 0.08, seed: 40, rarity: 4 },
-      "60_189": { name: "M4A1-S | Atomic Alloy", def_index: 60, paint_kit: 189, wear: 0.04, seed: 12, rarity: 3 },
-      "60_301": { name: "M4A1-S | Chantico's Fire", def_index: 60, paint_kit: 301, wear: 0.02, seed: 9, rarity: 5 },
-
-      // PISTOLS & SMGS
-      "1_180": { name: "Desert Eagle | Hypnotic", def_index: 1, paint_kit: 180, wear: 0.01, seed: 8, rarity: 3 },
-      "1_351": { name: "Desert Eagle | Conspiracy", def_index: 1, paint_kit: 351, wear: 0.03, seed: 14, rarity: 3 },
-      "1_470": { name: "Desert Eagle | Sunset Storm", def_index: 1, paint_kit: 470, wear: 0.02, seed: 55, rarity: 4 },
-      "1_527": { name: "Desert Eagle | Kumicho Dragon", def_index: 1, paint_kit: 527, wear: 0.04, seed: 2, rarity: 4 },
-      "1_231": { name: "Desert Eagle | Blaze", def_index: 1, paint_kit: 231, wear: 0.01, seed: 99, rarity: 3 },
-
-      "4_38": { name: "Glock-18 | Fade", def_index: 4, paint_kit: 38, wear: 0.01, seed: 27, rarity: 4 },
-      "4_353": { name: "Glock-18 | Water Elemental", def_index: 4, paint_kit: 353, wear: 0.06, seed: 3, rarity: 3 },
-      "4_437": { name: "Glock-18 | Reactor", def_index: 4, paint_kit: 437, wear: 0.05, seed: 11, rarity: 3 },
-
-      "61_501": { name: "USP-S | Kill Confirmed", def_index: 61, paint_kit: 501, wear: 0.04, seed: 88, rarity: 5 },
-      "61_313": { name: "USP-S | Caiman", def_index: 61, paint_kit: 313, wear: 0.02, seed: 4, rarity: 3 },
-      "61_221": { name: "USP-S | Serum", def_index: 61, paint_kit: 221, wear: 0.01, seed: 1, rarity: 3 },
-      "61_290": { name: "USP-S | Orion", def_index: 61, paint_kit: 290, wear: 0.02, seed: 50, rarity: 4 },
-
-      "63_522": { name: "CZ75-Auto | Victoria", def_index: 63, paint_kit: 522, wear: 0.03, seed: 7, rarity: 5 },
-      "64_523": { name: "Revolver R8 | Fade", def_index: 64, paint_kit: 523, wear: 0.01, seed: 12, rarity: 4 },
-      "19_233": { name: "P90 | Asiimov", def_index: 19, paint_kit: 233, wear: 0.05, seed: 62, rarity: 5 },
-      "19_182": { name: "P90 | Trigon", def_index: 19, paint_kit: 182, wear: 0.08, seed: 22, rarity: 3 },
-
-      // CASES
-      "4001_0": { name: "CS:GO Weapon Case 1", def_index: 4001, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
-      "4004_0": { name: "Operation Bravo Case", def_index: 4004, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
-      "4008_0": { name: "eSports 2013 Winter Case", def_index: 4008, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
-      "4009_0": { name: "CS:GO Weapon Case 2", def_index: 4009, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
-      "4011_0": { name: "Operation Phoenix Weapon Case", def_index: 4011, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
-      "4013_0": { name: "Huntsman Weapon Case", def_index: 4013, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
-      "4014_0": { name: "Operation Breakout Weapon Case", def_index: 4014, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
-      "4015_0": { name: "Operation Vanguard Weapon Case", def_index: 4015, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
-      "4017_0": { name: "Chroma Case", def_index: 4017, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
-      "4018_0": { name: "Chroma 2 Case", def_index: 4018, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
-      "4019_0": { name: "Falchion Case", def_index: 4019, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
-      "4020_0": { name: "Shadow Case", def_index: 4020, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
-      "4021_0": { name: "Revolver Case", def_index: 4021, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
-      "4022_0": { name: "Operation Wildfire Case", def_index: 4022, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
-
-      // KEYS
-      "1201_0": { name: "CS:GO Case Key", def_index: 1201, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
-      "1203_0": { name: "Operation Phoenix Key", def_index: 1203, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
-      "1204_0": { name: "Operation Breakout Key", def_index: 1204, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
-      "1209_0": { name: "Operation Wildfire Key", def_index: 1209, paint_kit: 0, wear: 0, seed: 0, rarity: 0 },
-      "1202_0": { name: "eSports Key", def_index: 1202, paint_kit: 0, wear: 0, seed: 0, rarity: 0 }
-    };
+    function filterPresets() { buildPresetSelect(); }
 
     // INVENTORY ARRAY (STARTS EMPTY BY DEFAULT)
     let inventory = [];
 
     window.onload = function() {
+      buildPresetSelect();
+      loadPresetItem();
       renderInventory();
     };
 
@@ -474,14 +336,16 @@
       }
     }
 
+    function numOr(v, fallback) { const n = parseFloat(v); return isNaN(n) ? fallback : n; }
+
     function addItemFromForm() {
       const name = document.getElementById('input-item-name').value.trim() || "Custom Weapon";
-      const nametag = document.getElementById('input-nametag').value.trim();
-      const def_index = parseInt(document.getElementById('input-def-index').value) || 7;
-      const paint_kit = parseInt(document.getElementById('input-paint-kit').value) || 0;
-      const wear = parseFloat(document.getElementById('input-wear').value) || 0.01;
-      const seed = parseInt(document.getElementById('input-seed').value) || 1;
-      const rarity = parseInt(document.getElementById('input-rarity').value) || 2;
+      const nametag = document.getElementById('input-nametag').value.trim().replace(/"/g, "'");
+      const def_index = Math.round(numOr(document.getElementById('input-def-index').value, 7));
+      const paint_kit = Math.max(0, Math.round(numOr(document.getElementById('input-paint-kit').value, 0)));
+      const wear = Math.min(1, Math.max(0, numOr(document.getElementById('input-wear').value, 0.01)));
+      const seed = Math.min(1000, Math.max(0, Math.round(numOr(document.getElementById('input-seed').value, 1))));
+      const rarity = Math.min(7, Math.max(1, Math.round(numOr(document.getElementById('input-rarity').value, 3))));
 
       const maxId = inventory.reduce((max, item) => Math.max(max, item.id), 1);
       const maxInvId = inventory.reduce((max, item) => Math.max(max, item.inventory_id), 0);
@@ -494,7 +358,8 @@
         wear: wear,
         seed: seed,
         rarity: rarity,
-        equipped: "0",
+        eq: { "2": false, "3": false },
+        slot: SLOT_BY_DEF[def_index],
         name: name,
         nametag: nametag
       });
@@ -509,13 +374,23 @@
       showToast("Item deleted");
     }
 
-    function toggleEquip(id, side) {
+    // equipped_state in inventory.txt is  "<team>" "<loadout slot>"  (2 = T, 3 = CT).
+    // Only one item can sit in a given slot for a given team, so equipping unequips the previous one.
+    function toggleEquip(id, team) {
       const item = inventory.find(i => i.id === id);
-      if (item) {
-        item.equipped = item.equipped === side ? "0" : side;
-        renderInventory();
-        showToast("Equip status updated");
+      if (!item) return;
+      if (item.slot === undefined) {
+        showToast("Cannot equip: unknown loadout slot for this item");
+        return;
       }
+      if (item.eq[team]) {
+        item.eq[team] = false;
+      } else {
+        inventory.forEach(o => { if (o.id !== id && o.slot === item.slot && o.eq[team]) o.eq[team] = false; });
+        item.eq[team] = true;
+      }
+      renderInventory();
+      showToast("Equip status updated");
     }
 
     function clearInventory() {
@@ -538,14 +413,24 @@
         fillStyle = "url(#chGrad)";
       } else if (paintKit === 12) { // Crimson Web
         fillStyle = "#991b1b";
-      } else if (paintKit === 415 || paintKit === 416 || paintKit === 418 || paintKit === 419) { // Sapphire/Ruby/Doppler
+      } else if (paintKit >= 415 && paintKit <= 421 && paintKit !== 417) { // Ruby/Sapphire/Doppler phases
         fillStyle = paintKit === 415 ? "#dc2626" : (paintKit === 416 ? "#2563eb" : "#4f46e5");
       } else if (paintKit === 344) { // Dragon Lore
         fillStyle = "#d97706";
-      } else if (paintKit === 279 || paintKit === 255 || paintKit === 233) { // Asiimov
+      } else if (paintKit === 279 || paintKit === 255 || paintKit === 156) { // Asiimov
         fillStyle = "#f97316";
-      } else if (paintKit === 180) { // Redline / Fire Serpent
+      } else if (paintKit === 180) { // Fire Serpent
         fillStyle = "#b91c1c";
+      } else if (paintKit === 282) { // Redline
+        fillStyle = "#dc2626";
+      } else if (paintKit === 409) { // Tiger Tooth
+        fillStyle = "#f59e0b";
+      } else if (paintKit === 413) { // Marble Fade
+        fillStyle = "url(#fadeGrad)";
+      } else if (paintKit === 417) { // Black Pearl
+        fillStyle = "#1e1b4b";
+      } else if (paintKit === 410 || paintKit === 414) { // Damascus / Rust Coat
+        fillStyle = "#64748b";
       }
 
       const svgDefs = `
@@ -623,8 +508,20 @@
         `;
       }
 
-      // 5. CASES / CONTAINERS (4000+)
-      if (defIndex >= 4000) {
+      // 5a. KEYS
+      if (isKeyDef(defIndex)) {
+        return `
+          <svg viewBox="0 0 200 120" class="w-full h-24 drop-shadow-lg">
+            <circle cx="65" cy="60" r="20" fill="none" stroke="#eab308" stroke-width="8" />
+            <rect x="82" y="56" width="85" height="9" rx="2" fill="#eab308" />
+            <rect x="140" y="65" width="8" height="16" fill="#eab308" />
+            <rect x="155" y="65" width="8" height="12" fill="#eab308" />
+          </svg>
+        `;
+      }
+
+      // 5b. CASES / CONTAINERS
+      if (isCrateDef(defIndex)) {
         return `
           <svg viewBox="0 0 200 120" class="w-full h-24 drop-shadow-lg">
             <rect x="50" y="35" width="100" height="60" rx="6" fill="#78350f" stroke="#d97706" stroke-width="3" />
@@ -643,6 +540,8 @@
         </svg>
       `;
     }
+
+    function escapeHtml(s) { return String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
 
     function renderInventory() {
       const grid = document.getElementById('inventory-grid');
@@ -664,18 +563,19 @@
 
       inventory.forEach(item => {
         const card = document.createElement('div');
-        card.className = `scaleform-panel border-b-4 rounded-lg p-4 flex flex-col justify-between space-y-3 rarity-${item.rarity} rarity-glow-${item.rarity} relative overflow-hidden`;
+        const rc = isKnifeDef(item.def_index) ? 7 : item.rarity;
+        card.className = `scaleform-panel border-b-4 rounded-lg p-4 flex flex-col justify-between space-y-3 rarity-${rc} rarity-glow-${rc} relative overflow-hidden`;
 
         let badge = "";
-        if (item.equipped === "2") badge = `<span class="bg-amber-500 text-slate-950 font-black text-[9px] px-2 py-0.5 rounded uppercase">T Equipped</span>`;
-        if (item.equipped === "3") badge = `<span class="bg-blue-500 text-white font-black text-[9px] px-2 py-0.5 rounded uppercase">CT Equipped</span>`;
+        if (item.eq["2"]) badge += `<span class="bg-amber-500 text-slate-950 font-black text-[9px] px-2 py-0.5 rounded uppercase mr-1">T Equipped</span>`;
+        if (item.eq["3"]) badge += `<span class="bg-blue-500 text-white font-black text-[9px] px-2 py-0.5 rounded uppercase">CT Equipped</span>`;
 
         card.innerHTML = `
           <div class="flex justify-between items-start">
             <div>
               <span class="text-[10px] text-blue-300/60 font-mono">ID: #${item.id} (Def ${item.def_index})</span>
-              <h3 class="font-teko text-lg text-white uppercase tracking-wider leading-tight">${item.name}</h3>
-              ${item.nametag ? `<div class="text-[10px] text-amber-300 font-mono mt-0.5"><i class="fa-solid fa-tag text-[9px] mr-1"></i>"${item.nametag}"</div>` : ''}
+              <h3 class="font-teko text-lg text-white uppercase tracking-wider leading-tight">${escapeHtml(item.name)}</h3>
+              ${item.nametag ? `<div class="text-[10px] text-amber-300 font-mono mt-0.5"><i class="fa-solid fa-tag text-[9px] mr-1"></i>"${escapeHtml(item.nametag)}"</div>` : ''}
             </div>
             ${badge}
           </div>
@@ -692,7 +592,7 @@
               <div class="flex justify-between"><span class="text-slate-400">Seed:</span> <span class="text-slate-200">${item.seed}</span></div>
             </div>
           ` : `
-            <div class="text-[10px] text-slate-400 italic py-1 font-mono">Container / Key</div>
+            <div class="text-[10px] text-slate-400 italic py-1 font-mono">${isKnifeDef(item.def_index) ? "Vanilla knife" : "Container / Key"}</div>
           `}
 
           <div class="flex space-x-1.5 pt-2 border-t border-slate-800">
@@ -723,7 +623,8 @@
         kv += `\t\t"inventory"\t\t"${item.inventory_id}"\n`;
         kv += `\t\t"def_index"\t\t"${item.def_index}"\n`;
         kv += `\t\t"level"\t\t"1"\n`;
-        kv += `\t\t"quality"\t\t"${item.rarity === 6 ? '3' : '4'}"\n`;
+        const isKnife = isKnifeDef(item.def_index);
+        kv += `\t\t"quality"\t\t"${isKnife ? '3' : '4'}"\n`;
         kv += `\t\t"flags"\t\t"0"\n`;
         kv += `\t\t"origin"\t\t"24"\n`;
         kv += `\t\t"in_use"\t\t"0"\n`;
@@ -742,10 +643,11 @@
           kv += `\t\t}\n`;
         }
 
-        if (item.equipped && item.equipped !== "0") {
+        const eqTeams = ["2", "3"].filter(t => item.eq[t] && item.slot !== undefined);
+        if (eqTeams.length) {
           kv += `\t\t"equipped_state"\n`;
           kv += `\t\t{\n`;
-          kv += `\t\t\t"${item.equipped}"\t\t"0"\n`;
+          eqTeams.forEach(t => { kv += `\t\t\t"${t}"\t\t"${item.slot}"\n`; });
           kv += `\t\t}\n`;
         }
 
