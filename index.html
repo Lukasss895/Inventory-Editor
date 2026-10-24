@@ -3,342 +3,242 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CS:GO (2016) Inventory Editor & Unboxing Simulator</title>
+  <title>CS:GO Offline Inventory Manager</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Roboto+Mono:wght@400;500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
     
     body {
-      font-family: 'Rajdhani', sans-serif;
-      background-color: #0b0e13;
+      font-family: 'Inter', sans-serif;
+      background-color: #0b0f17;
       color: #e2e8f0;
     }
-    
-    .code-font {
-      font-family: 'Roboto Mono', monospace;
+
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
     }
 
-    /* CS:GO Rarity Colors */
-    .rarity-0 { border-color: #b0c3d9; color: #b0c3d9; } /* Consumer */
-    .rarity-1 { border-color: #5e98d9; color: #5e98d9; } /* Industrial */
-    .rarity-2 { border-color: #4b69ff; color: #4b69ff; } /* Mil-Spec */
-    .rarity-3 { border-color: #8847ff; color: #8847ff; } /* Restricted */
-    .rarity-4 { border-color: #d32ce6; color: #d32ce6; } /* Classified */
-    .rarity-5 { border-color: #eb4b4b; color: #eb4b4b; } /* Covert */
-    .rarity-6 { border-color: #ffd700; color: #ffd700; } /* Extraordinary / Knife */
+    /* CS:GO Item Rarity Borders & Accents */
+    .rarity-2 { border-color: #4b69ff; } /* Mil-Spec */
+    .rarity-3 { border-color: #8847ff; } /* Restricted */
+    .rarity-4 { border-color: #d32ce6; } /* Classified */
+    .rarity-5 { border-color: #eb4b4b; } /* Covert */
+    .rarity-6 { border-color: #ffd700; } /* Knife / Gold */
 
-    .bg-rarity-0 { background: rgba(176, 195, 217, 0.1); }
-    .bg-rarity-2 { background: rgba(75, 105, 255, 0.1); }
-    .bg-rarity-3 { background: rgba(136, 71, 255, 0.1); }
-    .bg-rarity-4 { background: rgba(211, 44, 230, 0.1); }
-    .bg-rarity-5 { background: rgba(235, 75, 75, 0.1); }
-    .bg-rarity-6 { background: rgba(255, 215, 0, 0.1); }
+    .rarity-bg-2 { background: linear-gradient(180deg, rgba(75, 105, 255, 0.08) 0%, rgba(15, 23, 42, 0.6) 100%); }
+    .rarity-bg-3 { background: linear-gradient(180deg, rgba(136, 71, 255, 0.08) 0%, rgba(15, 23, 42, 0.6) 100%); }
+    .rarity-bg-4 { background: linear-gradient(180deg, rgba(211, 44, 230, 0.08) 0%, rgba(15, 23, 42, 0.6) 100%); }
+    .rarity-bg-5 { background: linear-gradient(180deg, rgba(235, 75, 75, 0.08) 0%, rgba(15, 23, 42, 0.6) 100%); }
+    .rarity-bg-6 { background: linear-gradient(180deg, rgba(255, 215, 0, 0.12) 0%, rgba(15, 23, 42, 0.6) 100%); }
 
-    /* Case Spinner Animation Track */
-    .spinner-container {
-      position: relative;
-      overflow: hidden;
-    }
-    .spinner-line {
-      position: absolute;
-      left: 50%;
-      top: 0;
-      bottom: 0;
-      width: 4px;
-      background: #eab308;
-      z-index: 20;
-      box-shadow: 0 0 12px #eab308;
-      transform: translateX(-50%);
-    }
-    .spinner-track {
-      display: flex;
-      will-change: transform;
-      transition: transform 6s cubic-bezier(0.1, 1, 0.1, 1);
+    /* Glassmorphic Cards */
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
     }
 
     /* Custom Scrollbars */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #0f172a;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #334155;
-      border-radius: 3px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #475569;
-    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #090d16; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #334155; }
   </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col antialiased">
 
-  <!-- TOP HEADER -->
-  <header class="bg-slate-900 border-b border-slate-800 px-6 py-4 flex flex-wrap justify-between items-center gap-4">
+  <!-- TOP HEADER NAVBAR -->
+  <header class="glass-panel sticky top-0 z-40 px-6 py-3.5 flex justify-between items-center border-b border-slate-800/80">
     <div class="flex items-center space-x-3">
-      <div class="bg-amber-500 text-slate-950 p-2 rounded font-bold text-xl flex items-center justify-center w-10 h-10">
-        <i class="fa-solid fa-crosshairs"></i>
+      <div class="bg-gradient-to-tr from-amber-600 to-amber-400 text-slate-950 p-2 rounded-lg font-black text-xl shadow-lg shadow-amber-500/10">
+        <i class="fa-solid fa-shield-halved"></i>
       </div>
       <div>
-        <h1 class="text-xl font-bold tracking-wide text-white uppercase">CS:GO (2016) Inventory Manager</h1>
-        <p class="text-xs text-slate-400">KeyValues <span class="code-font text-amber-400">inventory.txt</span> Generator & Case Spinner</p>
+        <h1 class="text-base font-bold text-white tracking-wide uppercase">CS:GO Inventory Configurator</h1>
+        <p class="text-xs text-slate-400">Offline <span class="font-mono text-amber-400">inventory.txt</span> KeyValues Generator</p>
       </div>
     </div>
 
-    <!-- TAB BUTTONS -->
-    <div class="flex space-x-2 bg-slate-950 p-1.5 rounded-lg border border-slate-800">
-      <button id="tab-inventory-btn" onclick="switchTab('inventory')" class="px-4 py-2 rounded text-sm font-bold uppercase transition bg-amber-500 text-slate-950">
-        <i class="fa-solid fa-boxes-stacked mr-1.5"></i> Inventory Editor
+    <!-- QUICK ACTIONS HEADER -->
+    <div class="flex items-center space-x-3">
+      <button onclick="copyToClipboard()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold px-4 py-2 rounded-lg text-xs flex items-center space-x-2 transition border border-slate-700/60 shadow-sm">
+        <i class="fa-solid fa-copy text-amber-400"></i>
+        <span>Copy KeyValues</span>
       </button>
-      <button id="tab-unboxing-btn" onclick="switchTab('unboxing')" class="px-4 py-2 rounded text-sm font-bold uppercase transition text-slate-400 hover:text-white">
-        <i class="fa-solid fa-box-open mr-1.5"></i> Case Unboxing
-      </button>
-      <button id="tab-keyvalues-btn" onclick="switchTab('keyvalues')" class="px-4 py-2 rounded text-sm font-bold uppercase transition text-slate-400 hover:text-white">
-        <i class="fa-solid fa-code mr-1.5"></i> View Raw KV
+      <button onclick="downloadInventoryFile()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs flex items-center space-x-2 transition shadow-md shadow-amber-500/10">
+        <i class="fa-solid fa-download"></i>
+        <span>Download inventory.txt</span>
       </button>
     </div>
   </header>
 
-  <!-- MAIN CONTAINER -->
-  <main class="flex-1 p-6 max-w-7xl w-full mx-auto">
+  <!-- MAIN LAYOUT -->
+  <main class="flex-1 max-w-[1600px] w-full mx-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-    <!-- ==================== TAB 1: INVENTORY EDITOR ==================== -->
-    <div id="tab-inventory" class="space-y-6">
+    <!-- LEFT COLUMN: ADD / EDIT ITEM FORM -->
+    <div class="lg:col-span-4 space-y-5">
       
-      <!-- CONTROLS & ADD ITEM BANNER -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        
-        <!-- QUICK ADD PANEL -->
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4 md:col-span-1">
-          <h2 class="text-lg font-bold text-amber-400 uppercase tracking-wider flex items-center">
-            <i class="fa-solid fa-plus-circle mr-2"></i> Add Item
+      <!-- ADD ITEM CARD -->
+      <div class="glass-panel rounded-2xl p-5 space-y-4">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-800/80">
+          <h2 class="text-sm font-bold text-white uppercase tracking-wider flex items-center space-x-2">
+            <i class="fa-solid fa-square-plus text-amber-400"></i>
+            <span>Add Item to Inventory</span>
           </h2>
+          <span class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded font-mono">2016 Schema</span>
+        </div>
+
+        <div class="space-y-3">
           
-          <div class="space-y-3 text-sm">
-            <div>
-              <label class="block text-xs font-semibold text-slate-400 mb-1">Preset Template</label>
-              <select id="preset-select" onchange="loadPresetItem()" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-white focus:outline-none focus:border-amber-500">
-                <optgroup label="--- Knives ---">
-                  <option value="515_38">Butterfly Knife | Fade</option>
-                  <option value="515_418">Butterfly Knife | Doppler Phase 1</option>
-                  <option value="507_38">Karambit | Fade</option>
-                  <option value="507_44">Karambit | Case Hardened</option>
-                  <option value="508_419">M9 Bayonet | Doppler Phase 2</option>
-                  <option value="508_12">M9 Bayonet | Crimson Web</option>
-                  <option value="500_415">Bayonet | Ruby</option>
-                  <option value="506_38">Flip Knife | Fade</option>
-                  <option value="505_418">Gut Knife | Doppler</option>
-                  <option value="512_38">Huntsman Knife | Fade</option>
-                  <option value="509_38">Falchion Knife | Fade</option>
-                  <option value="516_12">Shadow Daggers | Crimson Web</option>
-                  <option value="514_38">Bowie Knife | Fade</option>
-                </optgroup>
-                <optgroup label="--- Rifles & Snipers ---">
-                  <option value="7_38">AK-47 | Redline</option>
-                  <option value="7_180">AK-47 | Fire Serpent</option>
-                  <option value="7_300">AK-47 | Vulcan</option>
-                  <option value="7_490">AK-47 | Frontside Misty</option>
-                  <option value="16_255">M4A4 | Asiimov</option>
-                  <option value="16_309">M4A4 | Howl</option>
-                  <option value="60_440">M4A1-S | Golden Coil</option>
-                  <option value="60_321">M4A1-S | Cyrex</option>
-                  <option value="60_430">M4A1-S | Hyper Beast</option>
-                  <option value="9_344">AWP | Dragon Lore</option>
-                  <option value="9_279">AWP | Asiimov</option>
-                  <option value="9_422">AWP | Hyper Beast</option>
-                  <option value="9_38">AWP | Lightning Strike</option>
-                </optgroup>
-                <optgroup label="--- Pistols & SMGs ---">
-                  <option value="1_180">Desert Eagle | Hypnotic</option>
-                  <option value="1_351">Desert Eagle | Conspiracy</option>
-                  <option value="1_470">Desert Eagle | Sunset Storm</option>
-                  <option value="4_38">Glock-18 | Fade</option>
-                  <option value="4_353">Glock-18 | Water Elemental</option>
-                  <option value="61_501">USP-S | Kill Confirmed</option>
-                  <option value="19_233">P90 | Asiimov</option>
-                </optgroup>
-                <optgroup label="--- Cases & Keys ---">
-                  <option value="4001_0">CS:GO Weapon Case</option>
-                  <option value="4004_0">Operation Bravo Case</option>
-                  <option value="4008_0">eSports 2013 Winter Case</option>
-                  <option value="1201_0">CS:GO Case Key</option>
-                </optgroup>
-              </select>
-            </div>
-
-            <div class="grid grid-cols-2 gap-2">
-              <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-1">Def Index</label>
-                <input type="number" id="input-def-index" class="w-full bg-slate-950 border border-slate-700 rounded px-2.5 py-1.5 code-font text-white" value="515">
-              </div>
-              <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-1">Paint Kit</label>
-                <input type="number" id="input-paint-kit" class="w-full bg-slate-950 border border-slate-700 rounded px-2.5 py-1.5 code-font text-white" value="38">
-              </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-2">
-              <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-1">Wear (Float)</label>
-                <input type="number" step="0.01" min="0" max="1" id="input-wear" class="w-full bg-slate-950 border border-slate-700 rounded px-2.5 py-1.5 code-font text-white" value="0.01">
-              </div>
-              <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-1">Seed Pattern</label>
-                <input type="number" id="input-seed" class="w-full bg-slate-950 border border-slate-700 rounded px-2.5 py-1.5 code-font text-white" value="41">
-              </div>
-            </div>
-
-            <div>
-              <label class="block text-xs font-semibold text-slate-400 mb-1">Rarity</label>
-              <select id="input-rarity" class="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1.5 text-white">
-                <option value="2">Mil-Spec (Blue)</option>
-                <option value="3">Restricted (Purple)</option>
-                <option value="4">Classified (Pink)</option>
-                <option value="5">Covert (Red)</option>
-                <option value="6" selected>★ Special Item / Knife (Gold)</option>
-              </select>
-            </div>
-
-            <div class="pt-2">
-              <button onclick="addItemFromForm()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded uppercase tracking-wider transition">
-                <i class="fa-solid fa-plus mr-1"></i> Add to Inventory
-              </button>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- INVENTORY OVERVIEW & EXPORT ACTIONS -->
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 md:col-span-2 flex flex-col justify-between space-y-4">
+          <!-- PRESET SELECTOR -->
           <div>
-            <div class="flex justify-between items-center mb-4">
-              <h2 class="text-lg font-bold text-white uppercase tracking-wider">
-                <i class="fa-solid fa-boxes-stacked text-amber-500 mr-2"></i> Current Inventory 
-                <span id="inventory-count" class="ml-2 text-xs bg-slate-800 text-amber-400 px-2.5 py-1 rounded-full border border-slate-700">0 items</span>
-              </h2>
-
-              <div class="flex space-x-2">
-                <button onclick="clearInventory()" class="text-xs bg-red-900/40 hover:bg-red-900/80 text-red-300 border border-red-800 px-3 py-1.5 rounded transition">
-                  <i class="fa-solid fa-trash-can mr-1"></i> Clear All
-                </button>
-              </div>
-            </div>
-
-            <p class="text-xs text-slate-400 leading-relaxed">
-              Items listed here will be serialized into the official Valve KeyValues format compatible with your 2016 <span class="code-font text-amber-400">inventory.txt</span> file. You can equipped items for T or CT sides.
-            </p>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Preset Items</label>
+            <select id="preset-select" onchange="loadPresetItem()" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-amber-500 transition">
+              <optgroup label="--- Rare Knives ---">
+                <option value="515_38">★ Butterfly Knife | Fade</option>
+                <option value="515_418">★ Butterfly Knife | Doppler Phase 1</option>
+                <option value="507_38">★ Karambit | Fade</option>
+                <option value="507_44">★ Karambit | Case Hardened</option>
+                <option value="508_419">★ M9 Bayonet | Doppler Phase 2</option>
+                <option value="508_12">★ M9 Bayonet | Crimson Web</option>
+                <option value="500_415">★ Bayonet | Ruby</option>
+                <option value="506_38">★ Flip Knife | Fade</option>
+                <option value="505_418">★ Gut Knife | Doppler</option>
+                <option value="512_38">★ Huntsman Knife | Fade</option>
+                <option value="509_38">★ Falchion Knife | Fade</option>
+                <option value="516_12">★ Shadow Daggers | Crimson Web</option>
+                <option value="514_38">★ Bowie Knife | Fade</option>
+              </optgroup>
+              <optgroup label="--- Primary Rifles & Snipers ---">
+                <option value="7_38">AK-47 | Redline</option>
+                <option value="7_180">AK-47 | Fire Serpent</option>
+                <option value="7_300">AK-47 | Vulcan</option>
+                <option value="7_490">AK-47 | Frontside Misty</option>
+                <option value="16_255">M4A4 | Asiimov</option>
+                <option value="16_309">M4A4 | Howl</option>
+                <option value="60_440">M4A1-S | Golden Coil</option>
+                <option value="60_321">M4A1-S | Cyrex</option>
+                <option value="60_430">M4A1-S | Hyper Beast</option>
+                <option value="9_344">AWP | Dragon Lore</option>
+                <option value="9_279">AWP | Asiimov</option>
+                <option value="9_422">AWP | Hyper Beast</option>
+                <option value="9_38">AWP | Lightning Strike</option>
+              </optgroup>
+              <optgroup label="--- Pistols & SMGs ---">
+                <option value="1_180">Desert Eagle | Hypnotic</option>
+                <option value="1_351">Desert Eagle | Conspiracy</option>
+                <option value="1_470">Desert Eagle | Sunset Storm</option>
+                <option value="4_38">Glock-18 | Fade</option>
+                <option value="4_353">Glock-18 | Water Elemental</option>
+                <option value="61_501">USP-S | Kill Confirmed</option>
+                <option value="19_233">P90 | Asiimov</option>
+              </optgroup>
+              <optgroup label="--- Containers & Keys ---">
+                <option value="4001_0">CS:GO Weapon Case</option>
+                <option value="4004_0">Operation Bravo Case</option>
+                <option value="4008_0">eSports 2013 Winter Case</option>
+                <option value="1201_0">CS:GO Case Key</option>
+              </optgroup>
+            </select>
           </div>
 
-          <!-- ACTIONS BANNER -->
-          <div class="bg-slate-950 p-4 rounded-lg border border-slate-800 flex flex-wrap gap-3 items-center justify-between">
-            <div class="text-xs text-slate-400">
-              <i class="fa-solid fa-circle-check text-green-500 mr-1"></i> Ready for CS:GO 2016 Offline Client
+          <!-- FORM FIELDS -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-400 mb-1">Def Index</label>
+              <input type="number" id="input-def-index" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 font-mono text-xs text-white focus:outline-none focus:border-amber-500" value="515">
             </div>
-
-            <div class="flex flex-wrap gap-2">
-              <button onclick="copyToClipboard()" class="bg-slate-800 hover:bg-slate-700 text-white font-bold px-4 py-2 rounded text-xs uppercase transition border border-slate-700">
-                <i class="fa-solid fa-copy mr-1.5"></i> Copy inventory.txt
-              </button>
-              <button onclick="downloadInventoryFile()" class="bg-green-600 hover:bg-green-500 text-white font-bold px-4 py-2 rounded text-xs uppercase transition">
-                <i class="fa-solid fa-download mr-1.5"></i> Download File
-              </button>
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-400 mb-1">Paint Kit Index</label>
+              <input type="number" id="input-paint-kit" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 font-mono text-xs text-white focus:outline-none focus:border-amber-500" value="38">
             </div>
           </div>
-        </div>
 
-      </div>
-
-      <!-- INVENTORY ITEMS GRID -->
-      <div id="inventory-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-        <!-- Rendered dynamically via JS -->
-      </div>
-
-    </div>
-
-    <!-- ==================== TAB 2: CASE UNBOXING ==================== -->
-    <div id="tab-unboxing" class="hidden space-y-6">
-      
-      <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 text-center max-w-4xl mx-auto space-y-6">
-        
-        <div>
-          <h2 class="text-2xl font-bold text-white uppercase tracking-wider">CS:GO Case Unboxing Simulator</h2>
-          <p class="text-xs text-slate-400 mt-1">Select a weapon container and open it to spin for weapon skins or knives!</p>
-        </div>
-
-        <!-- SELECT CONTAINER -->
-        <div class="max-w-xs mx-auto">
-          <label class="block text-xs font-semibold text-slate-400 mb-1.5">Select Case</label>
-          <select id="case-select" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-white focus:outline-none focus:border-amber-500 text-sm font-semibold">
-            <option value="weapon_case_1">CS:GO Weapon Case 1</option>
-            <option value="bravo_case">Operation Bravo Case</option>
-            <option value="chroma_case">Chroma Case</option>
-          </select>
-        </div>
-
-        <!-- SPINNER WHEEL CONTAINER -->
-        <div class="spinner-container bg-slate-950 border-2 border-slate-800 rounded-xl h-40">
-          <div class="spinner-line"></div>
-          <div id="spinner-track" class="spinner-track h-full p-2 space-x-2">
-            <!-- Spinner items rendered dynamically -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-400 mb-1">Float (Wear)</label>
+              <input type="number" step="0.01" min="0" max="1" id="input-wear" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 font-mono text-xs text-white focus:outline-none focus:border-amber-500" value="0.01">
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-400 mb-1">Pattern Seed</label>
+              <input type="number" id="input-seed" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 font-mono text-xs text-white focus:outline-none focus:border-amber-500" value="41">
+            </div>
           </div>
-        </div>
 
-        <!-- SPIN CONTROLS -->
-        <div class="flex justify-center space-x-4">
-          <button id="spin-btn" onclick="spinCase()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-8 py-3 rounded-lg text-lg uppercase tracking-wider shadow-lg shadow-amber-500/20 transition">
-            <i class="fa-solid fa-key mr-2"></i> Open Container
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-400 mb-1">Item Rarity</label>
+            <select id="input-rarity" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-amber-500">
+              <option value="2">Mil-Spec Grade (Blue)</option>
+              <option value="3">Restricted (Purple)</option>
+              <option value="4">Classified (Pink)</option>
+              <option value="5">Covert (Red)</option>
+              <option value="6" selected>★ Special Knife / Extraordinary (Gold)</option>
+            </select>
+          </div>
+
+          <button onclick="addItemFromForm()" class="w-full mt-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold py-2.5 rounded-xl text-xs uppercase tracking-wider shadow-lg shadow-amber-500/10 transition">
+            <i class="fa-solid fa-plus mr-1.5"></i> Add Item
           </button>
-        </div>
 
-        <!-- LAST WON ITEM BANNER -->
-        <div id="won-item-modal" class="hidden bg-slate-950 border border-amber-500/40 p-4 rounded-xl max-w-md mx-auto text-center space-y-2">
-          <div class="text-xs text-amber-400 font-bold uppercase tracking-widest">Item Unboxed!</div>
-          <div id="won-item-name" class="text-lg font-bold text-white">Item Name</div>
-          <div id="won-item-sub" class="text-xs code-font text-slate-400">Float: 0.00</div>
-          <button onclick="addWonItemToInventory()" class="mt-2 bg-green-600 hover:bg-green-500 text-white font-bold px-4 py-1.5 rounded text-xs uppercase">
-            <i class="fa-solid fa-plus mr-1"></i> Add to inventory.txt
-          </button>
         </div>
-
       </div>
 
-    </div>
-
-    <!-- ==================== TAB 3: RAW KEYVALUES ==================== -->
-    <div id="tab-keyvalues" class="hidden space-y-4">
-      <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3">
-        <div class="flex justify-between items-center">
-          <h2 class="text-md font-bold text-white uppercase tracking-wider">
-            Raw <span class="code-font text-amber-400">inventory.txt</span> Output
+      <!-- RAW KEYVALUES INSPECTOR CARD -->
+      <div class="glass-panel rounded-2xl p-5 space-y-3">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center space-x-2">
+            <i class="fa-solid fa-code text-amber-400"></i>
+            <span>Live KeyValues Output</span>
           </h2>
-          <button onclick="copyToClipboard()" class="bg-amber-500 text-slate-950 hover:bg-amber-400 font-bold px-3 py-1.5 rounded text-xs uppercase">
-            <i class="fa-solid fa-copy mr-1"></i> Copy Code
-          </button>
+          <span class="text-[10px] text-slate-500 font-mono">inventory.txt</span>
+        </div>
+        <textarea id="kv-output" class="w-full h-52 bg-slate-950/80 border border-slate-800/80 rounded-xl p-3 font-mono text-[11px] text-emerald-400 focus:outline-none resize-none leading-relaxed" readonly></textarea>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN: VISUAL INVENTORY GRID -->
+    <div class="lg:col-span-8 space-y-5">
+      
+      <!-- INVENTORY BAR -->
+      <div class="glass-panel rounded-2xl p-5 flex flex-wrap justify-between items-center gap-4">
+        <div>
+          <h2 class="text-base font-bold text-white uppercase tracking-wider flex items-center space-x-2">
+            <i class="fa-solid fa-boxes-stacked text-amber-400"></i>
+            <span>Equipped & Stored Items</span>
+          </h2>
+          <p id="inventory-count" class="text-xs text-slate-400 mt-0.5">0 items configured</p>
         </div>
 
-        <textarea id="kv-output" class="w-full h-96 bg-slate-950 border border-slate-800 rounded-lg p-4 code-font text-xs text-green-400 focus:outline-none" readonly></textarea>
+        <button onclick="clearInventory()" class="bg-red-950/40 hover:bg-red-900/60 text-red-300 border border-red-800/60 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition">
+          <i class="fa-solid fa-trash-can mr-1.5"></i> Clear Inventory
+        </button>
       </div>
+
+      <!-- ITEMS GRID -->
+      <div id="inventory-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <!-- Rendered dynamically -->
+      </div>
+
     </div>
 
   </main>
 
-  <!-- NOTIFICATION TOAST -->
-  <div id="toast" class="fixed bottom-5 right-5 bg-amber-500 text-slate-950 px-4 py-2.5 rounded-lg shadow-xl font-bold text-sm transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50 flex items-center">
-    <i class="fa-solid fa-circle-check mr-2"></i> <span id="toast-msg">Notification</span>
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="fixed bottom-6 right-6 bg-amber-500 text-slate-950 px-4 py-2.5 rounded-xl shadow-2xl font-bold text-xs transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50 flex items-center space-x-2">
+    <i class="fa-solid fa-circle-check text-sm"></i>
+    <span id="toast-msg">Notification</span>
   </div>
 
-  <!-- JAVASCRIPT LOGIC -->
   <script>
-    // PRESET CATALOG OF WEAPONS & KNIVES (CS:GO 2016 ERA)
+    // CATALOG & DEF MAPPING
     const PRESETS = {
       "515_38": { name: "Butterfly Knife | Fade", def_index: 515, paint_kit: 38, wear: 0.01, seed: 41, rarity: 6 },
-      "515_418": { name: "Butterfly Knife | Doppler Phase 1", def_index: 515, paint_kit: 418, wear: 0.02, seed: 120, rarity: 6 },
+      "515_418": { name: "Butterfly Knife | Doppler P1", def_index: 515, paint_kit: 418, wear: 0.02, seed: 120, rarity: 6 },
       "507_38": { name: "Karambit | Fade", def_index: 507, paint_kit: 38, wear: 0.01, seed: 80, rarity: 6 },
       "507_44": { name: "Karambit | Case Hardened", def_index: 507, paint_kit: 44, wear: 0.15, seed: 661, rarity: 6 },
-      "508_419": { name: "M9 Bayonet | Doppler Phase 2", def_index: 508, paint_kit: 419, wear: 0.03, seed: 21, rarity: 6 },
+      "508_419": { name: "M9 Bayonet | Doppler P2", def_index: 508, paint_kit: 419, wear: 0.03, seed: 21, rarity: 6 },
       "508_12": { name: "M9 Bayonet | Crimson Web", def_index: 508, paint_kit: 12, wear: 0.07, seed: 33, rarity: 6 },
       "500_415": { name: "Bayonet | Ruby", def_index: 500, paint_kit: 415, wear: 0.01, seed: 1, rarity: 6 },
       "506_38": { name: "Flip Knife | Fade", def_index: 506, paint_kit: 38, wear: 0.02, seed: 99, rarity: 6 },
@@ -376,7 +276,6 @@
       "1201_0": { name: "CS:GO Case Key", def_index: 1201, paint_kit: 0, wear: 0, seed: 0, rarity: 0 }
     };
 
-    // WEAPON DEF INDEX NAMES MAP
     const WEAPON_NAMES = {
       515: "Butterfly Knife", 507: "Karambit", 508: "M9 Bayonet", 500: "Bayonet",
       506: "Flip Knife", 505: "Gut Knife", 512: "Huntsman Knife", 509: "Falchion Knife",
@@ -384,7 +283,7 @@
       9: "AWP", 1: "Desert Eagle", 4: "Glock-18", 61: "USP-S", 19: "P90", 4001: "Container Case", 1201: "Key"
     };
 
-    // INITIAL STATE & INVENTORY ARRAY
+    // INVENTORY ARRAY STATE
     let inventory = [
       { id: 2, inventory_id: 1, def_index: 515, paint_kit: 38, wear: 0.01, seed: 41, rarity: 6, equipped: "3", name: "Butterfly Knife | Fade" },
       { id: 3, inventory_id: 2, def_index: 4001, paint_kit: 0, wear: 0, seed: 0, rarity: 0, equipped: "0", name: "CS:GO Weapon Case" },
@@ -393,32 +292,10 @@
       { id: 25, inventory_id: 4, def_index: 16, paint_kit: 255, wear: 0.22, seed: 32, rarity: 4, equipped: "0", name: "M4A4 | Asiimov" }
     ];
 
-    let lastWonItem = null;
-
-    // INITIALIZATION
     window.onload = function() {
       renderInventory();
     };
 
-    // SWITCH TABS
-    function switchTab(tabName) {
-      document.getElementById('tab-inventory').classList.add('hidden');
-      document.getElementById('tab-unboxing').classList.add('hidden');
-      document.getElementById('tab-keyvalues').classList.add('hidden');
-
-      document.getElementById('tab-inventory-btn').className = "px-4 py-2 rounded text-sm font-bold uppercase transition text-slate-400 hover:text-white";
-      document.getElementById('tab-unboxing-btn').className = "px-4 py-2 rounded text-sm font-bold uppercase transition text-slate-400 hover:text-white";
-      document.getElementById('tab-keyvalues-btn').className = "px-4 py-2 rounded text-sm font-bold uppercase transition text-slate-400 hover:text-white";
-
-      document.getElementById(`tab-${tabName}`).classList.remove('hidden');
-      document.getElementById(`tab-${tabName}-btn`).className = "px-4 py-2 rounded text-sm font-bold uppercase transition bg-amber-500 text-slate-950";
-
-      if (tabName === 'keyvalues') {
-        updateKeyValuesOutput();
-      }
-    }
-
-    // PRESET LOADER
     function loadPresetItem() {
       const selectedVal = document.getElementById('preset-select').value;
       const preset = PRESETS[selectedVal];
@@ -431,7 +308,6 @@
       }
     }
 
-    // ADD ITEM FROM FORM
     function addItemFromForm() {
       const def_index = parseInt(document.getElementById('input-def-index').value) || 7;
       const paint_kit = parseInt(document.getElementById('input-paint-kit').value) || 0;
@@ -445,7 +321,7 @@
       const maxId = inventory.reduce((max, item) => Math.max(max, item.id), 1);
       const maxInvId = inventory.reduce((max, item) => Math.max(max, item.inventory_id), 0);
 
-      const newItem = {
+      inventory.push({
         id: maxId + 1,
         inventory_id: maxInvId + 1,
         def_index: def_index,
@@ -455,90 +331,88 @@
         rarity: rarity,
         equipped: "0",
         name: name
-      };
+      });
 
-      inventory.push(newItem);
       renderInventory();
-      showToast("Item added to inventory!");
+      showToast("Item added successfully");
     }
 
-    // DELETE ITEM
     function deleteItem(id) {
       inventory = inventory.filter(i => i.id !== id);
       renderInventory();
-      showToast("Item removed.");
+      showToast("Item deleted");
     }
 
-    // TOGGLE EQUIPPED STATE
     function toggleEquip(id, side) {
       const item = inventory.find(i => i.id === id);
       if (item) {
         item.equipped = item.equipped === side ? "0" : side;
         renderInventory();
-        showToast("Equip status updated.");
+        showToast("Equip state updated");
       }
     }
 
-    // CLEAR ENTIRE INVENTORY
     function clearInventory() {
-      if (confirm("Are you sure you want to clear your entire inventory?")) {
+      if (confirm("Clear all items from inventory?")) {
         inventory = [];
         renderInventory();
-        showToast("Inventory cleared.");
+        showToast("Inventory cleared");
       }
     }
 
-    // RENDER INVENTORY GRID
     function renderInventory() {
       const grid = document.getElementById('inventory-grid');
       const countEl = document.getElementById('inventory-count');
       grid.innerHTML = "";
-      countEl.innerText = `${inventory.length} items`;
+      countEl.innerText = `${inventory.length} items configured`;
 
       if (inventory.length === 0) {
         grid.innerHTML = `
-          <div class="col-span-full bg-slate-900 border border-slate-800 rounded-xl p-8 text-center text-slate-500">
-            <i class="fa-solid fa-box-open text-4xl mb-2"></i>
-            <p>Inventory is empty. Add a preset or unbox a case!</p>
+          <div class="col-span-full glass-panel rounded-2xl p-10 text-center text-slate-500">
+            <i class="fa-solid fa-box-open text-3xl mb-2 text-slate-600"></i>
+            <p class="text-xs">Your inventory is empty. Add items using the panel on the left.</p>
           </div>
         `;
+        updateKeyValuesOutput();
         return;
       }
 
       inventory.forEach(item => {
         const card = document.createElement('div');
-        card.className = `bg-slate-900 border-2 rounded-xl p-4 flex flex-col justify-between space-y-3 rarity-${item.rarity} relative overflow-hidden bg-rarity-${item.rarity}`;
+        card.className = `glass-panel border-l-4 rounded-xl p-4 flex flex-col justify-between space-y-3 rarity-${item.rarity} rarity-bg-${item.rarity} relative overflow-hidden transition hover:translate-y-[-2px]`;
 
-        let equippedBadge = "";
-        if (item.equipped === "2") equippedBadge = `<span class="absolute top-2 right-2 bg-amber-500 text-slate-950 font-bold text-[10px] px-2 py-0.5 rounded">T</span>`;
-        if (item.equipped === "3") equippedBadge = `<span class="absolute top-2 right-2 bg-blue-500 text-white font-bold text-[10px] px-2 py-0.5 rounded">CT</span>`;
+        let badge = "";
+        if (item.equipped === "2") badge = `<span class="bg-amber-500 text-slate-950 font-black text-[9px] px-2 py-0.5 rounded uppercase">T Equipped</span>`;
+        if (item.equipped === "3") badge = `<span class="bg-blue-500 text-white font-black text-[9px] px-2 py-0.5 rounded uppercase">CT Equipped</span>`;
 
         card.innerHTML = `
-          ${equippedBadge}
-          <div>
-            <div class="text-xs font-semibold text-slate-400 code-font">ID: #${item.id} | DEF: ${item.def_index}</div>
-            <div class="text-base font-bold text-white tracking-wide mt-1">${item.name}</div>
+          <div class="flex justify-between items-start">
+            <div>
+              <span class="text-[10px] text-slate-400 font-mono">ID: #${item.id} (Def ${item.def_index})</span>
+              <h3 class="text-xs font-bold text-white tracking-wide mt-0.5">${item.name}</h3>
+            </div>
+            ${badge}
           </div>
 
           ${item.paint_kit > 0 ? `
-            <div class="space-y-1 text-xs code-font bg-slate-950/60 p-2 rounded border border-slate-800/80">
-              <div class="flex justify-between"><span class="text-slate-400">PaintKit:</span> <span class="text-amber-400">${item.paint_kit}</span></div>
-              <div class="flex justify-between"><span class="text-slate-400">Float:</span> <span class="text-slate-200">${item.wear}</span></div>
-              <div class="flex justify-between"><span class="text-slate-400">Seed:</span> <span class="text-slate-200">${item.seed}</span></div>
+            <div class="space-y-1 text-[11px] font-mono bg-slate-950/60 p-2 rounded-lg border border-slate-800/60">
+              <div class="flex justify-between"><span class="text-slate-500">PaintKit:</span> <span class="text-amber-400">${item.paint_kit}</span></div>
+              <div class="flex justify-between"><span class="text-slate-500">Float:</span> <span class="text-slate-300">${item.wear}</span></div>
+              <div class="flex justify-between"><span class="text-slate-500">Seed:</span> <span class="text-slate-300">${item.seed}</span></div>
             </div>
           ` : `
-            <div class="text-xs text-slate-500 italic py-2">Standard Container / Key</div>
+            <div class="text-[11px] text-slate-500 italic py-1">Stock Item / Container</div>
           `}
 
-          <div class="flex space-x-1 pt-2 border-t border-slate-800/80">
-            <button onclick="toggleEquip(${item.id}, '2')" class="flex-1 bg-slate-800 hover:bg-amber-600/30 text-slate-300 hover:text-amber-400 py-1 rounded text-xs font-bold border border-slate-700">
-              Equip T
+          <div class="flex space-x-1.5 pt-2 border-t border-slate-800/60">
+            <button onclick="toggleEquip(${item.id}, '2')" class="flex-1 bg-slate-800/80 hover:bg-amber-500/20 text-slate-300 hover:text-amber-400 py-1 rounded-lg text-[11px] font-semibold border border-slate-700/50 transition">
+              T
             </button>
-            <button onclick="toggleEquip(${item.id}, '3')" class="flex-1 bg-slate-800 hover:bg-blue-600/30 text-slate-300 hover:text-blue-400 py-1 rounded text-xs font-bold border border-slate-700">
-              Equip CT
+            <button onclick="toggleEquip(${item.id}, '3')" class="flex-1 bg-slate-800/80 hover:bg-blue-500/20 text-slate-300 hover:text-blue-400 py-1 rounded-lg text-[11px] font-semibold border border-slate-700/50 transition">
+              CT
             </button>
-            <button onclick="deleteItem(${item.id})" class="bg-red-900/40 hover:bg-red-800 text-red-300 px-2 py-1 rounded text-xs border border-red-800">
-              <i class="fa-solid fa-trash"></i>
+            <button onclick="deleteItem(${item.id})" class="bg-red-950/40 hover:bg-red-900/60 text-red-300 px-2 py-1 rounded-lg text-[11px] border border-red-800/50 transition">
+              <i class="fa-solid fa-trash-can"></i>
             </button>
           </div>
         `;
@@ -549,7 +423,6 @@
       updateKeyValuesOutput();
     }
 
-    // GENERATE VALVE KEYVALUES FOR CS:GO 2016 INVENTORY.TXT
     function generateKeyValues() {
       let kv = `"items"\n{\n`;
 
@@ -590,24 +463,18 @@
       return kv;
     }
 
-    // UPDATE TEXTAREA OUTPUT
     function updateKeyValuesOutput() {
-      const kv = generateKeyValues();
-      document.getElementById('kv-output').value = kv;
+      document.getElementById('kv-output').value = generateKeyValues();
     }
 
-    // COPY TO CLIPBOARD
     function copyToClipboard() {
-      const kv = generateKeyValues();
-      navigator.clipboard.writeText(kv).then(() => {
-        showToast("Copied inventory.txt to clipboard!");
+      navigator.clipboard.writeText(generateKeyValues()).then(() => {
+        showToast("KeyValues copied to clipboard!");
       });
     }
 
-    // DOWNLOAD INVENTORY.TXT FILE
     function downloadInventoryFile() {
-      const kv = generateKeyValues();
-      const blob = new Blob([kv], { type: 'text/plain' });
+      const blob = new Blob([generateKeyValues()], { type: 'text/plain' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -619,91 +486,13 @@
       showToast("inventory.txt downloaded!");
     }
 
-    // CASE UNBOXING LOGIC
-    function spinCase() {
-      const track = document.getElementById('spinner-track');
-      const btn = document.getElementById('spin-btn');
-      const modal = document.getElementById('won-item-modal');
-      modal.classList.add('hidden');
-      btn.disabled = true;
-      btn.classList.add('opacity-50');
-
-      track.style.transition = 'none';
-      track.style.transform = 'translateX(0px)';
-
-      const casePool = [
-        PRESETS["7_38"], PRESETS["16_255"], PRESETS["9_279"], PRESETS["1_180"],
-        PRESETS["515_38"], PRESETS["507_38"], PRESETS["60_321"], PRESETS["4_353"]
-      ];
-
-      track.innerHTML = "";
-      const totalCards = 50;
-      let winningCardIndex = 40;
-
-      for (let i = 0; i < totalCards; i++) {
-        const item = casePool[Math.floor(Math.random() * casePool.length)];
-        const card = document.createElement('div');
-        card.className = `min-w-[140px] h-32 bg-slate-900 border-2 rounded-lg p-3 flex flex-col justify-between items-center text-center rarity-${item.rarity} bg-rarity-${item.rarity}`;
-        card.innerHTML = `
-          <div class="text-[10px] code-font text-slate-400">Container Drop</div>
-          <div class="text-xs font-bold text-white">${item.name}</div>
-          <div class="text-[10px] text-amber-400 font-bold uppercase">Rarity ${item.rarity}</div>
-        `;
-        track.appendChild(card);
-      }
-
-      const winningItem = casePool[Math.floor(Math.random() * casePool.length)];
-      lastWonItem = winningItem;
-
-      setTimeout(() => {
-        track.style.transition = 'transform 6s cubic-bezier(0.1, 1, 0.1, 1)';
-        const cardWidth = 148;
-        const targetOffset = (winningCardIndex * cardWidth) - 300;
-        track.style.transform = `translateX(-${targetOffset}px)`;
-      }, 50);
-
-      setTimeout(() => {
-        btn.disabled = false;
-        btn.classList.remove('opacity-50');
-
-        document.getElementById('won-item-name').innerText = winningItem.name;
-        document.getElementById('won-item-sub').innerText = `Def Index: ${winningItem.def_index} | PaintKit: ${winningItem.paint_kit}`;
-        modal.classList.remove('hidden');
-        showToast(`Unboxed: ${winningItem.name}!`);
-      }, 6200);
-    }
-
-    // ADD UNBOXED ITEM TO INVENTORY
-    function addWonItemToInventory() {
-      if (!lastWonItem) return;
-      const maxId = inventory.reduce((max, item) => Math.max(max, item.id), 1);
-      const maxInvId = inventory.reduce((max, item) => Math.max(max, item.inventory_id), 0);
-
-      inventory.push({
-        id: maxId + 1,
-        inventory_id: maxInvId + 1,
-        def_index: lastWonItem.def_index,
-        paint_kit: lastWonItem.paint_kit,
-        wear: lastWonItem.wear,
-        seed: lastWonItem.seed,
-        rarity: lastWonItem.rarity,
-        equipped: "0",
-        name: lastWonItem.name
-      });
-
-      renderInventory();
-      document.getElementById('won-item-modal').classList.add('hidden');
-      showToast("Unboxed item saved to inventory.txt!");
-    }
-
-    // SHOW TOAST NOTIFICATION
     function showToast(msg) {
       const toast = document.getElementById('toast');
       document.getElementById('toast-msg').innerText = msg;
       toast.classList.remove('translate-y-20', 'opacity-0');
       setTimeout(() => {
         toast.classList.add('translate-y-20', 'opacity-0');
-      }, 3000);
+      }, 2500);
     }
   </script>
 </body>
